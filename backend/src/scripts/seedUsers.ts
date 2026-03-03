@@ -13,6 +13,16 @@ const defaultUsers = [
     phoneNumber: '+1234567890',
     isActive: true,
   },
+  // New admin user for homydays
+  {
+    email: 'admin@homydays.edu.ng',
+    password: 'Admin@123',
+    role: 'admin',
+    firstName: 'Homydays',
+    lastName: 'Admin',
+    phoneNumber: '+2340000000000',
+    isActive: true,
+  },
   {
     email: 'staff@school.com',
     password: 'Staff@123',
