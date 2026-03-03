@@ -1,5 +1,4 @@
 
-import React from "react";
 import homy1 from "../assets/images/homy1.jpg";
 import homy2 from "../assets/images/homy2.jpg";
 import homy3 from "../assets/images/homy3.jpg";
