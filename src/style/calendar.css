@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .heightprob{
+    @apply min-h-[calc(100vh-80px)] md:min-h-0 flex flex-col;
+   }
+  .calendar {
+    @apply my-0 mx-0 md:my-[30px] md:mx-[30px] xl:ml-[40px] xl:mr-[30px] flex flex-col items-center;
+    @apply bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none;
+    /* @apply  pb-[30px]; */
+    @apply heightprob;
+  }
+  .calendar-header {
+    @apply text-[22px]  leading-[28px] font-Lora font-bold text-white md:text-[rgba(5,135,143,1)] bg-transparent md:bg-white shadow-none md:shadow-[0px_1px_25px_0px_rgba(56,_159,_166,_0.1)] rounded-b-[20px] md:rounded-[20px];
+    @apply py-[43.5px] ml:py-[46px] md:py-[12px] md:px-[74px];
+    @apply bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none;
+    @apply sticky md:static top-0;
+    @apply m-0 md:mb-[17px] w-full md:w-auto text-center;
+    @apply z-40;
+  }
+  .calendar-body-container {
+    /* @apply w-full flex flex-col md:flex-row flex-wrap; */
+    @apply bg-white;
+    /* @apply justify-between; */
+    @apply pt-[30px] md:p-0;
+    @apply rounded-t-[30px] md:rounded-none;
+    @apply w-full;
+  }
+  .calendar-body-container-header {
+    @apply flex flex-row justify-between;
+    /* @apply md:ml-[15px]; */
+    @apply mb-[50px] md:mb-[30px];
+    @apply px-[30px] md:p-0;
+  }
+
+  .calendar-body-container-header button:nth-child(1),
+  .calendar-body-container-header button:nth-child(2) {
+    @apply flex flex-row items-center;
+    @apply text-[15px] leading-[19.2px];
+    @apply bg-white text-black;
+    @apply rounded-[20px];
+    @apply shadow-[0px_8px_26px_0px_#046A7E2B];
+    @apply md:shadow-[0px_1px_25px_0px_rgba(56,_159,_166,_0.1)];
+    @apply py-[11px] px-[14px];
+  }
+  .calendar-body-content{
+    @apply flex flex-col xl:flex-row;
+    @apply w-full;
+  }
+  .calendar-body-content-calendar {
+    @apply block;
+    @apply shadow-[0px_7.82px_25.42px_0px_#046A7E2B];
+    @apply mb-[50px] xl:mb-0;
+    @apply rounded-[15px];
+    @apply mx-[20px] ml:mx-[30px] md:mx-0 xl:mr-[35px] 2xl:mr-[40px];
+    @apply px-[25px] pt-[20px] pb-[15px] xl:pt-[30px] xl:pb-0;
+    @apply xl:self-baseline;
+    @apply basis-full xl:basis-[68.22%];
+  }
+  .calendar-body-content-upcoming{
+    @apply shadow-[0px_8px_26px_0px_#046A7E2B];
+    @apply rounded-none md:rounded-[15px];
+    @apply py-[30px] xl:py-[50px] px-[30px];
+    /* @apply max-h-screen overflow-scroll; */
+    @apply basis-full xl:basis-[31.78%];
+    @apply mb-[50px] md:mb-[30px];
+  }
+  .upcoming-date{
+    @apply px-[8px] py-[6px] md:px-[12px] md:py-[10px] text-center rounded-[10px];
+    @apply size-[45px] flex flex-col justify-center items-center;
+    @apply shadow-[0px_8px_26px_0px_#046A7E2B];
+    @apply md:shadow-[0px_1px_25px_0px_#389FA61A];
+
+  }
+  .date-container:nth-child(4n+2) .upcoming-date{
+    @apply bg-[#FFCD88];
+  }
+  .date-container:nth-child(4n+3) .upcoming-date{
+    @apply bg-[#92D7F7];
+  }
+  .date-container:nth-child(4n+4) .upcoming-date{
+    @apply bg-[#FFF8EE];
+  }
+  .date-container:nth-child(4n+5) .upcoming-date{
+    @apply bg-[#E8C1A0];
+  }
+  .date-container:last-child{
+   @apply mb-0
+  }
+
+  
+}
+

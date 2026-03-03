@@ -1,0 +1,156 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .tuition-header {
+    @apply text-[22px]  leading-[28px] font-Lora font-bold text-white md:text-[rgba(5,135,143,1)] bg-transparent md:bg-white shadow-none md:shadow-[0px_1px_25px_0px_rgba(56,_159,_166,_0.1)] rounded-b-[20px] md:rounded-[20px];
+    @apply py-[43.5px] ml:py-[46px] md:py-[12px] md:px-[74px];
+    @apply bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none;
+    @apply sticky md:static top-0;
+    @apply m-0 md:mb-[17px] w-full md:w-auto text-center;
+    @apply z-40;
+  }
+  .tuition-body-container {
+    /* @apply w-full flex flex-col md:flex-row flex-wrap; */
+    @apply bg-white;
+    /* @apply justify-between; */
+    @apply pb-[50px] pt-[30px] md:py-0 md:px-[10px] lg:px-[15px] xl:px-[20px] 2xl:px-[30px];
+    @apply rounded-t-[30px] md:rounded-none;
+    @apply w-full;
+  }
+  .tuition-body-container-header {
+    @apply hidden md:flex flex-row justify-between;
+    /* @apply md:ml-[15px]; */
+    @apply mb-[50px] md:mb-[20px];
+    @apply px-[50px] md:p-0;
+  }
+
+  .tuition-body-container-header button:nth-child(1),
+  .tuition-body-container-header button:nth-child(2) {
+    @apply flex flex-row items-center;
+    @apply text-[15px] leading-[19.2px];
+    @apply bg-white text-black;
+    @apply rounded-[20px];
+    @apply shadow-[0px_8px_26px_0px_#046A7E2B];
+    @apply md:shadow-[0px_1px_25px_0px_rgba(56,_159,_166,_0.1)];
+    @apply py-[11px] px-[14px];
+  }
+  .tuition-body-container-content-one {
+    @apply flex flex-col xl:flex-row;
+    @apply w-full h-auto;
+    /* @apply self-baseline; */
+    @apply mb-[0px] md:mb-[50px];
+  }
+
+  /* ///////////////////////// */
+  .tuition-finance-status {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .tuition-finance-status::-webkit-scrollbar {
+    display: flex;
+  }
+  /* /////////////////// */
+  .tuition-finance {
+    /* @apply w-full; */
+    /* @apply hidden; */
+    @apply mt-0 mb-[50px] md:mb-[20px] xl:mb-0;
+    @apply pt-[19px] pb-[18px] md:py-0;
+    /* @apply px-[30px] md:px-0; */
+    /* @apply px-[21px]; */
+    @apply mr-0   xl:mr-[30px];
+    /* md:mr-[15px] lg:mr-[20px] */
+
+    @apply shadow-[0px_8px_26px_0px_rgba(4,_106,_126,_0.17)] md:shadow-none;
+    @apply basis-full xl:basis-[66.95%];
+  }
+  .tuition-finance-status {
+    @apply flex-row md:flex-col overflow-x-scroll md:overflow-auto;
+    /* @apply flex flex-row overflow-x-auto; */
+    /* @apply whitespace-nowrap; */
+  }
+  .tuition-finance-status-one {
+    @apply flex flex-row justify-evenly;
+    @apply px-0 md:px-[30px] pt-[15px] pb-0 md:pb-[40px] md:py-[40px];
+    @apply mx-[30px] md:mx-[15px] lg:mx-[20px] xl:mx-[25px] 2xl:mx-[30px];
+    @apply mb-0 md:mb-[30px] mt-[0px] md:mt-[10px];
+    @apply md:uppercase;
+    @apply shadow-none md:shadow-[0px_1px_25px_0px_rgba(56,_159,_166,_0.1)];
+    @apply rounded-[15px];
+    /* @apply overflow-x-scroll max-w-full;  */
+    /* @apply inline-flex flex-row; */
+    /* @apply overflow-x-scroll; */
+    /* @apply max-w-full; */
+  }
+  .tuition-finance-status-two {
+    @apply flex flex-row justify-between;
+    @apply text-nowrap mx-[30px] md:mx-[15px] lg:mx-[20px] xl:mx-[25px] 2xl:mx-[30px];
+    @apply mb-0 md:mb-[10px];
+  }
+  .tuition-class-fees-overview {
+    @apply rounded-[15px];
+    @apply shadow-[0px_8px_26px_0px_rgba(4,_106,_126,_0.17)] md:shadow-[0px_1px_25px_0px_rgba(56,_159,_166,_0.1)];
+    @apply ml-0   xl:ml-[30px];
+    /* md:ml-[15px] lg:ml-[20px] */
+    @apply mx-[30px] md:mx-[15px] lg:mx-[20px] xl:mx-[25px] 2xl:mr-[0px];
+    @apply basis-full xl:basis-[33.05%];
+    @apply xl:mt-[10px];
+    @apply pt-[25px] pb-[25px]; /*Adjustttttttttttttttttt */
+    @apply px-5 xl:px-5;
+  }
+  .tuition-class-fees-overview-body {
+    @apply mt-[15px] md:mt-[20px];
+    @apply flex-col;
+  }
+  .tuition-class-fees-overview-body-button {
+    /* @apply rounded-[15px]; */
+    @apply shadow-[0px_1px_25px_0px_rgba(56,_159,_166,_0.1)];
+    @apply border-solid border md:border-2 border-black;
+    @apply py-2 px-5;
+    @apply w-[200px];
+    @apply font-semibold xl:font-bold;
+    @apply mx-auto;
+  }
+  .tuition-class-fees-overview-body-class-selector {
+    @apply flex-col w-full;
+    @apply shadow-[0px_1px_25px_0px_rgba(56,_159,_166,_0.1)];
+    @apply absolute bg-white;
+  }
+  .tuition-class-fees-overview-body-class-selector button {
+    @apply border-b py-2 hover:bg-slate-200;
+  }
+  .tuition-class-fees-overview-body-content {
+    @apply mt-[15px] md:mt-[20px];
+  }
+  .fees-entries {
+    @apply flex flex-row justify-between;
+  }
+
+  /* TUITION CLASS STATS TABLE */
+  .class-stats-table-row-header th {
+    @apply table-cell;
+    @apply pt-[16px] lg:pt-[20px] xl:pt-[25px];
+    @apply border-x-0 border-t-0 border-b-[#C4C4C4];
+    @apply font-Lora text-[15px] leading-[19.2px];
+  }
+
+  
+  .class-stats-table-row-details td {
+    @apply table-cell;
+    @apply pt-[22.5px] pb-[17px];
+    @apply border-b-[#C4C4C4] border-solid border-b-[1px];
+    @apply font-Poppins text-[12px] xl:text-[13px] leading-[15px];
+  }
+  .class-stats-table-row-details td:nth-child(1),
+  .class-stats-table-row-details td:last-child {
+    @apply table-cell;
+  }
+  /* .class-stats-table-row-details td:nth-child(1) {
+    @apply pl-[10px];
+  }
+  .class-stats-table-row-details td:last-child {
+    @apply pr-[14px];
+  } */
+
+}

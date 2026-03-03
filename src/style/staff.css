@@ -1,0 +1,142 @@
+.staff {
+	@apply md:py-[30px] md:px-[10px] flex flex-col items-center;
+	@apply md:py-[5px] md:px-[40px];
+	box-sizing: border-box;
+}
+
+.staff-header {
+    @apply md:hidden leading-[28px] font-Lora font-bold text-white bg-transparent shadow-none;
+    @apply pt-[43.5px] ml:pb-[20px] ml:pt-[46px] md:py-[12px] md:px-[74px];
+    @apply bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none;
+    @apply sticky md:static top-0;
+    @apply m-0 md:mb-[30px] w-full md:w-auto text-center;
+  }
+
+.staff-sub-header {
+    @apply ml:fixed ml:top-20 md:hidden w-full pb-[50px] bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)];
+  }
+
+.staff-sub-header > p {
+    @apply  bg-white m-auto w-fit leading-[28px] font-Lora font-bold text-[rgba(5,135,143,1)] p-[10px_20px] shadow-[0px_1px_25px_0px_rgba(56,_159,_166,_0.1)] rounded-[20px];
+  }
+
+.staff-container {
+	@apply w-full flex lg:flex-row flex-col-reverse;
+}
+
+.staff-container> .staffs{
+	@apply lg:w-[calc(100%-420px)] w-[100%] h-[100%] md:flex-row gap-[30px];
+}
+
+.staff-container>.staffs > .staffs-header{
+	@apply w-[100%] flex items-center justify-between;
+	@apply md:static ml:fixed top-[150px] pr-[50px] pt-[30px] mb-[45px];
+	@apply md:p-0 xl:px-[60px] ml:px-[50px] ml:py-[10px] ml:bg-white ml:rounded-[35px];
+}
+
+.staff-heading {
+	@apply font-Lora font-bold text-[24px] text-left text-[#000] hidden md:block;
+}
+
+.total{
+	@apply font-Lora font-bold text-[24px] text-left text-[#05878F] md:hidden;
+}
+
+.total > span{
+	@apply text-[24px] text-left text-[#000];
+}
+	
+.staff-profile{
+	@apply md:block hidden font-Poppins font-medium text-left text-[20px];
+}
+
+.staff-details {
+	@apply lg:max-w-[420px] w-[100%] h-fit  py-10;
+	@apply shadow-none lg:shadow-[0px_1px_25px_0px_#389FA61A] px-[50px] lg:px-[20px];
+    @apply md:right-[45px] lg:top-[40px] md:mt-0 mt-[40px];
+}
+
+.staff-img {
+	@apply rounded-[280px] ml:mt-[20px] object-cover w-[200px] h-[200px] m-auto;
+}
+
+
+.staff-name {
+	@apply font-Lora lg:block hidden font-bold text-[18px] text-center text-[#000]
+}
+
+.staff-subject-font {
+	@apply font-Poppins lg:block hidden text-center text-[18px] text-[#000]
+}
+
+.contact {
+	@apply ml:p-[10px] lg:bg-transparent ml:bg-[#05878F] ml:rounded-full;
+}
+
+.staff-details-font {
+	@apply font-Poppins text-[14px] text-[#000] mb-[10px];
+	@apply bg-[#ECFEFF] lg:bg-transparent rounded-[0px_20px_20px_20px] lg:rounded-none p-[5px_25px] lg:p-0;
+}
+
+.staff-details-container {
+	@apply flex flex-col gap-[5px] mb-[40px] ml:m-auto ml:w-[500px] lg:w-[100%];
+}
+
+.staff-detail-props {
+	@apply flex gap-[40px] items-center lg:justify-start ml:justify-between;
+}
+
+.staff-detail-props>h3 {
+	@apply font-Lora min-w-[150px] font-bold text-[14px] text-[#000]
+}
+
+.action {
+	@apply lg:flex lg:w-[100%] hidden mb-0 w-[98%] items-center justify-end
+}
+
+.edit-btn {
+	@apply bg-[#05878F]  text-[#FFF] text-center font-Poppins font-normal text-[14px] rounded-[50px] px-[30px] py-[8px]
+}
+
+.filter{
+	@apply  w-full relative z-10;
+}
+
+.genders, .months{
+	@apply w-full bg-[#05878F] absolute rounded-[15px] hidden  px-[8px] py-[8px] ml:p-[5px] ml:max-w-[300px] ml:min-w-[100px];
+}
+
+.months > button,
+.genders > button{
+	@apply bg-[#fff] flex px-[14px] py-[11px] rounded-full mb-1 font-Poppins font-normal text-[14px];
+}
+
+.filter-btn,.add-btn{
+    @apply lg:shadow-[0px_1px_25px_0px_#389FA61A] shadow-[0px_8px_26px_0px_#046A7E2B] rounded-[15px] gap-[10px] p-[15px] font-Lora font-bold text-[15px];
+}
+
+.cards{
+	@apply md:flex flex-wrap hidden items-center justify-center;
+	@apply gap-[45px] mb-[45px];
+}
+
+.staff-card{
+	@apply font-Poppins w-[250px] p-[20px] items-center gap-[15px];
+}
+
+.staff-card-name{
+	@apply font-medium text-[16px] m-0 p-0;
+}
+
+.staff-card-subject{
+	@apply font-normal text-[14px] m-0 p-0;
+}
+
+.staff-card-btn{
+	@apply text-[#05878F] text-[14px];
+}
+
+.pagination {
+	@apply font-Lora font-bold text-[#05878F] text-[15px];
+	@apply w-full flex justify-between px-[50px] pb-[20px];
+}

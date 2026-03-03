@@ -1,0 +1,62 @@
+.profile {
+	@apply md:py-[30px] md:px-[10px] flex flex-col items-center;
+	@apply md:py-[50px] md:px-[60px];
+}
+
+.profile-header {
+    @apply text-[22px] md:text-[24px] md:leading-[30.72px] md:hidden leading-[28px] font-Lora;
+    @apply py-[43.5px] ml:py-[46px] md:py-[12px] md:px-[74px];
+    @apply bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none;
+    @apply sticky md:static top-0 font-bold text-white md:text-[rgba(5,135,143,1)];
+    @apply m-0 md:mb-[30px] w-full md:w-auto text-center rounded-b-[20px] md:rounded-[20px];
+    @apply bg-transparent md:bg-white shadow-none md:shadow-[0px_1px_25px_0px_rgba(56,_159,_166,_0.1)];
+  }
+
+.profile-container {
+	@apply md:justify-center hidden md:flex-col rounded-[20px] min-h-[755px];
+	@apply shadow-[0px_1px_25px_0px_#389FA61A] w-full md:flex xl:flex-row md:items-center;
+}
+
+.profile-img-conatiner {
+	@apply bg-[#FFF8EE] px-4 py-10 md:w-3/6 w-[100%] h-fit rounded-[20px];
+}
+
+.profile-img {
+	@apply w-[88%] m-auto object-contain rounded-[70px] h-[100%];
+}
+
+.user-details {
+	@apply md:w-3/6 w-[100%] h-[100%] px-[50px] py-10;
+}
+
+.heading {
+	@apply font-Lora font-bold text-[35px] text-center text-[#000] mb-[10px];
+}
+
+.user-subject-font {
+	@apply font-Poppins text-center text-[20px] text-[#000] mb-[10px];
+}
+
+.user-details-font {
+	@apply font-Poppins leading-[19.5px] text-[16px] text-[#000] mb-[10px];
+}
+
+.details-container {
+	@apply flex flex-col gap-[20px] mb-[40px];
+}
+
+.detail-props {
+	@apply flex gap-[40px] items-center;
+}
+
+.detail-props>h3 {
+	@apply font-Lora w-[150px] leading-[19.2px] font-bold text-[16px] text-[#000];
+}
+
+.action {
+	@apply flex w-[100%] md:mb-0 mb-[150px] items-center justify-end;
+}
+
+.edit-btn {
+	@apply bg-[#05878F] text-[#FFF] text-center font-Poppins font-normal text-[14px] rounded-[50px] px-[30px] py-[8px];
+}

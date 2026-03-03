@@ -1,0 +1,281 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+/* @import 'react-big-calendar/lib/css/react-big-calendar.css'; */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.heightprob {
+  @apply min-h-[calc(100vh-80px)] md:min-h-0 flex flex-col;
+}
+/* 
+  /////////////////////////////////////
+  STUDENT
+  /////////////////////////////////////
+  */
+.student-overview {
+  @apply my-0 mx-0 md:my-[30px] md:mx-[15px] 2xl:mx-[20px] flex flex-col items-center;
+  @apply bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none;
+  @apply heightprob;
+  /* @apply h-full; */
+  /* @apply  pb-[30px]; */
+}
+.student-overview-header {
+  @apply text-[22px] md:text-[24px] md:leading-[30.72px] leading-[28px] font-Lora font-bold text-white md:text-[rgba(5,135,143,1)] bg-transparent md:bg-white shadow-none md:shadow-[0px_1px_25px_0px_rgba(56,_159,_166,_0.1)] rounded-b-[20px] md:rounded-[20px];
+  @apply py-[43.5px] ml:py-[46px] md:py-[12px] md:px-[74px];
+  @apply bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none;
+  @apply sticky md:static top-0;
+  @apply m-0 md:mb-[30px] w-full md:w-auto text-center;
+  @apply z-40;
+}
+.student-overview-class-container {
+  @apply min-w-full flex flex-col md:flex-row flex-wrap;
+  @apply bg-white;
+  @apply justify-between;
+  @apply pt-[50px] px-[30px] md:p-0;
+  @apply rounded-t-[30px] md:rounded-none;
+}
+.student-overview-class {
+  @apply p-[19px] md:py-[22px] md:px-[30px];
+  @apply rounded-[15px] shadow-[0px_8px_26px_0px_rgba(4,_106,_126,_0.17)] md:shadow-[0px_1px_25px_0px_rgba(56,_159,_166,_0.1)];
+  @apply basis-full lg:basis-[calc(50%-30px)] xl:basis-[calc(50%-40px)] 2xl:basis-[calc(33.3333%-40px)];
+  @apply mx-0 md:mx-[15px] xl:mx-[20px];
+  @apply mb-[50px];
+  @apply h-auto;
+  /* @apply pointer-events-none; */
+  /* @apply static md:relative; */
+}
+.student-overview-class-desktop-nav path {
+  @apply fill-white;
+}
+
+/* Student Names */
+.student-names {
+  @apply my-0 flex flex-row justify-center md:flex-row md:justify-start;
+  @apply bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none;
+  @apply min-h-[calc(100vh-80px)] md:min-h-full;
+  /* @apply  pb-[30px]; */
+}
+.student-names-list {
+  @apply my-0 mx-0 md:my-[30px] md:ml-[30px] 2xl:ml-[40px];
+  @apply w-full md:w-auto md:basis-[55%] lg:basis-[62%] xl:basis-[67.2%];
+  /* @apply  min-h-[calc(100vh-80px)] md:min-h-full; */
+  @apply self-stretch;
+  @apply flex flex-col;
+}
+.student-names-list-header {
+  @apply font-Lora font-bold;
+  @apply pt-[43.5px] ml:pt-[46px] pb-[15px] md:p-0;
+  @apply bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none;
+  @apply sticky md:static top-0;
+  @apply m-0  w-full md:w-auto text-center;
+  @apply flex flex-col md:flex-row md:flex-wrap;
+  @apply justify-normal md:justify-center lg:justify-between;
+  @apply items-center;
+  @apply rounded-b-[20px];
+  @apply md:mb-[20px] lg:mb-[25px];
+  @apply z-[40];
+}
+.student-names-list-header1 {
+  @apply text-white md:text-[rgba(5,135,143,1)] bg-transparent md:bg-white shadow-none md:shadow-[0px_1px_25px_0px_rgba(56,_159,_166,_0.1)] rounded-none md:rounded-[20px];
+  @apply py-0 md:py-[12px] md:px-[20px] lg:px-[30px] xl:py-[16px] xl:px-[45px];
+  @apply mb-[20px] md:mb-[5px] md:mr-[10px];
+  @apply text-[22px] md:text-base xl:text-[18px] md:leading-[23.04px] leading-[28px];
+}
+.student-names-list-header2 {
+  @apply px-[35px] py-[8px] md:py-[12px] md:px-[20px] lg:px-[30px] xl:py-[16px];
+  @apply text-[rgba(5,135,143,1)] bg-white shadow-none md:shadow-[0px_1px_25px_0px_rgba(56,_159,_166,_0.1)] rounded-[10px] md:rounded-[20px];
+  @apply lg:mx-[20px] xl:mx-[25px];
+  @apply mb-0 md:mb-[5px];
+  @apply text-lg leading-[23.04px] md:text-base xl:text-[18px] md:leading-[23.04px];
+}
+.student-names-list-header3 {
+  @apply flex-row;
+  @apply hidden md:flex;
+  @apply md:ml-[15px];
+  @apply mb-0 md:mb-[5px];
+}
+.student-names-list-header3 button {
+  @apply flex flex-row items-center;
+  @apply text-[15px] leading-[19.2px];
+  @apply bg-white text-black;
+  @apply rounded-[20px];
+  @apply shadow-[0px_1px_25px_0px_rgba(56,_159,_166,_0.1)];
+  @apply py-[11px] px-[14px];
+}
+.student-names-list-container {
+  @apply min-w-full;
+  @apply bg-white;
+  @apply grow;
+  /* @apply  min-h-[calc(100vh-80px-145.53px)] ml:min-h-[calc(100vh-80px-148.03px)] md:min-h-full; */
+  @apply pt-[30px] px-[30px] md:p-0;
+  @apply rounded-t-[30px] md:rounded-none;
+  @apply flex flex-col;
+}
+
+.student-names-list-container-mheader {
+  @apply flex flex-row justify-between;
+  @apply md:ml-[15px];
+  @apply mb-0 md:mb-[5px];
+}
+
+.student-names-list-container-mheader-button > button {
+  @apply flex flex-row items-center justify-center;
+  @apply text-[15px] leading-[19.2px];
+  
+  @apply rounded-[20px];
+  @apply shadow-[0px_8px_26px_0px_#046A7E2B];
+  @apply py-[11px] px-[14px] text-center;
+}
+.student-names-list-container-mheader-button > button:not(:last-child){
+  @apply bg-white text-black;
+}
+
+/* Desktop View */
+
+/* Table Header */
+.table-row-header th {
+  @apply hidden xl:table-cell;
+  @apply pt-[16px] lg:pt-[20px] xl:pt-[25px];
+  @apply border-x-0 border-t-0 border-b-[#C4C4C4];
+  @apply font-Lora text-[15px] leading-[19.2px];
+}
+.table-row-header th:nth-child(1),
+.table-row-header th:last-child {
+  @apply table-cell;
+}
+.table-row-header th:nth-child(1) {
+  @apply text-left;
+  @apply pl-[10px];
+}
+.table-row-header th:last-child {
+  @apply pr-[14px];
+}
+.table-row-header th:nth-child(2) {
+  @apply hidden lg:table-cell;
+}
+/* Table Body */
+.table-row-details-active {
+  @apply border-l-[5px] border-[#329DA3] border-solid !important;
+  @apply shadow-[0px_8px_26px_0px_#046A7E2B];
+}
+.table-row-details {
+  @apply border-l-[5px] border-l-transparent border-solid;
+  @apply cursor-pointer;
+}
+.table-row-details td {
+  @apply hidden xl:table-cell;
+  @apply pt-[22.5px] pb-[17px];
+  @apply border-b-[#C4C4C4] border-solid border-b-[1px];
+  @apply font-Poppins text-[12px] xl:text-[13px] leading-[15px];
+}
+.table-row-details td:nth-child(1),
+.table-row-details td:last-child {
+  @apply table-cell;
+}
+
+
+
+.table-row-details td:nth-child(1) {
+  @apply pl-[10px];
+}
+.table-row-details td:last-child {
+  @apply pr-[14px];
+}
+.table-row-details td:nth-child(2) {
+  @apply hidden lg:table-cell;
+}
+.active-call-contact path {
+  @apply stroke-white;
+}
+.active-message-contact path {
+  @apply fill-white;
+}
+
+.student-names-database {
+  @apply hidden md:block shadow-[0px_8px_26px_0px_#046A7E2B];
+  @apply md:min-h-[calc(100vh-68px)] lg:min-h-[calc(100vh-72px)] xl:min-h-[calc(100vh-78px)] 2xl:min-h-[calc(100vh-89px)];
+  @apply md:mx-[30px] 2xl:mx-[35px];
+  @apply md:basis-[45%] lg:basis-[38%] xl:basis-[32.8%] bg-white;
+  @apply z-[40];
+  /* @apply self-baseline; */
+  @apply sticky md:top-[68px] lg:top-[72px] xl:top-[78px] 2xl:top-[89px];
+  /* @apply overflow-y-clip; */
+  @apply md:max-h-[calc(100vh-68px)] lg:max-h-[calc(100vh-72px)] xl:max-h-[calc(100vh-78px)] 2xl:max-h-[calc(100vh-89px)];
+  @apply overflow-y-scroll;
+}
+.student-db-call,
+.student-db-email {
+  @apply size-[40px] md:size-[20px] rounded-full;
+  @apply bg-[#05878F] md:bg-white;
+  @apply flex justify-center items-center;
+  @apply shadow-[0px_8px_26px_0px_#046A7E2B];
+}
+.student-db-call svg,
+.student-db-email svg {
+  @apply size-[18.47px] md:size-[9.24px];
+}
+.student-db-call path {
+  @apply stroke-white md:stroke-[#05878F];
+}
+.student-db-email path {
+  @apply fill-white md:fill-[#05878F];
+}
+.student-db-details {
+  @apply flex flex-row text-[15px];
+  @apply mb-[20px] md:mb-[15px];
+}
+.student-db-details-edit {
+  @apply flex-row text-[15px];
+  @apply mb-[20px] md:mb-[15px];
+}
+.student-db-details-key {
+  @apply basis-1/2 lg:w-1/2;
+  @apply font-Lora font-bold;
+  @apply text-[15px] md:text-[12px] xl:text-[13px];
+  @apply mr-[10px];
+  /* @apply flex-1; */
+}
+.student-db-details-property {
+  @apply basis-1/2 lg:w-1/2;
+  @apply font-Poppins font-medium;
+  @apply text-[15px] md:text-[12px] xl:text-[13px];
+  @apply flex justify-end md:justify-start;
+  /* @apply shrink; */
+}
+.student-db-details-property input[type="text"],
+.student-db-details-property input[type="number"],
+.student-db-details-property input[type="email"],
+.student-db-details-property input[type="tel"] {
+  @apply text-right md:text-left;
+  @apply w-full;
+  /* @apply inline; */
+}
+.react-datepicker-wrapper,
+.react-datepicker__input-container {
+  @apply w-full;
+  @apply flex justify-end md:justify-start;
+  @apply z-[0];
+}
+
+.student-db-pagination {
+  @apply flex md:hidden justify-between my-[50px];
+  @apply font-Lora font-bold text-[15px] leading-[19.2px];
+}
+.student-db-pagination button {
+  @apply rounded-[20px] bg-white;
+  @apply shadow-[0px_8px_26px_0px_#046A7E2B];
+  @apply py-[10px] px-[14px];
+  /* @apply flex flex-row items-center; */
+}
+
+.student-db-pagination button:disabled {
+  @apply bg-gray-200 text-gray-500;
+}
+
+/* Adjusting rechart */
+.studentchart .recharts-responsive-container {
+  @apply relative !important;
+}
+.studentchart .recharts-wrapper {
+  @apply absolute bottom-0 !important;
+}

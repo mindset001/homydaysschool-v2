@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.student-addbutton-db-details {
+  @apply flex flex-row text-[15px];
+  @apply mb-[20px] md:mb-[15px];
+}
+.student-addbutton-db-details-key {
+  @apply basis-1/2 lg:w-1/2;
+  @apply font-Lora font-bold;
+  @apply text-[15px] md:text-[12px] xl:text-[13px];
+  @apply mr-[10px];
+  /* @apply flex-1; */
+}
+.student-addbutton-db-details-property {
+  @apply basis-1/2 lg:w-1/2;
+  @apply font-Poppins font-medium;
+  @apply text-[15px] md:text-[12px] xl:text-[13px];
+  @apply flex justify-end md:justify-start;
+  /* @apply shrink; */
+}
+.student-addbutton-db-details-property input[type="text"],
+.student-addbutton-db-details-property input[type="number"],
+.student-addbutton-db-details-property input[type="email"],
+.student-addbutton-db-details-property input[type="tel"] {
+  @apply text-left;
+  @apply w-full;
+  /* @apply inline; */
+}
+ .react-datepicker-wrapper,
+.react-datepicker__input-container {
+  @apply w-full;
+  @apply flex justify-end md:justify-start;
+  @apply z-[0];
+}
+ /* .react-datepicker-popper {
+  @apply -translate-x-14 scale-95 -translate-y-2;
+  @apply right-10;
+} */
+
+.student-addbutton-db-pagination {
+  @apply flex md:hidden justify-between my-[50px];
+  @apply font-Lora font-bold text-[15px] leading-[19.2px];
+}
+.student-addbutton-db-pagination button {
+  @apply rounded-[20px] bg-white;
+  @apply shadow-[0px_8px_26px_0px_#046A7E2B];
+  @apply py-[10px] px-[14px];
+  /* @apply flex flex-row items-center; */
+}
+
+.student-addbutton-db-pagination button:disabled {
+  @apply bg-gray-200 text-gray-500;
+}
