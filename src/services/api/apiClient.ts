@@ -1,8 +1,21 @@
 import axios from "axios";
 import { getAccessToken, getRefreshToken, saveTokens, clearTokens } from "../../utils/authTokens";
 
-const baseURL = import.meta.env.VITE_REACT_APP_API_URL;
-const API_KEY = import.meta.env.VITE_REACT_APP_API_KEY;
+// When running locally the developer must provide the API URL via an .env file
+// or Vite environment variables. If the variable is missing the client will fall
+// back to the hard‑coded local URL so that API calls don't try to hit the
+// front‑end server (which was causing the 404 you saw).
+const baseURL =
+  import.meta.env.VITE_REACT_APP_API_URL ||
+  'http://localhost:5000/api';
+
+const API_KEY = import.meta.env.VITE_REACT_APP_API_KEY || '';
+
+if (!import.meta.env.VITE_REACT_APP_API_URL) {
+  console.warn(
+    'VITE_REACT_APP_API_URL not defined, using default http://localhost:5000/api'
+  );
+}
 
 const apiClient = axios.create({
   baseURL,

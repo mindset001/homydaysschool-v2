@@ -27,11 +27,15 @@ export const config = {
   
   cors: {
     origin: [
-      process.env.FRONTEND_URL || 'http://localhost:5174',
-      'https://homydaysschool-v2.vercel.app/',
+      // trim any trailing slash from the configured frontend URL(s)
+      (process.env.FRONTEND_URL || 'http://localhost:5174').replace(/\/$/, ''),
+      // add hard‑coded fallback(s) without trailing slash
+      'https://homydaysschool-v2.vercel.app',
       'http://localhost:5173',
       'http://localhost:5174',
-    ].filter(Boolean),
+    ]
+      .filter(Boolean)
+      .map(url => url.replace(/\/$/, '')),
   },
   
   rateLimit: {

@@ -78,11 +78,18 @@ if (config.nodeEnv === 'development') {
 
 // API Key validation for all routes except health check and test routes
 app.use('/api', (req, res, next) => {
-  // Skip API key validation for test routes during development
+  // development convenience: bypass entirely when running locally
+  if (config.nodeEnv === 'development') {
+    console.log('API key check skipped (development mode) for', req.method, req.originalUrl);
+    return next();
+  }
+
+  // Skip API key validation for test routes (used by automated tests)
   if (req.path.startsWith('/test/')) {
     console.log('Bypassing API key validation for test route:', req.path);
     return next();
   }
+
   return validateApiKey(req, res, next);
 });
 
