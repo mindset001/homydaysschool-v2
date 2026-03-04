@@ -314,7 +314,7 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
           value={formData.assigned_to}
           className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#05878F] hover:border-[#05878F] border-[#05878F] focus:border-2"
           onChange={handleChange}
-          required
+          
           disabled={isClassLoading}
         >
           <option value="">
@@ -342,7 +342,7 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
           name="subject"
           value={formData.subject}
           onChange={handleChange}
-          required
+        
         />
       </div>
 

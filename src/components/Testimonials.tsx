@@ -2,37 +2,37 @@ import React from "react";
 
 const testimonials = [
   {
-    name: "Mrs. Opadiji",
+    name: "Mrs. Adepoju",
     rating: 4.0,
     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel nisi sit amet lorem tincidunt viverra. In euismod magna et semper malesuada.",
     image: "/assets/images/testimonial1.jpg",
   },
   {
-    name: "Mrs. Opadiji",
+    name: "Mr Odewale",
     rating: 4.0,
     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel nisi sit amet lorem tincidunt viverra. In euismod magna et semper malesuada.",
     image: "/assets/images/testimonial1.jpg",
   },
   {
-    name: "Mrs. Opadiji",
+    name: "Mr Alabi",
     rating: 4.0,
     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel nisi sit amet lorem tincidunt viverra. In euismod magna et semper malesuada.",
     image: "/assets/images/testimonial1.jpg",
   },
   {
-    name: "Mrs. Opadiji",
+    name: "Mrs. Williams",
     rating: 4.0,
     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel nisi sit amet lorem tincidunt viverra. In euismod magna et semper malesuada.",
     image: "/assets/images/testimonial1.jpg",
   },
   {
-    name: "Mrs. Opadiji",
+    name: "Mr AbdulGaniyu",
     rating: 4.0,
     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel nisi sit amet lorem tincidunt viverra. In euismod magna et semper malesuada.",
     image: "/assets/images/testimonial1.jpg",
   },
   {
-    name: "Mrs. Opadiji",
+    name: "Mr Afolayanka",
     rating: 4.0,
     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel nisi sit amet lorem tincidunt viverra. In euismod magna et semper malesuada.",
     image: "/assets/images/testimonial1.jpg",

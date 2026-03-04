@@ -2,6 +2,7 @@ import React, { memo, ReactNode } from "react";
 import { BookNav, Logout, Paper } from "../../assets/images";
 import { NavLink, useNavigate } from "react-router-dom";
 import OverviewSVG from "../svg/dashboard navbar svg/OverviewSVG";
+import ClassSVG from "../svg/dashboard navbar svg/ClassSVG";
 import GuardianSVG from "../svg/GuardianSVG";
 import StaffSVG from "../svg/StaffSVG";
 import CalendarSVG from "../svg/dashboard navbar svg/CalendarSVG";
@@ -54,7 +55,13 @@ const SideNav: React.FC<SideNavProps> = ({ mobileToggle, setMobileToggle }) => {
       roles: ["admin", "staff"],
     },
     {
-      item: <StaffSVG />,
+      item: <ClassSVG />, 
+      to: "classes",
+      text: "Class",
+      roles: ["admin"],
+    },
+    {
+      item: <StaffSVG />, 
       to: "staff",
       text: "Staff",
       roles: ["admin"],

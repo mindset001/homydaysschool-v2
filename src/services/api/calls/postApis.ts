@@ -1,3 +1,6 @@
+export const createClass = (classData: object) => {
+  return apiClient.post(`/classes/`, classData);
+};
 import { EventInterface } from "../../../hooks/useTotalPercentageValue";
 import apiClient from "../apiClient";
 

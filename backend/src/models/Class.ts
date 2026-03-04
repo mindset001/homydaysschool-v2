@@ -37,7 +37,7 @@ const classSchema = new Schema<IClass>(
     },
     grade: {
       type: String,
-      required: true,
+      required: false,
     },
     section: {
       type: String,
@@ -55,7 +55,7 @@ const classSchema = new Schema<IClass>(
     subjects: [String],
     academicYear: {
       type: String,
-      required: true,
+      required: false,
     },
     schedule: [
       {

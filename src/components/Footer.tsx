@@ -5,11 +5,11 @@ const Footer: React.FC = () => (
     <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-8">
       <div className="flex flex-col gap-2 max-w-xs">
         <div className="flex items-center gap-2 mb-2">
-          <img src="/assets/images/school-logo.png" alt="Zenith International Schools Logo" className="h-12 w-12" />
-          <span className="font-bold text-lg">ZENITH INTERNATIONAL SCHOOLS</span>
+          <img src="/assets/images/school-logo.png" alt="homydays Logo" className="h-12 w-12" />
+          <span className="font-bold text-lg">HOMYDAYS SCHOOLS</span>
         </div>
         <div className="text-sm">
-          1, Dr. R.O. Adeleke Street, Behind ADS Grammar School, Off Oba Adesoji Aderemi, Ring Road, Iludun Osogbo.
+          Adjacent Dipson Plastic, Dagbolu international Market, Osogbo.
         </div>
       </div>
       <div className="flex flex-col gap-2 text-sm">
@@ -21,16 +21,16 @@ const Footer: React.FC = () => (
       </div>
       <div className="flex flex-col gap-2 text-sm">
         <div className="flex items-center gap-2">
-          <span role="img" aria-label="twitter">🐦</span> Zenith_Schools
+          <span role="img" aria-label="twitter">🐦</span> Homydays_Schools
         </div>
         <div className="flex items-center gap-2">
-          <span role="img" aria-label="instagram">📸</span> Zenith._Schools
+          <span role="img" aria-label="instagram">📸</span> Homydays_Schools
         </div>
         <div className="flex items-center gap-2">
-          <span role="img" aria-label="email">✉️</span> zenithhighschoolosogbo@gmail.com
+          <span role="img" aria-label="email">✉️</span> homydaysschools@gmail.com
         </div>
         <div className="flex items-center gap-2">
-          <span role="img" aria-label="phone">📞</span> 0814 515 9459, 0909 590 8187
+          <span role="img" aria-label="phone">📞</span> 0816 007 1243, 0909 590 8187
         </div>
       </div>
     </div>
@@ -40,7 +40,7 @@ const Footer: React.FC = () => (
         <span>Privacy Policy</span>
       </div>
       <div>
-        ©Zenith International Schools. Developed by Demlinks Technologies
+        ©Homydays Schools. Developed by Demlynks Technologies
       </div>
     </div>
   </footer>

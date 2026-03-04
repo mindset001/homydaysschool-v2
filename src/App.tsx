@@ -43,6 +43,7 @@ import TuitionLayout from "./layouts/role/TuitionLayout";
 import ToastNotification from "./shared/ToastNotification";
 import UserProvider from "./hooks/UseUserContext";
 import Results from "./pages/dashboard/Results";
+import ClassesPage from "./pages/dashboard/Classes";
 import ResultNames from "./pages/dashboard/ResultNames";
 import ResultNamesMobile from "./pages/dashboard/ResultNamesMobile";
 import ResultGuardian from "./pages/guardian-dashboard/ResultGuardian";
@@ -134,6 +135,7 @@ function App() {
           ) : role === "staff" ? null : null} */}
             {/* ENDS */}
             <Route path="subjects" element={<Subjects />} />
+            <Route path="classes" element={<ClassesPage />} />
             <Route path="calendar" element={<Calendar />} />
             {/* ROLE INTERCHANGING FOR TUITION*/}
             <Route path="tuition" element={<TuitionLayout />} />

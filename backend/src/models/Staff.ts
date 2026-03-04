@@ -72,8 +72,16 @@ const staffSchema = new Schema<IStaff>(
     salary: {
       type: Number,
     },
-    subjects: [String],
-    classes: [String],
+    subjects: {
+      type: [String],
+      required: false,
+      default: [],
+    },
+    classes: {
+      type: [String],
+      required: false,
+      default: [],
+    },
     emergencyContact: {
       name: String,
       relationship: String,
