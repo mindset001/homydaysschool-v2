@@ -59,14 +59,14 @@ const ClassesPage: React.FC = () => {
             ) : (
               <>
                 {classNameData.map((cls) => (
-                  <li key={cls.id || cls._id} className="border rounded px-4 py-2 bg-white shadow-sm flex items-center justify-between">
+                  <li key={cls.id} className="border rounded px-4 py-2 bg-white shadow-sm flex items-center justify-between">
                     <span>{cls.name}</span>
                     <button
                       className="ml-4 px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-sm"
-                      onClick={() => handleDelete(cls.id || cls._id)}
-                      disabled={deletingId === (cls.id || cls._id)}
+                      onClick={() => handleDelete(cls.id)}
+                      disabled={deletingId === cls.id}
                     >
-                      {deletingId === (cls.id || cls._id) ? "Deleting..." : "Delete"}
+                      {deletingId === cls.id ? "Deleting..." : "Delete"}
                     </button>
                   </li>
                 ))}
