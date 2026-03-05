@@ -66,16 +66,6 @@ interface Ward {
   classTeachers?: ClassTeacher[];
 }
 
-const formatDate = (dateStr: string) => {
-  if (!dateStr) return "N/A";
-  const date = new Date(dateStr);
-  if (isNaN(date.getTime())) return dateStr;
-  return date.toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  });
-};
 
 export const DetailRow = ({ label, value }: { label: string; value?: string | number }) => (
   <div className="flex justify-between items-start gap-4 py-2 border-b border-gray-100 last:border-0">
