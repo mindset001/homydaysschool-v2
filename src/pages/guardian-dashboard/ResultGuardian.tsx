@@ -49,10 +49,9 @@ const ResultGuardian: React.FC = () => {
     enabled: !!id,
   });
   // Fetch payment summary
-  const { data: paymentData, isLoading: isPaymentLoading, isError: isPaymentError } = useQuery([
-    "guardian-student-payment",
-    id,
-  ], () => getPaymentsByStudent(id!), {
+  const { data: paymentData, isLoading: isPaymentLoading, isError: isPaymentError } = useQuery({
+    queryKey: ["guardian-student-payment", id],
+    queryFn: () => getPaymentsByStudent(id!),
     enabled: !!id,
     staleTime: 5 * 60 * 1000,
   });
