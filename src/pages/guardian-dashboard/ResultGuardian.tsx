@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getClassStudentResult } from "../../services/api/calls/getApis";
+import { getClassStudentResult, getPaymentsByStudent } from "../../services/api/calls/getApis";
 import Loader from "../../shared/Loader";
 
 interface AcademicResult {
@@ -41,29 +41,65 @@ const ResultGuardian: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
+
+  // Fetch result data
   const { data: raw, isLoading, isError } = useQuery({
     queryKey: ["guardian-student-result", id],
     queryFn: () => getClassStudentResult(id!),
     enabled: !!id,
   });
+  // Fetch payment summary
+  const { data: paymentData, isLoading: isPaymentLoading, isError: isPaymentError } = useQuery([
+    "guardian-student-payment",
+    id,
+  ], () => getPaymentsByStudent(id!), {
+    enabled: !!id,
+    staleTime: 5 * 60 * 1000,
+  });
 
   const student: StudentResultData | null = raw?.data?.data?.[0] ?? null;
   const records: AcademicRecord[] = student?.academicRecords ?? [];
-
   const termOptions = records.map((r, i) => ({
     label: `${r.term} – ${r.year}`,
     index: i,
   }));
-
   const [selectedIndex, setSelectedIndex] = useState(0);
   const activeRecord: AcademicRecord | undefined = records[selectedIndex];
+  const paymentSummary = paymentData?.data?.summary;
 
-  if (isLoading) return <Loader />;
 
-  if (isError || !student) {
+  if (isLoading || isPaymentLoading) return <Loader />;
+
+
+  if (isError || isPaymentError || !student) {
     return (
       <div className="flex flex-col items-center justify-center h-full py-20 font-Poppins">
-        <p className="text-red-500 text-sm mb-4">Failed to load results. Please try again.</p>
+        <p className="text-red-500 text-sm mb-4">Failed to load results or payment info. Please try again.</p>
+        <button
+          onClick={() => navigate(-1)}
+          className="px-4 py-2 bg-clr1 text-white text-sm rounded-[8px] hover:bg-[#046a71] transition-colors"
+        >
+          Go Back
+        </button>
+      </div>
+    );
+  }
+
+  // Prevent result viewing if tuition is not fully paid
+  if (paymentSummary && paymentSummary.balance > 0) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full py-20 font-Poppins">
+        <p className="text-red-500 text-lg mb-4 font-semibold">Result is not available.</p>
+        <p className="text-gray-700 text-sm mb-2">Outstanding school fees must be fully paid before results can be viewed.</p>
+        <div className="bg-[#f0fafb] border border-[#046A7E33] rounded-[12px] p-4 mb-6 flex flex-col items-center">
+          <p className="text-[15px] font-semibold text-gray-800 mb-1">School Fees Summary</p>
+          <div className="text-[13px] text-gray-700 space-y-1">
+            <div>Paid: <span className="font-semibold text-green-700">₦{paymentSummary.totalPaid?.toLocaleString() ?? 0}</span></div>
+            <div>Debt: <span className="font-semibold text-red-600">₦{paymentSummary.balance > 0 ? paymentSummary.balance.toLocaleString() : 0}</span></div>
+            <div>Total Due: <span className="font-semibold">₦{paymentSummary.totalDue?.toLocaleString() ?? 0}</span></div>
+            <div>Status: <span className="font-semibold text-blue-700">{paymentSummary.paymentStatus}</span></div>
+          </div>
+        </div>
         <button
           onClick={() => navigate(-1)}
           className="px-4 py-2 bg-clr1 text-white text-sm rounded-[8px] hover:bg-[#046a71] transition-colors"
