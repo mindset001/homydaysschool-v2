@@ -1,7 +1,7 @@
 
 import homy1 from "../assets/images/homy1.jpg";
-import homy2 from "../assets/images/homy2.jpg";
-import homy3 from "../assets/images/homy3.jpg";
+import homy2 from "../assets/images/kg2.jpg";
+import homy3 from "../assets/images/korede.jpg";
 import homy4 from "../assets/images/new.jpg";
 
 const heroImages = [homy1, homy2, homy3, homy4];
