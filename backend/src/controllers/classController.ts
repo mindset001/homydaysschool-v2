@@ -2,6 +2,7 @@ import { Response } from 'express';
 import { Class } from '../models/Class.js';
 import { Student } from '../models/Student.js';
 import { Staff } from '../models/Staff.js';
+import { User } from '../models/User.js';
 import { AuthRequest } from '../middleware/auth.js';
 
 export const getAllClasses = async (req: AuthRequest, res: Response): Promise<void> => {
@@ -146,19 +147,35 @@ export const addStudentToClass = async (req: AuthRequest, res: Response): Promis
 export const removeStudentFromClass = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { id, studentId } = req.params;
-    
+
+    // Find the student to get their userId before deleting
+    const student = await Student.findById(studentId);
+    if (!student) {
+      res.status(404).json({ message: 'Student not found' });
+      return;
+    }
+
+    // Remove student from class students array
     const classData = await Class.findByIdAndUpdate(
       id,
       { $pull: { students: studentId } },
       { new: true }
     ).populate('students', 'firstName lastName');
-    
+
     if (!classData) {
       res.status(404).json({ message: 'Class not found' });
       return;
     }
-    
-    res.json({ message: 'Student removed from class successfully', class: classData });
+
+    // Delete the student document
+    await Student.findByIdAndDelete(studentId);
+
+    // Delete the associated user account if it exists
+    if (student.userId) {
+      await User.findByIdAndDelete(student.userId);
+    }
+
+    res.json({ message: 'Student deleted successfully', class: classData });
   } catch (error: any) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }

@@ -265,13 +265,12 @@ const StudentAdminDatabase: React.FC = () => {
   const queryClient = useQueryClient();
 
   const deleteMutation = useMutation({
-    mutationFn: (variables: { id: number; studentid: number }) =>
+    mutationFn: (variables: { id: string | number; studentid: string | number }) =>
       deleteData(variables),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["classStudents"] });
+      queryClient.invalidateQueries({ queryKey: ["classStat"] });
       contextToast.success("Student deleted successfully!");
-      // console.log("Student deleted successfully!");
-      // setAddToggle(false); // Close the form after successful submission
       navigate(-1);
     },
     onError: (error) => {
@@ -1203,7 +1202,7 @@ const StudentAdminDatabase: React.FC = () => {
                 onClick={() => {
                   deleteMutation.mutate({
                     id: classNameID,
-                    studentid: Number(newStudentData.id),
+                    studentid: newStudentData.id,
                   });
                   // if (isSuccess) {
                   //   alert("Deleted");
