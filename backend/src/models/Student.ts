@@ -34,6 +34,8 @@ export interface IStudent extends Document {
     year: number;
     results: {
       subject: string;
+      test?: number;
+      exam?: number;
       score: number;
       grade: string;
     }[];
@@ -180,6 +182,8 @@ const studentSchema = new Schema<IStudent>(
         results: [
           {
             subject: String,
+            test: Number,
+            exam: Number,
             score: Number,
             grade: String,
           },

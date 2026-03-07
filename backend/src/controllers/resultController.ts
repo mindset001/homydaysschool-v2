@@ -172,6 +172,8 @@ export const uploadResult = async (req: AuthRequest, res: Response): Promise<voi
           year: parseInt(academicYear),
           results: results.map(r => ({
             subject: r.subject,
+            test: r.test,
+            exam: r.exam,
             score: r.score,
             grade: r.grade
           }))
