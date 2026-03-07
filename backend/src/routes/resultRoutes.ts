@@ -1,13 +1,20 @@
 import { Router } from 'express';
 import multer from 'multer';
 import path from 'path';
+import fs from 'fs';
 import { uploadResult, getStudentResults, saveStudentTermReport } from '../controllers/resultController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
+
+// Ensure uploads/results directory exists
+const resultsUploadDir = path.resolve(process.cwd(), 'uploads', 'results');
+if (!fs.existsSync(resultsUploadDir)) {
+  fs.mkdirSync(resultsUploadDir, { recursive: true });
+}
 
 // Configure multer for Excel file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/results/');
+    cb(null, resultsUploadDir);
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
