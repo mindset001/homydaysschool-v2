@@ -1,4 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary';
+import sharp from 'sharp';
 import { config } from './index.js';
 
 cloudinary.config({
@@ -40,7 +41,19 @@ export const uploadBufferToCloudinary = async (
     throw new Error('Cloudinary credentials are not configured.');
   }
 
-  const dataUri = `data:image/jpeg;base64,${buffer.toString('base64')}`;
+  // Compress image to stay within Cloudinary free-tier 10MB limit
+  let processedBuffer: Buffer;
+  try {
+    processedBuffer = await sharp(buffer)
+      .resize({ width: 1200, withoutEnlargement: true })
+      .jpeg({ quality: 80 })
+      .toBuffer();
+  } catch {
+    // If sharp fails (e.g. non-image file), use the raw buffer
+    processedBuffer = buffer;
+  }
+
+  const dataUri = `data:image/jpeg;base64,${processedBuffer.toString('base64')}`;
 
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
