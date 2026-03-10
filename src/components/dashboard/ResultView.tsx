@@ -379,14 +379,13 @@ const ResultView: React.FC<{
                 <table className="w-full text-[14px]">
                   <tbody>
                     <tr>
-                      <td colSpan={9} className="text-base">
+                      <td colSpan={8} className="text-base">
                         CONTINUOUS ASSESSMENT
                       </td>
                     </tr>
                     <tr>
                       <td></td>
-                      <td className="vertical-text">First Periodic Test</td>
-                      <td className="vertical-text">Second Periodic Test</td>
+                      <td className="vertical-text">Periodic Test</td>
                       <td className="vertical-text">End of Term Exam</td>
                       <td className="vertical-text">Overall for Term</td>
                       <td className="vertical-text">TOTAL</td>
@@ -401,8 +400,7 @@ const ResultView: React.FC<{
                           <span>Mx</span>
                         </div>
                       </td>
-                      <td>20</td>
-                      <td>20</td>
+                      <td>40</td>
                       <td>60</td>
                       <td>100%</td>
                       <td>100</td>
@@ -413,7 +411,6 @@ const ResultView: React.FC<{
                     {studentResultData?.results?.map((result) => (
                       <tr key={result.id}>
                         <td className="border px-4 py-2">{result.subject}</td>
-                        <td></td>
                         <td className="border px-4 py-2">
                           {result.test_score}
                         </td>
@@ -429,7 +426,6 @@ const ResultView: React.FC<{
                     ))}
                     <tr>
                       <td>Total</td>
-                      <td></td>
                       <td>
                         {studentResultData?.results?.length
                           ? studentResultData.results
@@ -437,7 +433,6 @@ const ResultView: React.FC<{
                               .reduce((a, b) => a + b, 0)
                           : 0}
                       </td>
-
                       <td>
                         {studentResultData?.results?.length
                           ? studentResultData.results
@@ -453,14 +448,12 @@ const ResultView: React.FC<{
                               .reduce((a, b) => a + b, 0)
                           : 0}
                       </td>
-
                       <td></td>
                       <td></td>
                       <td></td>
                     </tr>
                     <tr>
                       <td>PERCENTAGE</td>
-                      <td></td>
                       <td></td>
                       <td></td>
                       <td></td>
