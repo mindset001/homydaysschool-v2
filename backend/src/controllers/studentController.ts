@@ -125,9 +125,19 @@ export const createStudent = async (req: AuthRequest, res: Response): Promise<vo
     });
     await user.save();
 
-    // Generate unique studentId
-    const studentCount = await Student.countDocuments();
-    const studentId = `STU${String(studentCount + 1).padStart(4, '0')}`;
+    // Generate unique studentId from highest existing ID to avoid collisions after deletions
+    const lastStudent = await Student.findOne({ studentId: /^STU\d+$/ })
+      .sort({ studentId: -1 })
+      .select('studentId')
+      .lean();
+    const lastNum = lastStudent
+      ? parseInt(lastStudent.studentId.replace('STU', ''), 10)
+      : 0;
+    let studentId = `STU${String(lastNum + 1).padStart(4, '0')}`;
+    // Ensure uniqueness in case of any edge-case collision
+    while (await Student.exists({ studentId })) {
+      studentId = `STU${String(parseInt(studentId.replace('STU', ''), 10) + 1).padStart(4, '0')}`;
+    }
 
     // Handle guardian creation/lookup if guardian_email is provided
     let guardianId;
