@@ -3,9 +3,8 @@ import { Student } from '../models/Student.js';
 import { User } from '../models/User.js';
 import { Guardian } from '../models/Guardian.js';
 import { AuthRequest } from '../middleware/auth.js';
-import { uploadToCloudinary } from '../config/cloudinary.js';
+import { uploadBufferToCloudinary } from '../config/cloudinary.js';
 import bcrypt from 'bcryptjs';
-import fs from 'fs';
 
 export const getAllStudents = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
@@ -109,9 +108,8 @@ export const createStudent = async (req: AuthRequest, res: Response): Promise<vo
     // Handle image upload if provided
     let profileImageUrl = '';
     if (req.file) {
-      const result = await uploadToCloudinary(req.file.path, 'students');
+      const result = await uploadBufferToCloudinary(req.file.buffer, 'students');
       profileImageUrl = result.url;
-      fs.unlinkSync(req.file.path);
     }
 
     // Create User record
@@ -331,9 +329,8 @@ export const updateStudent = async (req: AuthRequest, res: Response): Promise<vo
     // Handle image upload if provided
     let profileImageUrl;
     if (req.file) {
-      const result = await uploadToCloudinary(req.file.path, 'students');
+      const result = await uploadBufferToCloudinary(req.file.buffer, 'students');
       profileImageUrl = result.url;
-      fs.unlinkSync(req.file.path);
     }
 
     // Update User record
@@ -416,10 +413,7 @@ export const uploadStudentDocument = async (req: AuthRequest, res: Response): Pr
     }
     
     // Upload to Cloudinary
-    const result = await uploadToCloudinary(req.file.path, 'students/documents');
-    
-    // Delete local file
-    fs.unlinkSync(req.file.path);
+    const result = await uploadBufferToCloudinary(req.file.buffer, 'students/documents');
     
     // Update student document
     const student = await Student.findByIdAndUpdate(

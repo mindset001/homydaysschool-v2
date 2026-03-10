@@ -2,9 +2,8 @@ import { Response } from 'express';
 import { Staff } from '../models/Staff.js';
 import { User } from '../models/User.js';
 import { AuthRequest } from '../middleware/auth.js';
-import { uploadToCloudinary } from '../config/cloudinary.js';
+import { uploadBufferToCloudinary } from '../config/cloudinary.js';
 import bcrypt from 'bcryptjs';
-import fs from 'fs';
 
 export const getAllStaff = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
@@ -102,10 +101,8 @@ export const createStaff = async (req: AuthRequest, res: Response): Promise<void
     // Handle image upload if provided
     let profileImageUrl = '';
     if (req.file) {
-      const result = await uploadToCloudinary(req.file.path, 'staff');
+      const result = await uploadBufferToCloudinary(req.file.buffer, 'staff');
       profileImageUrl = result.url;
-      // Delete local file after upload
-      fs.unlinkSync(req.file.path);
     }
 
     // Create User record
@@ -189,10 +186,8 @@ export const updateStaff = async (req: AuthRequest, res: Response): Promise<void
     // Handle image upload if provided
     let profileImageUrl = staff.userId ? (await User.findById(staff.userId))?.profileImage : '';
     if (req.file) {
-      const result = await uploadToCloudinary(req.file.path, 'staff');
+      const result = await uploadBufferToCloudinary(req.file.buffer, 'staff');
       profileImageUrl = result.url;
-      // Delete local file after upload
-      fs.unlinkSync(req.file.path);
     }
 
     // Update User record if user data is provided
@@ -263,8 +258,7 @@ export const uploadStaffDocument = async (req: AuthRequest, res: Response): Prom
       return;
     }
     
-    const result = await uploadToCloudinary(req.file.path, 'staff/documents');
-    fs.unlinkSync(req.file.path);
+    const result = await uploadBufferToCloudinary(req.file.buffer, 'staff/documents');
     
     const staff = await Staff.findByIdAndUpdate(
       id,
