@@ -80,13 +80,23 @@ export const getPaymentsByStudent = async (req: AuthRequest, res: Response): Pro
     // If there are payments, use the latest amountDue
     let totalDue = payments.length > 0 ? payments[0].amountDue : 0;
 
-    // If no payments, try to get expected amountDue from student/class config
+    // If no payments, compute totalDue from the student's class fee fields
     if (payments.length === 0) {
-      // Example: Assume student.class exists and you have a config or static value
-      // Replace this with your actual logic to fetch expected amountDue
-      // For demo, set to 30500 if student.class is defined
       if (student.class) {
-        totalDue = 30500; // TODO: Replace with dynamic lookup if available
+        const classDoc = await Class.findOne({ name: new RegExp(`^${student.class}$`, 'i') });
+        if (classDoc) {
+          totalDue =
+            (classDoc.schoolFee || 0) +
+            (classDoc.uniform || 0) +
+            (classDoc.sportWear || 0) +
+            (classDoc.schoolBus || 0) +
+            (classDoc.snack || 0) +
+            (classDoc.science || 0) +
+            (classDoc.games || 0) +
+            (classDoc.libraryFee || 0) +
+            (classDoc.extraActivities || 0) +
+            (classDoc.starterPack || 0);
+        }
       }
     }
 
