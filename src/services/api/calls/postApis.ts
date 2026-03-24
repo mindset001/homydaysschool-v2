@@ -57,3 +57,7 @@ export const createSubject = (subjectData: object) => {
 export const saveTimetable = (data: object) => {
   return apiClient.post(`/timetables/`, data);
 };
+
+export const markChatRead = () => {
+  return apiClient.post(`/chat/messages/read`, {});
+};

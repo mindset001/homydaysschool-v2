@@ -122,3 +122,8 @@ export const getChatMessages = () => {
 export const postChatMessage = (text: string) => {
   return apiClient.post(`chat/message`, { text });
 };
+
+export const getUnreadChatCount = async (): Promise<number> => {
+  const res = await apiClient.get(`chat/messages/unread-count`);
+  return res.data?.count ?? 0;
+};;

@@ -1,5 +1,6 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import data from "../services/api/db.json";
 import SideNav from "../components/dashboard/SideNav";
 import SearchSVG from "../components/svg/dashboard navbar svg/SearchSVG";
@@ -13,17 +14,40 @@ import HomeSVG from "../components/svg/dashboard navbar svg/HomeSVG";
 import { getRole, getUser } from "../utils/authTokens";
 import UserProfile from "../components/dashboard/UserProfile";
 import useGuardianWard from "../hooks/useGuardianWard";
+import { getUnreadChatCount } from "../services/api/calls/getApis";
 
 const DashboardLayout: React.FC = () => {
   const [mobileToggle, setMobileToggle] = useState<boolean>(false);
   const [toggleProfile, setToggleProfile] = useState<boolean>(false);
+  const role = getRole() as string;
+
+  // Poll for unread admin messages (guardian / staff only)
+  const { data: unreadCount = 0 } = useQuery<number>({
+    queryKey: ["unreadChatCount"],
+    queryFn: getUnreadChatCount,
+    refetchInterval: 30_000,
+    enabled: role === "guardian" || role === "staff",
+  });
+
   const mobileFooters: { tab: ReactNode; route: string }[] = [
     { tab: <HomeSVG />, route: "" },
     { tab: <CalendarSVG />, route: "calendar" },
     { tab: <TimetableSVG />, route: "timetable" },
-    { tab: <ChatSVG />, route: "chat" },
+    {
+      tab: (
+        <span className="relative inline-flex">
+          <ChatSVG />
+          {unreadCount > 0 && (
+            <span className="absolute -top-1 -right-1 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-red-500 px-[3px] text-[9px] font-bold text-white leading-none">
+              {unreadCount > 99 ? "99+" : unreadCount}
+            </span>
+          )}
+        </span>
+      ),
+      route: "chat",
+    },
   ];
-  const role = getRole() as string;
+
   useEffect(() => {
     console.log(data);
   }, []);
@@ -155,11 +179,16 @@ const DashboardLayout: React.FC = () => {
               </Link>
               <Link
                 to={"chat"}
-                className="rounded-full bg-[#F1F0F0] size-[44px] 2xl:size-[55px] flex justify-center items-center mx-[4px] lg:mx-[6px] xl:mx-[8px] 2xl:mx-[10px]"
+                className="relative rounded-full bg-[#F1F0F0] size-[44px] 2xl:size-[55px] flex justify-center items-center mx-[4px] lg:mx-[6px] xl:mx-[8px] 2xl:mx-[10px]"
               >
                 <div className="max-w-[22px] max-h-[22px] 2xl:max-w-[24px] 2xl:max-h-[24px] dashboard-header-desktop-svg">
                   <ChatSVG />
                 </div>
+                {unreadCount > 0 && (
+                  <span className="absolute top-1 right-1 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-red-500 px-[3px] text-[9px] font-bold text-white leading-none">
+                    {unreadCount > 99 ? "99+" : unreadCount}
+                  </span>
+                )}
               </Link>
               <Link
                 to={"timetable"}

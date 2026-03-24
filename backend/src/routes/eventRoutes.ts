@@ -10,7 +10,10 @@ import { authenticate, authorize } from '../middleware/auth.js';
 
 const router = Router();
 
-// All routes require authentication
+// Public route – no auth required (used by the landing page)
+router.get('/public', getAllEvents);
+
+// All routes below require authentication
 router.use(authenticate);
 
 router.get('/', authorize('admin', 'staff', 'student', 'guardian'), getAllEvents);
