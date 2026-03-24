@@ -23,6 +23,7 @@ import subjectRoutes from './routes/subjectRoutes.js';
 import templateRoutes from './routes/templateRoutes.js';
 import resultRoutes from './routes/resultRoutes.js';
 import chatRoutes from './routes/chatRoutes.js';
+import timetableRoutes from './routes/timetableRoutes.js';
 import testRoutes from './routes/testRoutes.js';
 
 const app: Application = express();
@@ -109,6 +110,7 @@ app.use('/api', templateRoutes);
 app.use('/api', resultRoutes);
 app.use('/api', analyticsRoutes);
 app.use('/api/chat', chatRoutes);
+app.use('/api/timetables', timetableRoutes);
 console.log('Routes registered successfully');
 
 // Error handler (must be last)

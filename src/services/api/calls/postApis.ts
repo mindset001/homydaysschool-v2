@@ -53,3 +53,7 @@ export const createPayment = (paymentData: object) => {
 export const createSubject = (subjectData: object) => {
   return apiClient.post(`/subjects/`, subjectData);
 };
+
+export const saveTimetable = (data: object) => {
+  return apiClient.post(`/timetables/`, data);
+};

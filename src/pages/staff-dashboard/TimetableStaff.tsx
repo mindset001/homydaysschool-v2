@@ -1,5 +1,66 @@
-// /* eslint-disable @typescript-eslint/no-explicit-any */
-// import { useQuery } from "@tanstack/react-query";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import Loader from "../../shared/Loader";
+import { MobileHeader } from "../guardian-dashboard/Profile";
+import { getAllTimetables } from "../../services/api/calls/getApis";
+import { Timetable } from "../guardian-dashboard/TimetableGuardian";
+
+const daysOfWeek: string[] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+const TERMS = ['First Term', 'Second Term', 'Third Term'] as const;
+const ACADEMIC_YEARS = ['2025/2026', '2026/2027', '2027/2028', '2028/2029'] as const;
+
+const TimetablesStaff = () => {
+  const [selectedTerm, setSelectedTerm] = useState('First Term');
+  const [selectedYear, setSelectedYear] = useState('2025/2026');
+
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ['timetables', selectedTerm, selectedYear],
+    queryFn: () => getAllTimetables({ term: selectedTerm, academicYear: selectedYear }),
+  });
+
+  const timeTables: any[] = data?.data?.data ?? [];
+
+  if (isLoading) return <Loader />;
+  if (isError) return <div className="w-6/6 text-center mt-[20%]">{(error as Error).message}</div>;
+
+  return (
+    <section className="bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none min-h-[calc(100vh-80px)] md:min-h-0 flex flex-col">
+      <MobileHeader title="Timetable" subtitle="Timetables" />
+      <div className="rounded-t-[30px] flex flex-col gap-0 md:gap-5 pt-[20px] md:pt-0 md:mt-[30px] md:px-[30px] bg-white">
+        {/* Filters */}
+        <div className="flex flex-wrap gap-3 px-2 pt-4">
+          <select
+            value={selectedTerm}
+            onChange={(e) => setSelectedTerm(e.target.value)}
+            className="border border-gray-200 rounded-lg px-3 py-2 text-[12px] bg-white focus:outline-none focus:ring-1 focus:ring-clr1"
+          >
+            {TERMS.map((t) => <option key={t} value={t}>{t}</option>)}
+          </select>
+          <select
+            value={selectedYear}
+            onChange={(e) => setSelectedYear(e.target.value)}
+            className="border border-gray-200 rounded-lg px-3 py-2 text-[12px] bg-white focus:outline-none focus:ring-1 focus:ring-clr1"
+          >
+            {ACADEMIC_YEARS.map((y) => <option key={y} value={y}>{y}</option>)}
+          </select>
+        </div>
+
+        {timeTables.length > 0 ? (
+          timeTables.map((item, index) => (
+            <Timetable key={index} daysOfWeek={daysOfWeek} timeTable={item} />
+          ))
+        ) : (
+          <div className="w-6/6 text-center py-20 text-gray-400 text-sm">
+            No timetable available for {selectedTerm}, {selectedYear}.
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
+
+export default TimetablesStaff;
 // import Loader from "../../shared/Loader";
 // import { MobileHeader } from "../guardian-dashboard/Profile";
 // import { getAllTimetables } from "../../services/api/calls/getApis";

@@ -60,17 +60,15 @@ export const getHomeAnalytics = async (req: AuthRequest, res: Response): Promise
       const totalPaid = studentPaymentMap.get(studentId) || 0;
 
       if (totalFee === 0) {
-        // If no fee set for class, count as void
+        // No fee configured for this class — record is void/undefined
         voidTuition++;
       } else if (totalPaid >= totalFee) {
         // Fully paid
         completedTuition++;
-      } else if (totalPaid > 0) {
-        // Partially paid
-        incompleteTuition++;
       } else {
-        // Not paid
-        voidTuition++;
+        // Partially paid OR hasn't started paying yet (totalPaid === 0)
+        // Both cases are "incomplete" — they owe money
+        incompleteTuition++;
       }
 
       // Check starter pack status (assuming it's a field on student)

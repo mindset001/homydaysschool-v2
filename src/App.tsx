@@ -48,9 +48,7 @@ import ResultNames from "./pages/dashboard/ResultNames";
 import ResultNamesMobile from "./pages/dashboard/ResultNamesMobile";
 import ResultGuardian from "./pages/guardian-dashboard/ResultGuardian";
 import ProtectedRoute from "./pages/ProtectedRoute";
-// import ResultsLayout from "./layouts/role/ResultsLayout";
-// import { getRole } from "./utils/authTokens";
-// import StudentOverview from "./pages/dashboard/student/StudentOverview";
+import { getRole } from "./utils/authTokens";
 
 const LandingPage = lazy(() => import("./pages/LandingPage"));
 const ForgotPassword = lazy(() => import("./pages/login/ForgotPassword"));
@@ -83,11 +81,23 @@ const StudentAdminDatabase = lazy(
 const TimetablesGuardian = lazy(
   () => import("./pages/guardian-dashboard/TimetableGuardian")
 );
+const AdminTimetable = lazy(
+  () => import("./pages/dashboard/Timetable")
+);
+const TimetablesStaff = lazy(
+  () => import("./pages/staff-dashboard/TimetableStaff")
+);
+
+const TimetablePage = () => {
+  const role = getRole();
+  if (role === "admin") return <AdminTimetable />;
+  if (role === "staff") return <TimetablesStaff />;
+  return <TimetablesGuardian />;
+};
+
+const queryClient = new QueryClient();
+
 function App() {
-  // CHANGE ROLE
-  // const [role] = useState("admin");
-  // const role = getRole();
-  const queryClient = new QueryClient();
 
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -143,7 +153,7 @@ function App() {
             <Route path="tuition" element={<Tuition />} />
           ) : null} */}
             {/* ENDS */}
-            <Route path="timetable" element={<TimetablesGuardian />} />
+            <Route path="timetable" element={<TimetablePage />} />
             <Route path="guardian-result/:id" element={<ResultGuardian />} />
             {/* <Route path="attendance" element={<Attendance />} /> */}
             {/* {role === "admin" || role === "guardian" ? (

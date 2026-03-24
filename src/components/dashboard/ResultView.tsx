@@ -1,6 +1,14 @@
 // import React, { useEffect, useMemo } from "react";
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+
+const getScoreBands = (className: string) => {
+  const name = className.toLowerCase();
+  if (name.includes("jss") || name.includes("sss")) {
+    return { testMax: 30, examMax: 70 };
+  }
+  return { testMax: 40, examMax: 60 };
+};
 import { useEffect, useState } from "react";
 import { getClassStudentResult } from "../../services/api/calls/getApis";
 import { saveStudentTermReport } from "../../services/api/calls/updateApis";
@@ -13,14 +21,17 @@ const ResultView: React.FC<{
   resultViewToggle: boolean;
   setResultViewToggle: React.Dispatch<React.SetStateAction<boolean>>;
   totalStudentsInClass?: number;
+  readOnly?: boolean;
 }> = ({
   studentID,
   className: classByName,
   resultViewToggle,
   setResultViewToggle,
   totalStudentsInClass = 0,
+  readOnly = false,
 }) => {
   const queryClient = useQueryClient();
+  const { testMax, examMax } = getScoreBands(classByName);
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth();
   // Determine term based on month (adjust as needed for your school calendar)
@@ -400,8 +411,8 @@ const ResultView: React.FC<{
                           <span>Mx</span>
                         </div>
                       </td>
-                      <td>40</td>
-                      <td>60</td>
+                      <td>{testMax}</td>
+                      <td>{examMax}</td>
                       <td>100%</td>
                       <td>100</td>
                       <td></td>
@@ -829,7 +840,9 @@ const ResultView: React.FC<{
                 </>
               ) : (
                 <>
-                  <button onClick={handleEdit} className="bg-blue-500 hover:bg-blue-600">Edit</button>
+                  {!readOnly && (
+                    <button onClick={handleEdit} className="bg-blue-500 hover:bg-blue-600">Edit</button>
+                  )}
                   <button onClick={handlePrint}>Print</button>
                   <button onClick={() => setResultViewToggle(false)}>Close</button>
                 </>

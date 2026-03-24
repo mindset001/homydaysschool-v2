@@ -15,3 +15,8 @@ export const deleteEvent = async (id: string | number) => {
     );
     return response.data;
   };
+
+export const deleteTimetable = async (id: string) => {
+  const response = await apiClient.delete(`/timetables/${id}`);
+  return response.data;
+};

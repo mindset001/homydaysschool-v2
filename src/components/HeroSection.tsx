@@ -1,19 +1,36 @@
 
+import { useState, useEffect, useCallback } from "react";
 import homy1 from "../assets/images/homy1.jpg";
 import homy2 from "../assets/images/kg2.jpg";
 import homy3 from "../assets/images/korede.jpg";
 import homy4 from "../assets/images/new.jpg";
 
 const heroImages = [homy1, homy2, homy3, homy4];
+const AUTO_ROTATE_INTERVAL = 4000;
 
 export default function HeroSection() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const goNext = useCallback(() => {
+    setActiveIndex((prev) => (prev + 1) % heroImages.length);
+  }, []);
+
+  const goPrev = useCallback(() => {
+    setActiveIndex((prev) => (prev - 1 + heroImages.length) % heroImages.length);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(goNext, AUTO_ROTATE_INTERVAL);
+    return () => clearInterval(timer);
+  }, [goNext]);
+
   return (
     <section className="relative w-full min-h-[60vh] flex flex-col justify-end bg-black">
       {/* Background Image */}
       <img
-        src={heroImages[0]}
+        src={heroImages[activeIndex]}
         alt="Classroom"
-        className="absolute inset-0 w-full h-full object-cover opacity-80"
+        className="absolute inset-0 w-full h-full object-cover opacity-80 transition-opacity duration-700"
       />
       {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
@@ -28,9 +45,9 @@ export default function HeroSection() {
           <a href="/login" className="bg-white text-black px-6 py-2 rounded shadow font-semibold hover:bg-blue-100 transition text-center">
             Login
           </a>
-          <button className="bg-black/60 text-white px-6 py-2 rounded border border-white hover:bg-white hover:text-black transition text-center">
+          <a href="#enroll" className="bg-black/60 text-white px-6 py-2 rounded border border-white hover:bg-white hover:text-black transition text-center">
             Enroll
-          </button>
+          </a>
         </div>
         {/* Carousel Thumbnails */}
         <div className="flex gap-2 flex-wrap justify-center sm:justify-start">
@@ -39,16 +56,28 @@ export default function HeroSection() {
               key={idx}
               src={img}
               alt={`Slide ${idx + 1}`}
-              className="w-20 h-16 sm:w-24 sm:h-20 object-cover rounded shadow border-2 border-white"
+              loading="lazy"
+              onClick={() => setActiveIndex(idx)}
+              className={`w-20 h-16 sm:w-24 sm:h-20 object-cover rounded shadow border-2 cursor-pointer transition-all duration-200 ${
+                idx === activeIndex ? "border-blue-400 scale-105" : "border-white opacity-70 hover:opacity-100"
+              }`}
             />
           ))}
         </div>
         {/* Carousel Controls */}
         <div className="flex gap-2 mt-2 justify-center sm:justify-start">
-          <button className="w-8 h-8 flex items-center justify-center bg-white/80 rounded hover:bg-white">
+          <button
+            onClick={goPrev}
+            aria-label="Previous slide"
+            className="w-8 h-8 flex items-center justify-center bg-white/80 rounded hover:bg-white transition"
+          >
             &#8592;
           </button>
-          <button className="w-8 h-8 flex items-center justify-center bg-white/80 rounded hover:bg-white">
+          <button
+            onClick={goNext}
+            aria-label="Next slide"
+            className="w-8 h-8 flex items-center justify-center bg-white/80 rounded hover:bg-white transition"
+          >
             &#8594;
           </button>
         </div>

@@ -86,10 +86,22 @@ export const getCalender = () => {
   return apiClient.get(`calender/`);
 };
 
-export const getAllTimetables = () => {
-  // Placeholder - timetables not yet implemented
-  return Promise.resolve({ data: { data: [] } });
+export const getAllTimetables = (params?: { term?: string; academicYear?: string }) => {
+  const query = new URLSearchParams();
+  if (params?.term) query.set('term', params.term);
+  if (params?.academicYear) query.set('academicYear', params.academicYear);
+  const qs = query.toString();
+  return apiClient.get(`timetables/${qs ? `?${qs}` : ''}`);
 };
+
+export const getTimetableByClass = (classId: string, params?: { term?: string; academicYear?: string }) => {
+  const query = new URLSearchParams();
+  if (params?.term) query.set('term', params.term);
+  if (params?.academicYear) query.set('academicYear', params.academicYear);
+  const qs = query.toString();
+  return apiClient.get(`timetables/class/${classId}${qs ? `?${qs}` : ''}`);
+};
+
 export const getAllPayments = () => {
   return apiClient.get(`payments/`);
 };

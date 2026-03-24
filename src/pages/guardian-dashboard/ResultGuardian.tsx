@@ -1,8 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+
+const getScoreBands = (className: string) => {
+  const name = className.toLowerCase();
+  if (name.includes("jss") || name.includes("sss")) {
+    return { testMax: 30, examMax: 70 };
+  }
+  return { testMax: 40, examMax: 60 };
+};
 import { getClassStudentResult, getPaymentsByStudent } from "../../services/api/calls/getApis";
 import Loader from "../../shared/Loader";
+import ResultView from "../../components/dashboard/ResultView";
 
 interface AcademicResult {
   subject: string;
@@ -63,8 +72,10 @@ const ResultGuardian: React.FC = () => {
     index: i,
   }));
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [fullReportOpen, setFullReportOpen] = useState(false);
   const activeRecord: AcademicRecord | undefined = records[selectedIndex];
   const paymentSummary = paymentData?.data?.summary;
+  const { testMax, examMax } = getScoreBands(student?.class ?? "");
 
 
   if (isLoading || isPaymentLoading) return <Loader />;
@@ -111,6 +122,14 @@ const ResultGuardian: React.FC = () => {
 
   return (
     <div className="p-4 md:p-6 font-Poppins">
+      {/* Full Report Sheet Overlay */}
+      <ResultView
+        studentID={id!}
+        className={student.class}
+        resultViewToggle={fullReportOpen}
+        setResultViewToggle={setFullReportOpen}
+        readOnly={true}
+      />
       {/* Header */}
       <div className="flex items-center gap-3 mb-6">
         <button
@@ -137,22 +156,30 @@ const ResultGuardian: React.FC = () => {
           )}
         </div>
 
-        {termOptions.length > 0 && (
-          <div className="flex flex-col gap-1">
-            <label className="text-[11px] text-gray-500">Select Term</label>
-            <select
-              value={selectedIndex}
-              onChange={(e) => setSelectedIndex(Number(e.target.value))}
-              className="border border-gray-200 rounded-[8px] px-3 py-2 text-[12px] text-gray-700 bg-white focus:outline-none focus:ring-1 focus:ring-clr1"
-            >
-              {termOptions.map((opt) => (
-                <option key={opt.index} value={opt.index}>
-                  {opt.label}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
+        <div className="flex flex-col gap-2 items-end">
+          {termOptions.length > 0 && (
+            <div className="flex flex-col gap-1">
+              <label className="text-[11px] text-gray-500">Select Term</label>
+              <select
+                value={selectedIndex}
+                onChange={(e) => setSelectedIndex(Number(e.target.value))}
+                className="border border-gray-200 rounded-[8px] px-3 py-2 text-[12px] text-gray-700 bg-white focus:outline-none focus:ring-1 focus:ring-clr1"
+              >
+                {termOptions.map((opt) => (
+                  <option key={opt.index} value={opt.index}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+          <button
+            onClick={() => setFullReportOpen(true)}
+            className="px-4 py-2 bg-clr1 text-white text-[12px] rounded-[8px] hover:bg-[#046a71] transition-colors whitespace-nowrap"
+          >
+            View Full Report Sheet
+          </button>
+        </div>
       </div>
 
       {/* Results */}
@@ -175,8 +202,8 @@ const ResultGuardian: React.FC = () => {
               <thead className="bg-clr1 text-white">
                 <tr>
                   <th className="text-left px-4 py-3 font-semibold">Subject</th>
-                  <th className="text-center px-4 py-3 font-semibold">Test (40)</th>
-                  <th className="text-center px-4 py-3 font-semibold">Exam (60)</th>
+                  <th className="text-center px-4 py-3 font-semibold">Test ({testMax})</th>
+                  <th className="text-center px-4 py-3 font-semibold">Exam ({examMax})</th>
                   <th className="text-center px-4 py-3 font-semibold">Total (100)</th>
                   <th className="text-center px-4 py-3 font-semibold">Grade</th>
                 </tr>

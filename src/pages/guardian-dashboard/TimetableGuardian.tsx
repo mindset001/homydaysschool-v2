@@ -3,7 +3,10 @@ import { useQuery } from "@tanstack/react-query";
 import { MobileHeader } from "./Profile";
 import Loader from "../../shared/Loader";
 import { getAllTimetables } from "../../services/api/calls/getApis";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+
+const TERMS = ['First Term', 'Second Term', 'Third Term'] as const;
+const ACADEMIC_YEARS = ['2025/2026', '2026/2027', '2027/2028', '2028/2029'] as const;
 
 interface ClassPeriod {
   [key: string]: string[]; // Dynamic string keys, with the value being an array of strings
@@ -31,9 +34,12 @@ const timePeriods: string[] = [
 ];
 
 const TimetablesGuardian = () => {
+  const [selectedTerm, setSelectedTerm] = useState('First Term');
+  const [selectedYear, setSelectedYear] = useState('2025/2026');
+
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["calender"],
-    queryFn: () => getAllTimetables(),
+    queryKey: ['timetables', selectedTerm, selectedYear],
+    queryFn: () => getAllTimetables({ term: selectedTerm, academicYear: selectedYear }),
   });
 
   function transformTimetable(backendData: any): ClassPeriod[] {
@@ -105,6 +111,24 @@ const TimetablesGuardian = () => {
       <MobileHeader title="Timetable" subtitle="Timetables" />
 
       <div className="rounded-t-[30px] flex flex-col gap-0 md:gap-5 pt-[20px] md:pt-0 md:mt-[30px] md:px-[30px] bg-white">
+        {/* Term / Year filters */}
+        <div className="flex flex-wrap gap-3 px-2 pt-2">
+          <select
+            value={selectedTerm}
+            onChange={(e) => setSelectedTerm(e.target.value)}
+            className="border border-gray-200 rounded-lg px-3 py-2 text-[12px] bg-white focus:outline-none focus:ring-1 focus:ring-clr1"
+          >
+            {TERMS.map((t) => <option key={t} value={t}>{t}</option>)}
+          </select>
+          <select
+            value={selectedYear}
+            onChange={(e) => setSelectedYear(e.target.value)}
+            className="border border-gray-200 rounded-lg px-3 py-2 text-[12px] bg-white focus:outline-none focus:ring-1 focus:ring-clr1"
+          >
+            {ACADEMIC_YEARS.map((y) => <option key={y} value={y}>{y}</option>)}
+          </select>
+        </div>
+
         {!isLoading && !isError && timeTables && timeTables.length > 0 ? (
           timeTables.map((item, index) => (
             <Timetable key={index} daysOfWeek={daysOfWeek} timeTable={item} />
