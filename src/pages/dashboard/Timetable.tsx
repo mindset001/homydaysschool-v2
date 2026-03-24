@@ -11,7 +11,9 @@ const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] as const;
 const TERMS = ['First Term', 'Second Term', 'Third Term'] as const;
 const ACADEMIC_YEARS = ['2025/2026', '2026/2027', '2027/2028', '2028/2029'] as const;
 
-const TIME_SLOTS = [
+type TimeSlot = { key: PeriodKey | null; label: string; isBreak?: boolean };
+
+const TIME_SLOTS: TimeSlot[] = [
   { key: 'first_period',  label: '8:20 – 9:00 am' },
   { key: 'second_period', label: '9:00 – 9:40 am' },
   { key: 'third_period',  label: '9:40 – 10:20 am' },
@@ -22,7 +24,7 @@ const TIME_SLOTS = [
   { key: null,            label: '12:50 – 1:00 pm', isBreak: true },
   { key: 'eight_period',  label: '1:00 – 1:40 pm' },
   { key: 'nineth_period', label: '1:40 – 2:20 pm' },
-] as const;
+];
 
 type PeriodKey = 'first_period' | 'second_period' | 'third_period' | 'fourth_period' |
   'fifth_period' | 'six_period' | 'eight_period' | 'nineth_period' | 'tenth_period';
