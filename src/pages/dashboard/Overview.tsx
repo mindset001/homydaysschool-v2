@@ -70,7 +70,7 @@ const Overview: React.FC = () => {
     // isLoading: isHomeAnalyticLoading,
   } = useQuery<any>({
     queryKey: ["home-analytic"],
-    queryFn: getHomeAnalytic,
+    queryFn: () => getHomeAnalytic(),
   });
 
   const homeAnalytic: HomeAnalyticDataInterface = useMemo(() => {
