@@ -30,6 +30,8 @@ export const config = {
       // trim any trailing slash from the configured frontend URL(s)
       (process.env.FRONTEND_URL || 'http://localhost:5174').replace(/\/$/, ''),
       // add hard‑coded fallback(s) without trailing slash
+      'https://homydaysschools.sch.ng',
+      'https://www.homydaysschools.sch.ng',
       'https://homydaysschool-v2.vercel.app',
       'http://localhost:5173',
       'http://localhost:5174',
