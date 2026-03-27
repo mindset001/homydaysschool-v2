@@ -24,6 +24,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { createPayment } from "../../../services/api/calls/postApis";
 import { getUser, getRole } from "../../../utils/authTokens";
+import useActiveSession from "../../../hooks/useActiveSession";
 
 // import useClasses from "../../hooks/useClasses";
 // import { getClassStudentsId } from "../../services/api/calls/getApis";
@@ -102,6 +103,8 @@ const StudentAdminNames: React.FC = () => {
     navigate(-1);
   };
 
+  const { activeSession } = useActiveSession();
+
   const [studentData, setStudentData] = useState<studentDataI[]>([]);
   // const [tableActive, setTableActive] = useState<number | null>(null);
   // const { id } = useParams();
@@ -113,8 +116,8 @@ const StudentAdminNames: React.FC = () => {
   const [paymentModalOpen, setPaymentModalOpen] = useState<boolean>(false);
   const [selectedStudent, setSelectedStudent] = useState<studentDataI | null>(null);
   const [paymentFormData, setPaymentFormData] = useState({
-    academicYear: '2026/2027',
-    term: 'First Term',
+    academicYear: activeSession?.academicYear ?? '',
+    term: activeSession?.term ?? 'First Term',
     paymentType: 'School Fee',
     amount: 0,
     amountDue: 0,
@@ -148,10 +151,10 @@ const StudentAdminNames: React.FC = () => {
       setPaymentModalOpen(false);
       setSelectedStudent(null);
       toast.success('Payment recorded successfully!');
-      // Reset form
+      // Reset form — default back to active session
       setPaymentFormData({
-        academicYear: '2026/2027',
-        term: 'First Term',
+        academicYear: activeSession?.academicYear ?? '',
+        term: activeSession?.term ?? 'First Term',
         paymentType: 'School Fee',
         amount: 0,
         amountDue: 0,
@@ -167,14 +170,31 @@ const StudentAdminNames: React.FC = () => {
     },
   });
   
+  // Sync form year/term once active session loads
+  useEffect(() => {
+    if (activeSession) {
+      setPaymentFormData((prev) => ({
+        ...prev,
+        academicYear: activeSession.academicYear,
+        term: activeSession.term,
+      }));
+    }
+  }, [activeSession?.academicYear, activeSession?.term]);
+
   const handleOpenPaymentModal = (student: studentDataI) => {
     console.log('Opening payment modal for student:', student);
     console.log('Student ID:', student.id);
     setSelectedStudent(student);
     setPaymentFormData({
-      ...paymentFormData,
-      amountDue: student.tuition_balance || 0,
+      academicYear: activeSession?.academicYear ?? '',
+      term: activeSession?.term ?? 'First Term',
+      paymentType: 'School Fee',
       amount: 0,
+      amountDue: student.tuition_balance || 0,
+      paymentDate: new Date().toISOString().split('T')[0],
+      paymentMethod: 'Cash',
+      referenceNumber: '',
+      remarks: '',
     });
     setPaymentModalOpen(true);
   };

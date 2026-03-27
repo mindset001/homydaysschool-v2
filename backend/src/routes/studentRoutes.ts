@@ -7,6 +7,7 @@ import {
   deleteStudent,
   uploadStudentDocument,
 } from '../controllers/studentController.js';
+import { getPromotionPreview, promoteStudents } from '../controllers/promotionController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 import { upload } from '../config/multer.js';
 
@@ -14,6 +15,10 @@ const router = Router();
 
 // All routes require authentication
 router.use(authenticate);
+
+// Promotion routes — must be before /:id to avoid param collision
+router.get('/promotion-preview', authorize('admin'), getPromotionPreview);
+router.post('/promote', authorize('admin'), promoteStudents);
 
 router.get('/', authorize('admin', 'staff'), getAllStudents);
 router.get('/:id', authorize('admin', 'staff', 'student', 'guardian'), getStudentById);

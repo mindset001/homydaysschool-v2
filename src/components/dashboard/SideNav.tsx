@@ -9,10 +9,10 @@ import CalendarSVG from "../svg/dashboard navbar svg/CalendarSVG";
 import TuitionSVG from "../svg/dashboard navbar svg/TuitionSVG";
 import TimetableSVG from "../svg/dashboard navbar svg/TimetableSVG";
 import SubjectsSVG from "../svg/dashboard navbar svg/SubjectsSVG";
-// import AttendanceSVG from "../svg/dashboard navbar svg/AttendanceSVG";
 import ResultsSVG from "../svg/dashboard navbar svg/ResultsSVG";
 import ChatSVG from "../svg/dashboard navbar svg/ChatSVG";
-// import CertsAwardsSVG from "../svg/dashboard navbar svg/CertsAwardsSVG";
+import SessionSVG from "../svg/dashboard navbar svg/SessionSVG";
+import PromotionSVG from "../svg/dashboard navbar svg/PromotionSVG";
 import DropdownSVG from "../svg/dashboard navbar svg/DropdownSVG";
 import {
   clearRole,
@@ -20,14 +20,15 @@ import {
   clearUser,
   getRole,
 } from "../../utils/authTokens";
+import useActiveSession from "../../hooks/useActiveSession";
 interface SideNavProps {
   mobileToggle: boolean;
   setMobileToggle: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const SideNav: React.FC<SideNavProps> = ({ mobileToggle, setMobileToggle }) => {
   const navigate = useNavigate();
-  // determine user role early so it can influence navigation items
   const role = getRole();
+  const { activeSession } = useActiveSession();
 
   const navs: {
     item: ReactNode;
@@ -107,7 +108,19 @@ const SideNav: React.FC<SideNavProps> = ({ mobileToggle, setMobileToggle }) => {
       item: <ResultsSVG />,
       to: "results",
       text: "Results",
-      roles: ["admin"], // only admins should see results link now
+      roles: ["admin"],
+    },
+    {
+      item: <SessionSVG />,
+      to: "academic-session",
+      text: "Session",
+      roles: ["admin"],
+    },
+    {
+      item: <PromotionSVG />,
+      to: "student-promotion",
+      text: "Promote",
+      roles: ["admin"],
     },
     // {
     //   item: <ChatSVG />,
@@ -144,8 +157,8 @@ const SideNav: React.FC<SideNavProps> = ({ mobileToggle, setMobileToggle }) => {
       </div>
       <div className="bg-[#ECFEFF] hidden md:flex flex-row justify-center items-center font-Lora py-[14px]">
         <div className="text-base text-center leading-[20.48px] font-semibold 2xl:font-bold mr-[11px] text-[#05878F]">
-          2024/2025 <br className="hidden md:block xl:hidden" />
-          Academic Session
+          {activeSession
+            ? <>{activeSession.academicYear}<br className="hidden md:block xl:hidden" />{" "}{activeSession.term}</>            : <>No Active<br className="hidden md:block xl:hidden" />Session</>}
         </div>
         <div className="max-w-[13.17px] max-h-[7.59px]">
           <DropdownSVG />

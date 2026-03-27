@@ -61,3 +61,7 @@ export const saveTimetable = (data: object) => {
 export const markChatRead = () => {
   return apiClient.post(`/chat/messages/read`, {});
 };
+
+export const promoteStudents = (data: { studentIds: string[] }) => {
+  return apiClient.post('students/promote', data);
+};

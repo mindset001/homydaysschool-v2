@@ -340,3 +340,115 @@ export const deletePayment = async (req: AuthRequest, res: Response): Promise<vo
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
+
+const TERM_ORDER: Record<string, number> = {
+  'First Term': 1,
+  'Second Term': 2,
+  'Third Term': 3,
+};
+
+/**
+ * GET /api/payments/student/:studentId/term-summary
+ * Returns a per-term payment breakdown with carry-over balance tracking.
+ * Carry-over: unpaid balance from a term is added to the next term's total due.
+ */
+export const getStudentTermSummary = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const { studentId } = req.params;
+
+    const student = await Student.findById(studentId);
+    if (!student) {
+      res.status(404).json({ message: 'Student not found' });
+      return;
+    }
+
+    // Determine the per-term fee from the class document
+    let termFee = 0;
+    if (student.class) {
+      const classDoc = await Class.findOne({ name: new RegExp(`^${student.class}$`, 'i') });
+      if (classDoc) {
+        termFee =
+          (classDoc.schoolFee || 0) +
+          (classDoc.uniform || 0) +
+          (classDoc.sportWear || 0) +
+          (classDoc.schoolBus || 0) +
+          (classDoc.snack || 0) +
+          (classDoc.science || 0) +
+          (classDoc.games || 0) +
+          (classDoc.libraryFee || 0) +
+          (classDoc.extraActivities || 0) +
+          (classDoc.starterPack || 0);
+      }
+    }
+
+    // All payments for this student, oldest first
+    const payments = await Payment.find({ studentId })
+      .populate('receivedBy', 'firstName lastName')
+      .sort({ academicYear: 1, paymentDate: 1 });
+
+    // Group by academicYear + term
+    const termMap = new Map<
+      string,
+      { term: string; academicYear: string; paid: number; payments: any[] }
+    >();
+
+    payments.forEach((p) => {
+      const key = `${p.academicYear}__${p.term}`;
+      if (!termMap.has(key)) {
+        termMap.set(key, { term: p.term, academicYear: p.academicYear, paid: 0, payments: [] });
+      }
+      const entry = termMap.get(key)!;
+      entry.paid += p.amount;
+      entry.payments.push(p);
+    });
+
+    // Sort chronologically: year asc, then term order asc
+    const sorted = Array.from(termMap.values()).sort((a, b) => {
+      if (a.academicYear !== b.academicYear) return a.academicYear.localeCompare(b.academicYear);
+      return (TERM_ORDER[a.term] ?? 0) - (TERM_ORDER[b.term] ?? 0);
+    });
+
+    // Walk through terms computing carry-over
+    let carryOver = 0;
+    const termSummaries = sorted.map(({ term, academicYear, paid, payments: termPayments }) => {
+      const totalDue = termFee + carryOver;
+      const balance = totalDue - paid;
+      const summary = {
+        term,
+        academicYear,
+        label: `${term} — ${academicYear}`,
+        termFee,
+        carryOver,
+        totalDue,
+        totalPaid: paid,
+        balance: Math.max(0, balance),
+        overpaid: Math.max(0, -balance),
+        status: (balance <= 0 ? 'Paid' : paid > 0 ? 'Partial' : 'Unpaid') as 'Paid' | 'Partial' | 'Unpaid',
+        payments: termPayments,
+      };
+      // Only carry forward outstanding debt, not credit (for now)
+      carryOver = Math.max(0, balance);
+      return summary;
+    });
+
+    const overallPaid = termSummaries.reduce((s, t) => s + t.totalPaid, 0);
+    const overallDue = termSummaries.reduce((s, t) => s + t.termFee, 0);
+
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+
+    res.json({
+      termFee,
+      termSummaries,
+      overall: {
+        totalPaid: overallPaid,
+        totalDue: overallDue,
+        balance: carryOver,
+        status: (carryOver <= 0 && overallPaid > 0 ? 'Paid' : overallPaid > 0 ? 'Partial' : 'Unpaid') as string,
+      },
+    });
+  } catch (error: any) {
+    console.error('Error computing term summary:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};

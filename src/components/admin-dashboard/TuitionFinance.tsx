@@ -10,11 +10,13 @@ import { PathDown, PathUp } from "../../assets/images/dashboard/students";
 // import { totalPercentageValueI } from "../../types/user.type";
 import useTotalPercentageValue from "../../hooks/useTotalPercentageValue";
 import StudentChart from "../dashboard/StudentChart";
+import useActiveSession from "../../hooks/useActiveSession";
 
 const TuitionFinance: React.FC = () => {
   const [totalTuitionDropDown, setTotalTuitionDropDown] =
     useState<boolean>(true);
   const totalPercentageValue = useTotalPercentageValue();
+  const { activeSession } = useActiveSession();
   // const [totalPercentageValue, setTotalPercentageValue] =
   //   useState<totalPercentageValueI>({
   //     completed: 0,
@@ -141,6 +143,14 @@ const TuitionFinance: React.FC = () => {
       </button>
       {/* <span className="block md:hidden">Tuition</span> */}
 
+      {activeSession && (
+        <div className="flex justify-center mb-2">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ECFEFF] border border-[#05878F]/30 text-[11px] font-Poppins text-[#05878F] font-medium">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#05878F] inline-block" />
+            Showing: {activeSession.term} &middot; {activeSession.academicYear}
+          </span>
+        </div>
+      )}
       <div
         className={`tuition-finance-status ${
           totalTuitionDropDown ? "flex" : "hidden"

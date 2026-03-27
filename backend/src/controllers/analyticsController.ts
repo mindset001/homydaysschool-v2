@@ -10,6 +10,10 @@ import { AuthRequest } from '../middleware/auth.js';
 
 export const getHomeAnalytics = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
+    // Optional term/year filter (e.g. ?term=First+Term&academicYear=2025/2026)
+    const { term, academicYear } = req.query as { term?: string; academicYear?: string };
+    const sessionFilter = term && academicYear ? { term, academicYear } : null;
+
     // Get basic counts
     const [totalStudents, totalStaffs, totalGuardians, totalClasses, totalSubjects] = await Promise.all([
       Student.countDocuments(),
@@ -32,8 +36,15 @@ export const getHomeAnalytics = async (req: AuthRequest, res: Response): Promise
       classFeesMap.set(cls._id.toString(), totalFee);
     });
 
-    // Get all payments grouped by student
+    // Get payments grouped by student — filtered by term/year if provided
+    const paymentMatch: any = {};
+    if (sessionFilter) {
+      paymentMatch.term = sessionFilter.term;
+      paymentMatch.academicYear = sessionFilter.academicYear;
+    }
+
     const payments = await Payment.aggregate([
+      { $match: paymentMatch },
       {
         $group: {
           _id: '$studentId',
@@ -60,18 +71,13 @@ export const getHomeAnalytics = async (req: AuthRequest, res: Response): Promise
       const totalPaid = studentPaymentMap.get(studentId) || 0;
 
       if (totalFee === 0) {
-        // No fee configured for this class — record is void/undefined
         voidTuition++;
       } else if (totalPaid >= totalFee) {
-        // Fully paid
         completedTuition++;
       } else {
-        // Partially paid OR hasn't started paying yet (totalPaid === 0)
-        // Both cases are "incomplete" — they owe money
         incompleteTuition++;
       }
 
-      // Check starter pack status (assuming it's a field on student)
       if (student.starterPackCollected === true) {
         starterPackCollected++;
       }

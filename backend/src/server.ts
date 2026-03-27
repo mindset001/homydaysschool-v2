@@ -24,6 +24,7 @@ import templateRoutes from './routes/templateRoutes.js';
 import resultRoutes from './routes/resultRoutes.js';
 import chatRoutes from './routes/chatRoutes.js';
 import timetableRoutes from './routes/timetableRoutes.js';
+import academicSessionRoutes from './routes/academicSessionRoutes.js';
 import testRoutes from './routes/testRoutes.js';
 
 const app: Application = express();
@@ -111,6 +112,7 @@ app.use('/api', resultRoutes);
 app.use('/api', analyticsRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/timetables', timetableRoutes);
+app.use('/api/academic-sessions', academicSessionRoutes);
 console.log('Routes registered successfully');
 
 // Error handler (must be last)

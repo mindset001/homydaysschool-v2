@@ -87,6 +87,12 @@ const AdminTimetable = lazy(
 const TimetablesStaff = lazy(
   () => import("./pages/staff-dashboard/TimetableStaff")
 );
+const AcademicSessionPage = lazy(
+  () => import("./pages/dashboard/AcademicSession")
+);
+const StudentPromotionPage = lazy(
+  () => import("./pages/dashboard/StudentPromotion")
+);
 
 const TimetablePage = () => {
   const role = getRole();
@@ -154,6 +160,8 @@ function App() {
           ) : null} */}
             {/* ENDS */}
             <Route path="timetable" element={<TimetablePage />} />
+            <Route path="academic-session" element={<AcademicSessionPage />} />
+            <Route path="student-promotion" element={<StudentPromotionPage />} />
             <Route path="guardian-result/:id" element={<ResultGuardian />} />
             {/* <Route path="attendance" element={<Attendance />} /> */}
             {/* {role === "admin" || role === "guardian" ? (

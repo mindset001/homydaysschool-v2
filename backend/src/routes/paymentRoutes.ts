@@ -7,6 +7,7 @@ import {
   createPayment,
   updatePayment,
   deletePayment,
+  getStudentTermSummary,
 } from '../controllers/paymentController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 
@@ -17,6 +18,7 @@ router.use(authenticate);
 
 router.get('/', authorize('admin', 'staff'), getAllPayments);
 router.get('/:id', authorize('admin', 'staff'), getPaymentById);
+router.get('/student/:studentId/term-summary', authorize('admin', 'staff', 'guardian'), getStudentTermSummary);
 router.get('/student/:studentId', authorize('admin', 'staff', 'guardian'), getPaymentsByStudent);
 router.get('/class/:classId', authorize('admin', 'staff'), getPaymentsByClass);
 router.post('/', authorize('admin', 'staff'), createPayment);

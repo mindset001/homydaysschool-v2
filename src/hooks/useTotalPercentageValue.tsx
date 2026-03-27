@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { getHomeAnalytic } from "../services/api/calls/getApis";
 import { totalPercentageValueI } from "../types/user.type";
+import useActiveSession from "./useActiveSession";
 
 export interface EventInterface {
   id: number | string;
@@ -33,15 +34,21 @@ const useTotalPercentageValue = (): totalPercentageValueI => {
       paid_nothing: 0,
       starter_pack_collected: 0,
     });
-  // Get data for home analytic
+
+  const { activeSession } = useActiveSession();
+
+  // Get data for home analytic — filtered by the active session when available
+  const sessionParams = activeSession
+    ? { term: activeSession.term, academicYear: activeSession.academicYear }
+    : undefined;
+
   const {
     data: homeAnalyticData,
     isError: isHomeAnalyticError,
     error: homeAnalyticError,
-    // isLoading: isHomeAnalyticLoading,
   } = useQuery<{ data: { data: HomeAnalyticDataInterface } }>({
-    queryKey: ["home-analytic"],
-    queryFn: getHomeAnalytic,
+    queryKey: ["home-analytic", activeSession?._id ?? 'all'],
+    queryFn: () => getHomeAnalytic(sessionParams),
     retry: 2,
     retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
     staleTime: 0,

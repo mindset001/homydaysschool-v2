@@ -37,8 +37,15 @@ export const getClassStat = () => {
   return apiClient.get(`class_stat`);
 };
 
-export const getHomeAnalytic = () => {
-  return apiClient.get(`homeanalytic`);
+export const getHomeAnalytic = (params?: { term?: string; academicYear?: string }) => {
+  const qs = params?.term && params?.academicYear
+    ? `?term=${encodeURIComponent(params.term)}&academicYear=${encodeURIComponent(params.academicYear)}`
+    : '';
+  return apiClient.get(`homeanalytic${qs}`);
+};
+
+export const getStudentTermSummary = (studentId: string) => {
+  return apiClient.get(`payments/student/${studentId}/term-summary`);
 };
 
 export const getStudents = () => {
@@ -127,3 +134,7 @@ export const getUnreadChatCount = async (): Promise<number> => {
   const res = await apiClient.get(`chat/messages/unread-count`);
   return res.data?.count ?? 0;
 };;
+
+export const getPromotionPreview = () => {
+  return apiClient.get('students/promotion-preview');
+};
