@@ -68,7 +68,7 @@ const Overview: React.FC = () => {
     // isError: isHomeAnalyticError,
     // error: homeAnalyticError,
     // isLoading: isHomeAnalyticLoading,
-  } = useQuery<{ data: { data: HomeAnalyticDataInterface } }>({
+  } = useQuery<any>({
     queryKey: ["home-analytic"],
     queryFn: getHomeAnalytic,
   });
