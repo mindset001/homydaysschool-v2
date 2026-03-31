@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getAllStudents } from "../../../services/api/calls/getApis";
 import Loader from "../../../shared/Loader";
 import { profileImage as defaultProfileImage } from "../../../assets/images/users";

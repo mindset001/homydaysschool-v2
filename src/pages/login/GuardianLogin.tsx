@@ -109,7 +109,6 @@ const StaffLogin: React.FC = () => {
     // console.log(formData);
   };
 
-  const role = getRole();
   const { mutate } = useGuardianSignIn();
   ////////////////////////////////////////////////////////////////////
   // HANDLE SIGN IN

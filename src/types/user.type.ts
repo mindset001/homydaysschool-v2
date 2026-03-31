@@ -77,7 +77,7 @@ export interface userGuardWardDataI {
 }
 
 interface WardData {
-  id: number;
+  id: string;
   // API sometimes returns snake_case or camelCase depending on endpoint/version
   first_name?: string;
   last_name?: string;
@@ -92,7 +92,7 @@ interface WardData {
 }
 
 export interface guardianWardInterface {
-  id: number;
+  id: string;
   student_class: string;
   guardian_email: string;
   first_name: string;
