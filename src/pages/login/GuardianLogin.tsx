@@ -9,7 +9,7 @@ import { Warning } from "../../assets/images";
 import HidePasswordSVG from "../../components/svg/HidePasswordSVG";
 import ShowPasswordSVG from "../../components/svg/ShowPasswordSVG";
 import { useGuardianSignIn } from "../../services/api/auth";
-import { getRole, saveTokens, setRole, setuser } from "../../utils/authTokens";
+import { saveTokens, setRole, setuser } from "../../utils/authTokens";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
