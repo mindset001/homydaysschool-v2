@@ -12,7 +12,8 @@
     "seed": "tsx src/scripts/seedUsers.ts",
     "seed:classes": "tsx src/scripts/seedClasses.ts",
     "seed:subjects": "tsx src/scripts/seedSubjects.ts",
-    "seed:all": "tsx src/scripts/seedUsers.ts && tsx src/scripts/seedClasses.ts && tsx src/scripts/seedSubjects.ts"
+    "seed:all": "tsx src/scripts/seedUsers.ts && tsx src/scripts/seedClasses.ts && tsx src/scripts/seedSubjects.ts",
+    "migrate:studentIds": "tsx src/scripts/migrateStudentIds.ts"
   },
   "keywords": [
     "school",

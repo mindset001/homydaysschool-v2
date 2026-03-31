@@ -5,6 +5,7 @@ export interface JWTPayload {
   userId: string;
   email: string;
   role: string;
+  scopedStudentId?: string; // set on guardian logins to restrict to one student
 }
 
 export const generateAccessToken = (payload: JWTPayload): string => {

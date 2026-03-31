@@ -253,7 +253,17 @@ const StudentAdminOverview: React.FC = () => {
   // const navigate = useNavigate();
   return (
     <div className="student-overview">
-      <div className="student-overview-header">Students</div>
+      <div className="student-overview-header flex items-center justify-between">
+        <span>Students</span>
+        {role.toLowerCase() === "admin" && (
+          <Link
+            to="all"
+            className="text-xs font-Poppins font-medium bg-[#05878F] text-white px-3 py-1.5 rounded-lg hover:bg-[#046f76] transition-colors"
+          >
+            View All Students
+          </Link>
+        )}
+      </div>
       <div className="student-overview-class-container flex-grow">
         {role.toLowerCase() === "staff" &&
           staffData?.data?.staff &&

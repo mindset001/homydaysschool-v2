@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { User } from '../models/User.js';
+import { Student } from '../models/Student.js';
 import { hashPassword, comparePassword } from '../utils/password.js';
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../utils/jwt.js';
 
@@ -113,6 +114,82 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     });
   } catch (error: any) {
     console.error('Login error:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+/**
+ * Guardian login via student credentials.
+ * The parent/guardian enters their ward's email + password.
+ * On success the system returns tokens scoped to the GUARDIAN account.
+ */
+export const guardianLogin = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { studentId, password } = req.body;
+
+    console.log('Guardian login attempt via studentId:', studentId);
+
+    // 1. Find the Student record by studentId
+    const student = await Student.findOne({ studentId: studentId.trim().toUpperCase() });
+    if (!student) {
+      res.status(401).json({ message: 'Invalid credentials' });
+      return;
+    }
+
+    // 2. Find the student User account
+    const studentUser = await User.findById(student.userId);
+    if (!studentUser || studentUser.role !== 'student') {
+      res.status(401).json({ message: 'Invalid credentials' });
+      return;
+    }
+
+    if (!studentUser.isActive) {
+      res.status(403).json({ message: 'Student account is deactivated' });
+      return;
+    }
+
+    // 3. Verify password against student's password
+    const isMatch = await comparePassword(password, studentUser.password);
+    if (!isMatch) {
+      res.status(401).json({ message: 'Invalid credentials' });
+      return;
+    }
+
+    // 4. Issue a guardian-role token scoped to this student — no Guardian record needed
+    const payload = {
+      userId: studentUser._id.toString(),
+      email: studentUser.email,
+      role: 'guardian',
+      scopedStudentId: student._id.toString(),
+    };
+
+    const accessToken = generateAccessToken(payload);
+    const refreshToken = generateRefreshToken(payload);
+
+    studentUser.refreshToken = refreshToken;
+    await studentUser.save();
+
+    console.log('Guardian login successful via studentId:', studentId);
+
+    // Derive a display name from student parent info
+    const parentFirstName = student.fathersName?.split(' ')[0] || student.mothersName?.split(' ')[0] || 'Parent';
+    const parentLastName = student.fathersName?.split(' ').slice(1).join(' ') || student.mothersName?.split(' ').slice(1).join(' ') || '';
+
+    res.json({
+      message: 'Login successful',
+      accessToken,
+      refreshToken,
+      user: {
+        id: studentUser._id,
+        email: studentUser.email,
+        role: 'guardian',
+        firstName: parentFirstName,
+        lastName: parentLastName,
+        profileImage: studentUser.profileImage,
+      },
+    });
+  } catch (error: any) {
+    console.error('Guardian login error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };

@@ -12,9 +12,9 @@ interface UserContextType {
   setUser: React.Dispatch<React.SetStateAction<UserProfile>>;
   guardianActiveClassID: number;
   setGuardianActiveClassID: React.Dispatch<React.SetStateAction<number>>;
-  guardianActiveStudentID: { id: number; isUserLoading: boolean };
+  guardianActiveStudentID: { id: string; isUserLoading: boolean };
   setGuardianActiveStudentID: React.Dispatch<
-    React.SetStateAction<{ id: number; isUserLoading: boolean }>
+    React.SetStateAction<{ id: string; isUserLoading: boolean }>
   >;
 }
 
@@ -34,9 +34,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserProfile>({}); // Initialize with an empty object
   const [guardianActiveClassID, setGuardianActiveClassID] = useState<number>(0);
   const [guardianActiveStudentID, setGuardianActiveStudentID] = useState<{
-    id: number;
+    id: string;
     isUserLoading: boolean;
-  }>({ id: 0, isUserLoading: true });
+  }>({ id: '', isUserLoading: true });
   return (
     <UserContext.Provider
       value={{

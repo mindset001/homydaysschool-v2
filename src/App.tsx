@@ -78,6 +78,9 @@ const StudentAdminNamesOverviewMobile = lazy(
 const StudentAdminDatabase = lazy(
   () => import("./pages/admin-dashboard/student/StudentAdminDatabase")
 );
+const StudentAdminAll = lazy(
+  () => import("./pages/admin-dashboard/student/StudentAdminAll")
+);
 const TimetablesGuardian = lazy(
   () => import("./pages/guardian-dashboard/TimetableGuardian")
 );
@@ -125,6 +128,7 @@ function App() {
             {/* {role === "admin" ? ( */}
             <Route path="student" element={<StudentAdminLayout />}>
               <Route index element={<StudentAdminOverview />} />
+              <Route path="all" element={<StudentAdminAll />} />
               <Route path=":id" element={<StudentAdminNames />}>
                 <Route index element={<StudentAdminNamesOverviewMobile />} />
                 <Route path=":id" element={<StudentAdminDatabase />} />

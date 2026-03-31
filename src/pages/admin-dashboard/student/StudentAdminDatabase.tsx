@@ -490,7 +490,7 @@ const StudentAdminDatabase: React.FC = () => {
                   {/* <AdvancedImage cldImg={img} /> */}
                 </div>
                 <input
-                  required={newStudentData.image ? false : true}
+                  
                   onChange={(e) => {
                     if (e.target.files) {
                       const selectedFile = e.target.files[0];
@@ -616,7 +616,6 @@ const StudentAdminDatabase: React.FC = () => {
                 </div>
                 <div className="student-addbutton-db-details-property">
                   <input
-                    required
                     type="text"
                     name="last_name"
                     id="last_name"
@@ -638,7 +637,6 @@ const StudentAdminDatabase: React.FC = () => {
                 </div>
                 <div className="student-addbutton-db-details-property">
                   <input
-                    required
                     type="text"
                     name="first_name"
                     id="first_name"
@@ -660,7 +658,6 @@ const StudentAdminDatabase: React.FC = () => {
                 </div>
                 <div className="student-addbutton-db-details-property">
                   <input
-                    required
                     type="text"
                     name="middle_name"
                     id="middle_name"
@@ -760,7 +757,6 @@ const StudentAdminDatabase: React.FC = () => {
                       }`}
                     /> */}
                   <DatePicker
-                    required
                     // selected={data.date_of_birth}
                     selected={newStudentData.date_of_birth}
                     onChange={handleDateChange}
@@ -780,7 +776,6 @@ const StudentAdminDatabase: React.FC = () => {
                 <div className="student-db-details-property">
                   {editable ? (
                     <select
-                      required
                       value={newStudentData.gender || ""}
                       onChange={handleInputChange}
                       disabled={editable ? false : true}
@@ -827,7 +822,6 @@ const StudentAdminDatabase: React.FC = () => {
                 </div>
                 <div className="student-db-details-property">
                   <input
-                    required
                     type="text"
                     name="fathers_name"
                     id="fathers_name"
@@ -848,7 +842,6 @@ const StudentAdminDatabase: React.FC = () => {
                 </div>
                 <div className="student-db-details-property">
                   <input
-                    required
                     type="text"
                     name="fathers_occupation"
                     id="fathers_occupation"
@@ -867,7 +860,6 @@ const StudentAdminDatabase: React.FC = () => {
                 </div>
                 <div className="student-db-details-property">
                   <input
-                    required
                     type="tel"
                     name="fathers_contact"
                     id="fathers_contact"
@@ -886,7 +878,6 @@ const StudentAdminDatabase: React.FC = () => {
                 </div>
                 <div className="student-db-details-property">
                   <input
-                    required
                     type="text"
                     name="mothers_name"
                     id="mothers_name"
@@ -907,7 +898,6 @@ const StudentAdminDatabase: React.FC = () => {
                 </div>
                 <div className="student-db-details-property">
                   <input
-                    required
                     type="text"
                     name="mothers_occupation"
                     id="mothers_occupation"
@@ -926,7 +916,6 @@ const StudentAdminDatabase: React.FC = () => {
                 </div>
                 <div className="student-db-details-property">
                   <input
-                    required
                     type="tel"
                     name="mothers_contact"
                     id="mothers_contact"
@@ -946,7 +935,6 @@ const StudentAdminDatabase: React.FC = () => {
                 <div className="student-db-details-property">
                   <textarea
                     // type="text"
-                    required
                     name="home_address"
                     id="home_address"
                     value={newStudentData.home_address || ""}
@@ -964,7 +952,6 @@ const StudentAdminDatabase: React.FC = () => {
                 </div>
                 <div className="student-addbutton-db-details-property">
                   <select
-                    required
                     value={formData.guardian}
                     onChange={handleInputChange}
                     // onChange={(e) =>
@@ -989,7 +976,6 @@ const StudentAdminDatabase: React.FC = () => {
                 </div>
                 <div className="student-db-details-property">
                   <input
-                    required
                     type="email"
                     name="guardian_email"
                     id="guardian_email"
@@ -1014,7 +1000,6 @@ const StudentAdminDatabase: React.FC = () => {
                 </div>
                 <div className="student-db-details-property">
                   <input
-                    required
                     type="text"
                     name="home_town"
                     id="home_town"
@@ -1033,7 +1018,6 @@ const StudentAdminDatabase: React.FC = () => {
                 </div>
                 <div className="student-db-details-property">
                   <input
-                    required
                     type="text"
                     name="state_of_origin"
                     id="state_of_origin"
@@ -1052,7 +1036,6 @@ const StudentAdminDatabase: React.FC = () => {
                 </div>
                 <div className="student-db-details-property">
                   <input
-                    required
                     type="text"
                     name="country"
                     id="country"
@@ -1072,7 +1055,6 @@ const StudentAdminDatabase: React.FC = () => {
                 <div className="student-db-details-property">
                   {editable ? (
                     <select
-                      required
                       value={newStudentData.religion || ""}
                       onChange={handleInputChange}
                       // onChange={(e) =>
@@ -1121,7 +1103,6 @@ const StudentAdminDatabase: React.FC = () => {
                 {editable ? (
                   <div className="student-db-details-property">
                     <select
-                      required
                       disabled={editable ? false : true}
                       value={
                         newStudentData.starter_pack_collected
@@ -1227,12 +1208,12 @@ const StudentAdminDatabase: React.FC = () => {
           {/* Pagination */}
           <div className="student-db-pagination">
             <button onClick={handlePrev} disabled={disablePagination.prev}>
-              <span className="text-[#374957]">«</span>
+              <span className="text-[#374957]">Â«</span>
               <span className="ml-[5px]">Prev</span>
             </button>
             <button onClick={handleNext} disabled={disablePagination.next}>
               <span className="mr-[5px]">Next</span>
-              <span className="text-[#374957]">»</span>
+              <span className="text-[#374957]">Â»</span>
             </button>
           </div>
         </div>

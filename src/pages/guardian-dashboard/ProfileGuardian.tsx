@@ -189,14 +189,11 @@ const ProfileGuardian: React.FC = () => {
                   Personal Information
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8">
-                  <DetailRow label="Guardian ID" value={profile?.guardianId} />
                   <DetailRow label="Email" value={profile?.email} />
                   <DetailRow label="Phone Number" value={profile?.phoneNumber} />
                   <DetailRow label="Occupation" value={profile?.occupation} />
                   <DetailRow label="Relationship" value={profile?.relationshipToStudent} />
-                  <DetailRow label="Alt. Phone" value={profile?.alternatePhoneNumber} />
                   <DetailRow label="Address" value={profile?.address} />
-                  <DetailRow label="Wards Registered" value={profile?.studentCount ?? wards.length} />
                 </div>
               </div>
             </div>

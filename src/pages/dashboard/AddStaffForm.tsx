@@ -162,7 +162,6 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
       <div className="flex justify-between items-center mb-4">
         <label className="font-Lora text-[15px] font-medium">Title</label>
         <select
-          required
           name="title"
           value={formData.title}
           className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#05878F] hover:border-[#05878F] border-[#05878F] focus:border-2"
@@ -182,7 +181,6 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
           name="first_name"
           value={formData.first_name}
           onChange={handleChange}
-          required
         />
       </div>
       <div className="flex justify-between items-center mb-4">
@@ -193,7 +191,6 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
           name="last_name"
           value={formData.last_name}
           onChange={handleChange}
-          required
         />
       </div>
       <div className="flex justify-between items-center mb-4">
@@ -206,7 +203,6 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
           name="middle_name"
           value={formData.middle_name}
           onChange={handleChange}
-          required
         />
       </div>
       <div className="flex justify-between items-center mb-4">
@@ -217,7 +213,6 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
           name="email"
           value={formData.email}
           onChange={handleChange}
-          required
         />
       </div>
       <div className="flex justify-between items-center mb-4">
@@ -229,14 +224,12 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
           max={today}
           value={formData.date_of_birth}
           onChange={handleChange}
-          required
         />
       </div>
       <div className="flex justify-between items-center mb-4">
         <label className="font-Lora text-[15px] font-medium">Gender</label>
         <select
           name="gender"
-          required
           value={formData.gender}
           className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#05878F] hover:border-[#05878F] border-[#05878F] focus:border-2"
           onChange={handleChange}
@@ -256,7 +249,6 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
           name="home_address"
           value={formData.home_address}
           onChange={handleChange}
-          required
         />
       </div>
       <div className="flex justify-between items-center mb-4">
@@ -269,7 +261,6 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
           name="state_of_origin"
           value={formData.state_of_origin}
           onChange={handleChange}
-          required
         />
       </div>
       <div className="flex justify-between items-center mb-4">
@@ -280,7 +271,6 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
           name="home_town"
           value={formData.home_town}
           onChange={handleChange}
-          required
         />
       </div>
       <div className="flex justify-between items-center mb-4">
@@ -291,7 +281,6 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
           name="country"
           value={formData.country}
           onChange={handleChange}
-          required
         />
       </div>
       <div className="flex justify-between items-center mb-4">
@@ -304,7 +293,6 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
           name="qualification"
           value={formData.qualification}
           onChange={handleChange}
-          required
         />
       </div>
       <div className="flex justify-between items-center mb-4">

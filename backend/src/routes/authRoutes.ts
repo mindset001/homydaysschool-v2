@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { register, login, refreshToken, logout, testCredentials } from '../controllers/authController.js';
+import { register, login, guardianLogin, refreshToken, logout, testCredentials } from '../controllers/authController.js';
 import { body, validationResult } from 'express-validator';
 import { Request, Response, NextFunction } from 'express';
 
@@ -43,5 +43,14 @@ router.post(
 router.post('/refresh', refreshToken);
 router.post('/logout', logout);
 router.post('/test-credentials', testCredentials);
+router.post(
+  '/guardian-login',
+  [
+    body('studentId').notEmpty().withMessage('Student ID is required'),
+    body('password').notEmpty().withMessage('Password is required'),
+  ],
+  handleValidationErrors,
+  guardianLogin
+);
 
 export default router;

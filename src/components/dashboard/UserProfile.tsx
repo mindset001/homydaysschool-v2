@@ -41,11 +41,11 @@ const UserProfile: React.FC<Props> = ({
       guardianWard.students.length > 0
     ) {
       const { student_class_id, id } = guardianWard.students[0];
-      // guard against undefined by defaulting to 0
+      // guard against undefined by defaulting to empty string
       setGuardianActiveClassID(student_class_id ?? 0);
       setGuardianActiveStudentID((prev) => ({
         ...prev,
-        id: id,
+        id: (id as string) || '',
         isUserLoading: isGuardianWardError ? false : true,
       }));
     }
@@ -125,7 +125,7 @@ const UserProfile: React.FC<Props> = ({
                           setGuardianActiveClassID(classId ?? 0);
                           setGuardianActiveStudentID((prev) => ({
                             ...prev,
-                            id: wards.id,
+                            id: (wards.id as string) || '',
                             isUserLoading: isGuardianWardLoading ? true : false,
                           }));
                           setToggleProfile(false);

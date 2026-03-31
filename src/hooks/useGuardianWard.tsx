@@ -42,7 +42,7 @@ const useGuardianWard = () => {
     const students = rawWards.map((s) => {
       const user = s.userId || {};
       return {
-        id: s._id || s.id || 0,
+        id: (s._id || s.id || '') as string,
         firstName: user.firstName || s.first_name || '',
         lastName: user.lastName || s.last_name || '',
         middleName: user.middleName || s.middle_name || '',

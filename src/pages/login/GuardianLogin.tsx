@@ -3,15 +3,12 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   commonPasswordsImport,
-  consecutiveDotsRegexImport,
-  emailRegexImport,
-  invalidEmailCharRegexImport,
   specialCharRegexImport,
 } from "../../utils/regex";
 import { Warning } from "../../assets/images";
 import HidePasswordSVG from "../../components/svg/HidePasswordSVG";
 import ShowPasswordSVG from "../../components/svg/ShowPasswordSVG";
-import { useSignIn } from "../../services/api/auth";
+import { useGuardianSignIn } from "../../services/api/auth";
 import { getRole, saveTokens, setRole, setuser } from "../../utils/authTokens";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -24,65 +21,38 @@ const StaffLogin: React.FC = () => {
   const [toggleVisibility, setToggleVisibility] = useState<boolean>(false);
   const navigate = useNavigate();
   interface formInterface {
-    emailAddress: string;
+    studentId: string;
     password: string;
   }
   const [formData, setFormData] = useState<formInterface>({
-    emailAddress: "",
+    studentId: "",
     password: "",
   });
 
   //////////////////////////////
-  // VALIDATION REGEX
+  // VALIDATION
   ////////////////////////////////////
   const specialCharRegex = specialCharRegexImport;
-  //   const codeInjectionRegex = codeInjectionRegexImport;
-  //   const sqlInjectionRegex = sqlInjectionRegexImport;
-  // const invalidFullnameCharRegex = invalidFullnameCharRegexImport;
-  const emailRegex = emailRegexImport;
-  const invalidEmailCharRegex = invalidEmailCharRegexImport;
-  const consecutiveDotsRegex = consecutiveDotsRegexImport;
   const commonPasswords = commonPasswordsImport;
 
   ///////////////////////
-  // EMAIL ERROR AND VALIDATION
+  // STUDENT ID ERROR AND VALIDATION
   ///////////////////////
-  const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
-  const [toggleEmailError, setToggleEmailError] = useState<boolean>(false);
+  const [studentIdErrorMessage, setStudentIdErrorMessage] = useState<string>("");
+  const [toggleStudentIdError, setToggleStudentIdError] = useState<boolean>(false);
 
-  const handleEmail = (e: {
-    target: {
-      value: string;
-    };
-  }): void => {
-    const isInvalid = !emailRegex.test(e.target.value);
-    const isEmpty = e.target.value.trim() == "" || !e.target.value;
-    const isShort = e.target.value.length <= 1;
-    const hasSpecialChars = invalidEmailCharRegex.test(e.target.value);
-    const hasConsecutiveDots = consecutiveDotsRegex.test(e.target.value);
-
-    isInvalid || isEmpty || isShort || hasSpecialChars || hasConsecutiveDots
-      ? (setToggleEmailError(true),
-        setEmailErrorMessage(
-          isInvalid
-            ? "Enter valid email address"
-            : isEmpty
-            ? "This field is required"
-            : isShort
-            ? "Email address is too short"
-            : hasSpecialChars
-            ? "Email address contains invalid chars"
-            : hasConsecutiveDots
-            ? "Consecutive dots are not allowed"
-            : ""
-        ))
-      : (setToggleEmailError(false), setEmailErrorMessage(""));
-
-    setFormData({
-      ...formData,
-      emailAddress: e.target.value,
-    });
-    // console.log(formData);
+  const handleStudentId = (e: { target: { value: string } }): void => {
+    const val = e.target.value.trim();
+    const isEmpty = !val;
+    const isShort = val.length < 4;
+    if (isEmpty || isShort) {
+      setToggleStudentIdError(true);
+      setStudentIdErrorMessage(isEmpty ? "This field is required" : "Enter a valid Student ID");
+    } else {
+      setToggleStudentIdError(false);
+      setStudentIdErrorMessage("");
+    }
+    setFormData({ ...formData, studentId: e.target.value });
   };
   ////////////////////////////////////
   // PASSWORD ERROR AND VALIDATION
@@ -140,7 +110,7 @@ const StaffLogin: React.FC = () => {
   };
 
   const role = getRole();
-  const { mutate } = useSignIn();
+  const { mutate } = useGuardianSignIn();
   ////////////////////////////////////////////////////////////////////
   // HANDLE SIGN IN
   ////////////////////////////////////////////////////////////////////
@@ -148,26 +118,15 @@ const StaffLogin: React.FC = () => {
     e.preventDefault();
 
     const isValid =
-      // !toggleUsernameError &&
-      // !toggleFullnameError &&
-      !toggleEmailError &&
+      !toggleStudentIdError &&
       !togglePasswordError &&
-      // formData.username &&
-      // formData.fullname &&
-      formData.emailAddress &&
+      formData.studentId &&
       formData.password;
 
     if (!isValid) {
-      // Show appropriate error messages if fields are invalid
-      // !formData.username &&
-      //   (setUsernameErrorMessage("This field is required"),
-      //   setToggleUsernameError(true));
-      // !formData.fullname &&
-      //   (setFullnameErrorMessage("This field is required"),
-      //   setToggleFullnameError(true));
-      !formData.emailAddress &&
-        (setEmailErrorMessage("This field is required"),
-        setToggleEmailError(true));
+      !formData.studentId &&
+        (setStudentIdErrorMessage("This field is required"),
+        setToggleStudentIdError(true));
       !formData.password &&
         (setPasswordErrorMessage("This field is required"),
         setTogglePasswordError(true));
@@ -176,9 +135,8 @@ const StaffLogin: React.FC = () => {
     ////////////////////////////////////////////////
     setLoading(true);
     const userDetails = {
-      email: formData.emailAddress,
+      studentId: formData.studentId.trim().toUpperCase(),
       password: formData.password,
-      role: role as string,
     };
     mutate(userDetails, {
       onSuccess: (response: { data: any }) => {
@@ -257,28 +215,28 @@ const StaffLogin: React.FC = () => {
       className="mt-[50px] md:mt-[10px] w-auto mx-[30px] md:mx-[80px] z-10 flex flex-col justify-center"
     >
       <div className="flex flex-col mb-[5px]">
-        <label htmlFor="email" className="font-Lora text-[15px] font-medium">
-          Email address
+        <label htmlFor="studentId" className="font-Lora text-[15px] font-medium">
+          Student ID
         </label>
         <div className="relative w-full rounded-md mt-1 h-[41px]">
           <input
-            type="email"
-            placeholder="Enter email address"
-            name="email"
-            id="email"
-            className={`w-full h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px]
+            type="text"
+            placeholder="e.g. HMC0001"
+            name="studentId"
+            id="studentId"
+            className={`w-full h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] uppercase
               ${
-                toggleEmailError
+                toggleStudentIdError
                   ? " focus:border-[#FF2E2E] hover:border-[#FF2E2E] border-[#FF2E2E] focus:border-2"
                   : "focus:border-[#05878F] hover:border-[#05878F] border-[#05878F] focus:border-2"
               }`}
-            autoComplete={"on"}
-            value={formData.emailAddress}
-            onChange={handleEmail}
+            autoComplete={"off"}
+            value={formData.studentId}
+            onChange={handleStudentId}
           />
           <span
             className={`h-[41px] absolute  right-[12px] cursor-pointer flex items-center top-0 bottom-0 ${
-              toggleEmailError ? "visible" : "invisible"
+              toggleStudentIdError ? "visible" : "invisible"
             }`}
           >
             <img src={Warning} alt="warning" className="size-[15px]" />
@@ -286,15 +244,15 @@ const StaffLogin: React.FC = () => {
         </div>
         <div
           className={`text-[#FF2E2E] text-sm min-h-[20px] my-auto font-semibold font-Lora ${
-            toggleEmailError ? "visible" : "invisible"
+            toggleStudentIdError ? "visible" : "invisible"
           }`}
         >
-          {emailErrorMessage}
+          {studentIdErrorMessage}
         </div>
       </div>
       <div className="flex flex-col mb-[5px]">
         <label htmlFor="password" className="font-Lora text-[15px] font-medium">
-          Password
+          Student's Password
         </label>
 
         <div className="relative w-full rounded-md mt-1 h-[41px]">
@@ -361,8 +319,8 @@ const StaffLogin: React.FC = () => {
       <button
         className={`font-Lora text-white self-center border-2 border-[rgba(5,135,143,0.01)] border-solid rounded-[25px] inline-block text-xl font-bold lg:font-semibold py-[12px] w-full sm:w-auto text-center mt-[54px] md:mt-[23px]  md:mb-[2px] ${
           formData.password &&
-          formData.emailAddress &&
-          !toggleEmailError &&
+          formData.studentId &&
+          !toggleStudentIdError &&
           !togglePasswordError
             ? loading
               ? "bg-[#05878F]/50 cursor-not-allowed px-[64px]"
@@ -372,8 +330,8 @@ const StaffLogin: React.FC = () => {
         // onClick={handleLogin}
         disabled={
           formData.password &&
-          formData.emailAddress &&
-          !toggleEmailError &&
+          formData.studentId &&
+          !toggleStudentIdError &&
           !togglePasswordError
             ? loading
               ? true
