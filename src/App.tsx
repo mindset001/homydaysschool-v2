@@ -96,6 +96,9 @@ const AcademicSessionPage = lazy(
 const StudentPromotionPage = lazy(
   () => import("./pages/dashboard/StudentPromotion")
 );
+const ChangePasswordPage = lazy(
+  () => import("./pages/dashboard/ChangePassword")
+);
 
 const TimetablePage = () => {
   const role = getRole();
@@ -166,6 +169,7 @@ function App() {
             <Route path="timetable" element={<TimetablePage />} />
             <Route path="academic-session" element={<AcademicSessionPage />} />
             <Route path="student-promotion" element={<StudentPromotionPage />} />
+            <Route path="change-password" element={<ChangePasswordPage />} />
             <Route path="guardian-result/:id" element={<ResultGuardian />} />
             {/* <Route path="attendance" element={<Attendance />} /> */}
             {/* {role === "admin" || role === "guardian" ? (

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { User } from '../models/User.js';
 import { Student } from '../models/Student.js';
+import { Staff } from '../models/Staff.js';
 import { hashPassword, comparePassword } from '../utils/password.js';
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../utils/jwt.js';
 
@@ -260,6 +261,90 @@ export const logout = async (req: Request, res: Response): Promise<void> => {
     await User.findByIdAndUpdate(userId, { refreshToken: null });
 
     res.json({ message: 'Logout successful' });
+  } catch (error: any) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+export const changePassword = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const authReq = req as any;
+    const userId = authReq.user?.userId;
+    const { currentPassword, newPassword } = req.body;
+
+    if (!userId) {
+      res.status(401).json({ message: 'Unauthorized' });
+      return;
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      res.status(404).json({ message: 'User not found' });
+      return;
+    }
+
+    const isMatch = await comparePassword(currentPassword, user.password);
+    if (!isMatch) {
+      res.status(400).json({ message: 'Current password is incorrect' });
+      return;
+    }
+
+    if (newPassword.length < 8) {
+      res.status(400).json({ message: 'New password must be at least 8 characters' });
+      return;
+    }
+
+    user.password = await hashPassword(newPassword);
+    await user.save();
+
+    res.json({ message: 'Password changed successfully' });
+  } catch (error: any) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+export const adminResetPassword = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const requestingUser = (req as any).user;
+    if (!requestingUser || requestingUser.role !== 'admin') {
+      res.status(403).json({ message: 'Only admins can reset passwords' });
+      return;
+    }
+
+    const { targetType, targetId, newPassword } = req.body;
+
+    if (!newPassword || newPassword.length < 6) {
+      res.status(400).json({ message: 'New password must be at least 6 characters' });
+      return;
+    }
+
+    let userDocId: string | undefined;
+
+    if (targetType === 'student') {
+      const student = await Student.findById(targetId).populate('userId');
+      if (!student) { res.status(404).json({ message: 'Student not found' }); return; }
+      userDocId = (student.userId as any)?._id?.toString() || (student.userId as any)?.toString();
+    } else if (targetType === 'staff') {
+      const staff = await Staff.findById(targetId).populate('userId');
+      if (!staff) { res.status(404).json({ message: 'Staff not found' }); return; }
+      userDocId = (staff.userId as any)?._id?.toString() || (staff.userId as any)?.toString();
+    } else {
+      res.status(400).json({ message: 'Invalid targetType. Must be student or staff' });
+      return;
+    }
+
+    if (!userDocId) {
+      res.status(404).json({ message: 'User account not found for this record' });
+      return;
+    }
+
+    const user = await User.findById(userDocId);
+    if (!user) { res.status(404).json({ message: 'User account not found' }); return; }
+
+    user.password = await hashPassword(newPassword);
+    await user.save();
+
+    res.json({ message: `Password reset successfully for ${user.firstName} ${user.lastName}` });
   } catch (error: any) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }

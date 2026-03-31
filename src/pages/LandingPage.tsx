@@ -1,4 +1,3 @@
-
 import React from "react";
 import Navbar from "../components/Navbar";
 import HeroSection from "../components/HeroSection";
@@ -7,6 +6,7 @@ import OurValues from "../components/OurValues";
 import Testimonials from "../components/Testimonials";
 import AdmissionBanner from "../components/AdmissionBanner";
 import NewsEvents from "../components/NewsEvents";
+import ContactSection from "../components/ContactSection";
 import Footer from "../components/Footer";
 
 const LandingPage: React.FC = () => {
@@ -19,6 +19,7 @@ const LandingPage: React.FC = () => {
       <Testimonials />
       <AdmissionBanner />
       <NewsEvents />
+      <ContactSection />
       <Footer />
     </div>
   );

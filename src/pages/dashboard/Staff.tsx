@@ -4,12 +4,13 @@ import { Add, FilterMobile } from "../../assets/images/dashboard/students";
 import UserDetails from "../../shared/UserDetails";
 import useClasses from "../../hooks/useClasses";
 import Pagination from "../../shared/Pagination";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { useCreateStaff } from "../../services/api/staffApis";
 import Loader from "../../shared/Loader";
 import SlidePanel from "../../shared/SlidePanel";
 import AddStaffForm, { AddStaff } from "./AddStaffForm";
 import { getStaffs } from "../../services/api/calls/getApis";
+import { adminResetPassword } from "../../services/api/calls/postApis";
 import { showErrorToast, showSuccessToast } from "../../shared/ToastNotification";
 import { getRole } from "../../utils/authTokens";
 import { profileImage } from "../../assets/images/users";
@@ -129,6 +130,33 @@ const Staff: React.FC = () => {
   };
   const [isSliderOpen, setIsSliderOpen] = useState<boolean>(false);
   const { mutate, isPending: isCreatingUser } = useCreateStaff();
+
+  // Reset Password
+  const [showResetModal, setShowResetModal] = useState(false);
+  const [resetPassword, setResetPassword] = useState("");
+  const [resetConfirm, setResetConfirm] = useState("");
+  const [resetError, setResetError] = useState("");
+
+  const resetMutation = useMutation({
+    mutationFn: adminResetPassword,
+    onSuccess: (res: any) => {
+      showSuccessToast(res?.data?.message || "Password reset successfully!");
+      setShowResetModal(false);
+      setResetPassword("");
+      setResetConfirm("");
+      setResetError("");
+    },
+    onError: (err: any) => {
+      showErrorToast(err?.response?.data?.message || "Failed to reset password.");
+    },
+  });
+
+  const handleResetSubmit = () => {
+    if (resetPassword.length < 6) { setResetError("Password must be at least 6 characters"); return; }
+    if (resetPassword !== resetConfirm) { setResetError("Passwords do not match"); return; }
+    setResetError("");
+    resetMutation.mutate({ targetType: "staff", targetId: String(staffProfile.id), newPassword: resetPassword });
+  };
 
   const handleAddStaff = (newStaff: Partial<AddStaff>) => {
     mutate(newStaff, {
@@ -273,6 +301,14 @@ const Staff: React.FC = () => {
               <div className="staff-details">
                 <h1 className="staff-profile">Staffs Profile</h1>
                 <UserDetails user={staffProfile} />
+                {getRole() === "admin" && (
+                  <button
+                    onClick={() => { setShowResetModal(true); setResetPassword(""); setResetConfirm(""); setResetError(""); }}
+                    className="mt-3 w-full bg-amber-400 hover:bg-amber-500 text-white font-semibold py-2 px-4 rounded-xl text-sm transition-colors"
+                  >
+                    Reset Password
+                  </button>
+                )}
               </div>
               <div className="pagination w-full flex md:hidden justify-between px-[50px] pb-[20px]">
                 <Pagination next={handleNext} prev={handlePrev} />
@@ -291,6 +327,50 @@ const Staff: React.FC = () => {
           // onClose={() => setIsSliderOpen(false)}
         />
       </SlidePanel>
+
+      {/* Reset Password Modal */}
+      {showResetModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 font-Poppins">
+            <h2 className="text-lg font-bold font-Lora text-gray-900 mb-1">Reset Password</h2>
+            <p className="text-sm text-gray-500 mb-5">
+              Set a new password for <strong>{staffProfile.first_name} {staffProfile.last_name}</strong>. They will need to use this to log in.
+            </p>
+            <div className="flex flex-col gap-3">
+              <input
+                type="password"
+                placeholder="New password (min. 6 characters)"
+                value={resetPassword}
+                onChange={(e) => { setResetPassword(e.target.value); setResetError(""); }}
+                className="w-full border-2 border-[#05878F] rounded-xl py-2 px-4 text-sm outline-none"
+              />
+              <input
+                type="password"
+                placeholder="Confirm new password"
+                value={resetConfirm}
+                onChange={(e) => { setResetConfirm(e.target.value); setResetError(""); }}
+                className="w-full border-2 border-[#05878F] rounded-xl py-2 px-4 text-sm outline-none"
+              />
+              {resetError && <p className="text-red-500 text-xs font-semibold">{resetError}</p>}
+            </div>
+            <div className="flex gap-3 mt-5">
+              <button
+                onClick={handleResetSubmit}
+                disabled={resetMutation.isPending}
+                className="flex-1 bg-amber-400 hover:bg-amber-500 text-white font-bold py-2 rounded-xl text-sm disabled:opacity-60"
+              >
+                {resetMutation.isPending ? "Resetting..." : "Reset Password"}
+              </button>
+              <button
+                onClick={() => setShowResetModal(false)}
+                className="flex-1 border border-gray-300 text-gray-700 font-medium py-2 rounded-xl text-sm hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

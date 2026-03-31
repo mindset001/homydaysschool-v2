@@ -1,8 +1,17 @@
+import { EventInterface } from "../../../hooks/useTotalPercentageValue";
+import apiClient from "../apiClient";
+
+export const changePassword = (data: { currentPassword: string; newPassword: string }) => {
+  return apiClient.post(`auth/change-password`, data);
+};
+
+export const adminResetPassword = (data: { targetType: 'student' | 'staff'; targetId: string; newPassword: string }) => {
+  return apiClient.post(`auth/admin/reset-password`, data);
+};
+
 export const createClass = (classData: object) => {
   return apiClient.post(`/classes/`, classData);
 };
-import { EventInterface } from "../../../hooks/useTotalPercentageValue";
-import apiClient from "../apiClient";
 
 export const addStudent = async (newData: object) => {
   const response = await apiClient.post(`/students/`, newData, {

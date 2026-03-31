@@ -150,49 +150,18 @@ const StaffLogin: React.FC = () => {
         console.log("Guardian Data", userdata);
       },
       onError: (error: any) => {
-        if (error && !(error as any).response) {
-          console.error("Login failed:", error);
-          toast.error(
-            "An error occured. Check your internet connection and/or login credentials"
-          );
-        }
         setLoading(false);
-
-        // Still working on it
-        if (error && (error as any).response) {
-          if (error.response) {
-            switch (error.response.data.message) {
-              case "Invalid email or password":
-                toast.error("An error occured. Invalid email or password");
-                break;
-              case "You don't have permission to access this page":
-                toast.error("An error occured. Incorrect role details entered");
-                break;
-              case "net::ERR_PROXY_CONNECTION_FAILED":
-                console.error("Check your internet connection");
-                break;
-              case "net::ERR_TIMED_OUT":
-                console.error("Timeout error");
-                break;
-              default:
-            }
-          } else {
-            console.error("Error occurred: ", error.message);
-            toast.error(
-              "An error occured. Check your internet connection and/or login credentials"
-            );
-          }
-          // console.error("Error occurred: ", error.message);
-          // toast.error(
-          //   "An error occured. Check your internet connection and/or login credentials"
-          // );
-        } else {
-          console.error("An unknown error occurred");
-          toast.error(
-            "An error occured. Check your internet connection and/or login credentials"
-          );
+        const msg: string = error?.response?.data?.message ?? "";
+        if (msg === "Invalid credentials" || msg.toLowerCase().includes("invalid")) {
+          setTogglePasswordError(true);
+          setPasswordErrorMessage("Incorrect Student ID or password");
+          return;
         }
-        // Ends here
+        if (msg === "Student account is deactivated") {
+          toast.error("This student account has been deactivated. Please contact the school.");
+          return;
+        }
+        toast.error("An error occurred. Check your internet connection and try again.");
       },
     });
     ////////////////////////////////////////////////

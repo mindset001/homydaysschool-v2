@@ -15,6 +15,7 @@ import { getRole, getUser } from "../utils/authTokens";
 import UserProfile from "../components/dashboard/UserProfile";
 import useGuardianWard from "../hooks/useGuardianWard";
 import { getUnreadChatCount } from "../services/api/calls/getApis";
+import SessionExpiryWarning from "../shared/SessionExpiryWarning";
 
 const DashboardLayout: React.FC = () => {
   const [mobileToggle, setMobileToggle] = useState<boolean>(false);
@@ -69,6 +70,7 @@ const DashboardLayout: React.FC = () => {
 
   return (
     <div className="dashboard">
+      <SessionExpiryWarning />
       {/* Sidenav Background */}
       <div
         className={`fixed top-0 left-0 bottom-0 w-full min-h-screen bg-[rgba(0,0,0,0.5)] z-[55] ${

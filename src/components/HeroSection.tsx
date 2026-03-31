@@ -36,6 +36,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
       {/* Content */}
       <div className="relative z-10 px-4 sm:px-8 py-10 md:px-20 flex flex-col gap-4 w-full max-w-5xl mx-auto">
+        <p className="text-[#05878F] bg-white/10 border border-white/20 backdrop-blur-sm text-xs sm:text-sm font-semibold px-3 py-1 rounded-full w-fit mb-2">2nd Term &bull; 2025/2026 Academic Session</p>
         <h2 className="text-white text-base sm:text-lg font-light mb-1 sm:mb-2">Welcome to</h2>
         <h1 className="text-2xl sm:text-4xl md:text-6xl font-bold text-white mb-2 leading-tight">
           Homydays Schools

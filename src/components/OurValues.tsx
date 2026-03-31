@@ -2,21 +2,21 @@ import React from "react";
 
 const values = [
   {
-    title: "Dedication",
+    title: "Excellence",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel nisi sit amet lorem tincidunt viverra. In euismod magna et semper malesuada. Donec convallis mauris vel sapien tincidunt, ac finibus metus varius. Nulla porttitor ligula sed massa fermentum, ut vestibulum leo bibendum.",
+      "We uphold the highest academic and moral standards, challenging every student to reach their full potential through rigorous learning and dedicated mentorship.",
     icon: "/assets/images/value-icon.png",
   },
   {
-    title: "Dedication",
+    title: "Discipline",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel nisi sit amet lorem tincidunt viverra. In euismod magna et semper malesuada. Donec convallis mauris vel sapien tincidunt, ac finibus metus varius. Nulla porttitor ligula sed massa fermentum, ut vestibulum leo bibendum.",
+      "We instil a culture of responsibility, punctuality and respect — training students to become principled leaders who contribute positively to their communities.",
     icon: "/assets/images/value-icon.png",
   },
   {
-    title: "Dedication",
+    title: "Innovation",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel nisi sit amet lorem tincidunt viverra. In euismod magna et semper malesuada. Donec convallis mauris vel sapien tincidunt, ac finibus metus varius. Nulla porttitor ligula sed massa fermentum, ut vestibulum leo bibendum.",
+      "We embrace creative thinking and modern teaching methods, equipping our students with the skills needed to thrive in an ever-changing world.",
     icon: "/assets/images/value-icon.png",
   },
 ];

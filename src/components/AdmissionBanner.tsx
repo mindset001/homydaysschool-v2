@@ -4,8 +4,9 @@ const AdmissionBanner: React.FC = () => (
   <section className="w-full flex justify-center py-10 px-4">
     <div className="bg-blue-50 rounded-xl p-8 flex flex-col md:flex-row items-center justify-between w-full max-w-4xl gap-8">
       <div>
-        <h3 className="text-2xl font-bold text-blue-900 mb-2">Admission in Progress!!!</h3>
-        <p className="text-gray-700 mb-4">Enroll your child(ren) today to this great citadel of learning.</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-[#05878F] mb-1">2025/2026 Academic Session &mdash; 2nd Term</p>
+        <h3 className="text-2xl font-bold text-blue-900 mb-2">Admission in Progress!</h3>
+        <p className="text-gray-700 mb-4">Secure your child&apos;s place for the 3rd Term 2025/2026 &mdash; limited spaces available.</p>
         <ul className="flex flex-wrap gap-4 text-blue-900 font-medium text-sm mb-4">
           <li>Kindergaten</li>
           <li>Creche</li>

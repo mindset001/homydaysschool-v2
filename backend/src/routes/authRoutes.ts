@@ -1,7 +1,8 @@
 import { Router } from 'express';
-import { register, login, guardianLogin, refreshToken, logout, testCredentials } from '../controllers/authController.js';
+import { register, login, guardianLogin, refreshToken, logout, testCredentials, changePassword, adminResetPassword } from '../controllers/authController.js';
 import { body, validationResult } from 'express-validator';
 import { Request, Response, NextFunction } from 'express';
+import { authenticate } from '../middleware/auth.js';
 
 // Validation error middleware
 const handleValidationErrors = (req: Request, res: Response, next: NextFunction) => {
@@ -43,6 +44,27 @@ router.post(
 router.post('/refresh', refreshToken);
 router.post('/logout', logout);
 router.post('/test-credentials', testCredentials);
+router.post(
+  '/admin/reset-password',
+  authenticate,
+  [
+    body('targetType').isIn(['student', 'staff']).withMessage('targetType must be student or staff'),
+    body('targetId').notEmpty().withMessage('targetId is required'),
+    body('newPassword').isLength({ min: 6 }).withMessage('New password must be at least 6 characters'),
+  ],
+  handleValidationErrors,
+  adminResetPassword
+);
+router.post(
+  '/change-password',
+  authenticate,
+  [
+    body('currentPassword').notEmpty().withMessage('Current password is required'),
+    body('newPassword').isLength({ min: 8 }).withMessage('New password must be at least 8 characters'),
+  ],
+  handleValidationErrors,
+  changePassword
+);
 router.post(
   '/guardian-login',
   [
