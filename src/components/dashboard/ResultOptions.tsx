@@ -53,8 +53,8 @@ const ResultOptions: React.FC<{
       class_id: classActiveID,
     });
   const [downloadTemplate, setDownloadTemplate] = useState("");
-  const [selectedTerm, setSelectedTerm] = useState<string>("First Term");
-  const [selectedAcademicYear, setSelectedAcademicYear] = useState<string>("2026/2027");
+  const [selectedTerm, setSelectedTerm] = useState<string>("Second Term");
+  const [selectedAcademicYear, setSelectedAcademicYear] = useState<string>("2025/2026");
   
   // Handle template download with proper authentication
   const handleDownloadTemplate = async () => {

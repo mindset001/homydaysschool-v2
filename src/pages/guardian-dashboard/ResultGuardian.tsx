@@ -66,12 +66,16 @@ const ResultGuardian: React.FC = () => {
   });
 
   const student: StudentResultData | null = raw?.data?.data?.[0] ?? null;
-  const records: AcademicRecord[] = student?.academicRecords ?? [];
-  const termOptions = records.map((r, i) => ({
-    label: `${r.term} – ${r.year}`,
-    index: i,
-  }));
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const allRecords: AcademicRecord[] = student?.academicRecords ?? [];
+
+  // Show the most recent record — labelled as 2nd Term 2025/2026 in the UI.
+  // (Records uploaded before term defaults were corrected may carry a different
+  //  internal term/year label, so we just take the latest one.)
+  const records: AcademicRecord[] = allRecords.length > 0
+    ? [allRecords[allRecords.length - 1]]
+    : [];
+
+  const [selectedIndex] = useState(0);
   const [fullReportOpen, setFullReportOpen] = useState(false);
   const activeRecord: AcademicRecord | undefined = records[selectedIndex];
   const paymentSummary = paymentData?.data?.summary;
@@ -157,35 +161,17 @@ const ResultGuardian: React.FC = () => {
         </div>
 
         <div className="flex flex-col gap-2 items-end">
-          {termOptions.length > 0 && (
-            <div className="flex flex-col gap-1">
-              <label className="text-[11px] text-gray-500">Select Term</label>
-              <select
-                value={selectedIndex}
-                onChange={(e) => setSelectedIndex(Number(e.target.value))}
-                className="border border-gray-200 rounded-[8px] px-3 py-2 text-[12px] text-gray-700 bg-white focus:outline-none focus:ring-1 focus:ring-clr1"
-              >
-                {termOptions.map((opt) => (
-                  <option key={opt.index} value={opt.index}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-          <button
-            onClick={() => setFullReportOpen(true)}
-            className="px-4 py-2 bg-clr1 text-white text-[12px] rounded-[8px] hover:bg-[#046a71] transition-colors whitespace-nowrap"
-          >
-            View Full Report Sheet
-          </button>
+          <div className="bg-[#05878F]/10 text-[#05878F] text-xs font-semibold px-3 py-1 rounded-full">
+            2nd Term &bull; 2025/2026
+          </div>
+          {/* View Full Report Sheet button hidden for now */}
         </div>
       </div>
 
       {/* Results */}
-      {termOptions.length === 0 ? (
+      {records.length === 0 ? (
         <div className="text-center py-16 text-gray-400 text-sm">
-          No academic records available yet.
+          No results available for 2nd Term 2025/2026 yet.
         </div>
       ) : activeRecord ? (
         <>
