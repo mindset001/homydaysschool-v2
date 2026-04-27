@@ -3,9 +3,11 @@ import { useState, useEffect, useCallback } from "react";
 import homy1 from "../assets/images/homy1.jpg";
 import homy2 from "../assets/images/kg2.jpg";
 import homy3 from "../assets/images/korede.jpg";
-import homy4 from "../assets/images/new.jpg";
+import homy5 from "../../public/hero.jpeg"
+import homy6 from "../../public/hero2.jpeg"
+import homy7 from "../../public/hero3.jpeg"
 
-const heroImages = [homy1, homy2, homy3, homy4];
+const heroImages = [homy1, homy2, homy3, homy5, homy6, homy7];
 const AUTO_ROTATE_INTERVAL = 4000;
 
 export default function HeroSection() {
@@ -59,9 +61,8 @@ export default function HeroSection() {
               alt={`Slide ${idx + 1}`}
               loading="lazy"
               onClick={() => setActiveIndex(idx)}
-              className={`w-20 h-16 sm:w-24 sm:h-20 object-cover rounded shadow border-2 cursor-pointer transition-all duration-200 ${
-                idx === activeIndex ? "border-blue-400 scale-105" : "border-white opacity-70 hover:opacity-100"
-              }`}
+              className={`w-20 h-16 sm:w-24 sm:h-20 object-cover rounded shadow border-2 cursor-pointer transition-all duration-200 ${idx === activeIndex ? "border-blue-400 scale-105" : "border-white opacity-70 hover:opacity-100"
+                }`}
             />
           ))}
         </div>
