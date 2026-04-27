@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import apiClient from "../services/api/apiClient";
+import Logo from "../../public/logo.png"
 
 interface IEvent {
   _id: string;
@@ -35,7 +36,7 @@ const NewsEvents: React.FC = () => {
           {/* Header card */}
           <div className="rounded-lg shadow p-4 flex flex-col justify-between bg-black text-white min-h-[220px]">
             <img
-              src="/assets/images/news-logo.png"
+              src={Logo}
               alt="News Logo"
               className="w-16 h-16 mb-2 object-contain"
               loading="lazy"
@@ -49,14 +50,14 @@ const NewsEvents: React.FC = () => {
           {/* Event cards */}
           {isLoading
             ? Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="rounded-lg shadow p-4 bg-white animate-pulse min-h-[160px]">
-                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-3" />
-                  <div className="h-3 bg-gray-200 rounded w-1/2 mb-2" />
-                  <div className="h-3 bg-gray-200 rounded w-1/3 mt-auto" />
-                </div>
-              ))
+              <div key={i} className="rounded-lg shadow p-4 bg-white animate-pulse min-h-[160px]">
+                <div className="h-4 bg-gray-200 rounded w-3/4 mb-3" />
+                <div className="h-3 bg-gray-200 rounded w-1/2 mb-2" />
+                <div className="h-3 bg-gray-200 rounded w-1/3 mt-auto" />
+              </div>
+            ))
             : displayEvents.length > 0
-            ? displayEvents.map((item) => (
+              ? displayEvents.map((item) => (
                 <div
                   key={item._id}
                   className="rounded-lg shadow p-4 flex flex-col justify-between bg-white text-black min-h-[160px]"
@@ -65,7 +66,7 @@ const NewsEvents: React.FC = () => {
                   <div className="text-xs text-gray-500 mt-auto">{formatDate(item.date)}</div>
                 </div>
               ))
-            : Array.from({ length: 3 }).map((_, i) => (
+              : Array.from({ length: 3 }).map((_, i) => (
                 <div
                   key={i}
                   className="rounded-lg shadow p-4 flex flex-col justify-between bg-white text-black min-h-[160px]"
