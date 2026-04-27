@@ -24,6 +24,8 @@ export const getAllTimetables = async (req: AuthRequest, res: Response): Promise
       term: t.term,
       academicYear: t.academicYear,
       timetableId: t._id,
+      // Convert Mongoose Map to a plain object so the frontend can read it
+      timings: t.timings ? Object.fromEntries(t.timings as Map<string, string>) : {},
       // rename 'day' -> 'days' to match the frontend transform function
       timetable: t.schedule.map((s: any) => ({ ...s, days: s.day })),
     }));
@@ -67,7 +69,7 @@ export const getTimetableByClass = async (req: AuthRequest, res: Response): Prom
 // POST /api/timetables — create or replace a timetable for a class+term+year
 export const createOrUpdateTimetable = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    const { classId, term, academicYear, schedule } = req.body;
+    const { classId, term, academicYear, schedule, timings } = req.body;
 
     if (!classId || !term || !academicYear) {
       res.status(400).json({ message: 'classId, term, and academicYear are required' });
@@ -100,7 +102,7 @@ export const createOrUpdateTimetable = async (req: AuthRequest, res: Response): 
 
     const timetable = await Timetable.findOneAndUpdate(
       { classId, term, academicYear },
-      { classId, className: (cls as any).name, term, academicYear, schedule: builtSchedule },
+      { classId, className: (cls as any).name, term, academicYear, schedule: builtSchedule, timings: timings ?? {} },
       { upsert: true, new: true, runValidators: true }
     );
 

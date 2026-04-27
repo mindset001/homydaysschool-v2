@@ -11,23 +11,24 @@ const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] as const;
 const TERMS = ['First Term', 'Second Term', 'Third Term'] as const;
 const ACADEMIC_YEARS = ['2025/2026', '2026/2027', '2027/2028', '2028/2029'] as const;
 
-type TimeSlot = { key: PeriodKey | null; label: string; isBreak?: boolean };
+type PeriodKey = 'first_period' | 'second_period' | 'third_period' | 'fourth_period' |
+  'fifth_period' | 'six_period' | 'eight_period' | 'nineth_period' | 'tenth_period';
 
-const TIME_SLOTS: TimeSlot[] = [
+type TimeSlot = { key: PeriodKey | null; label: string; isBreak?: boolean; breakKey?: string };
+
+/** Default time slots — these become editable state in the edit view */
+const DEFAULT_TIME_SLOTS: TimeSlot[] = [
   { key: 'first_period',  label: '8:20 – 9:00 am' },
   { key: 'second_period', label: '9:00 – 9:40 am' },
   { key: 'third_period',  label: '9:40 – 10:20 am' },
-  { key: null,            label: '10:20 – 10:50 am', isBreak: true },
+  { key: null,            label: '10:20 – 10:50 am', isBreak: true, breakKey: 'break_1' },
   { key: 'fourth_period', label: '10:50 – 11:30 am' },
   { key: 'fifth_period',  label: '11:30 – 12:10 pm' },
   { key: 'six_period',    label: '12:10 – 12:50 pm' },
-  { key: null,            label: '12:50 – 1:00 pm', isBreak: true },
+  { key: null,            label: '12:50 – 1:00 pm',  isBreak: true, breakKey: 'break_2' },
   { key: 'eight_period',  label: '1:00 – 1:40 pm' },
   { key: 'nineth_period', label: '1:40 – 2:20 pm' },
 ];
-
-type PeriodKey = 'first_period' | 'second_period' | 'third_period' | 'fourth_period' |
-  'fifth_period' | 'six_period' | 'eight_period' | 'nineth_period' | 'tenth_period';
 
 type DaySchedule = Record<PeriodKey, string> & { day: string };
 type GridState = Record<string, Record<PeriodKey, string>>;
@@ -62,6 +63,25 @@ const scheduleToGrid = (schedule: DaySchedule[]): GridState => {
 const gridToSchedule = (grid: GridState): DaySchedule[] =>
   DAYS.map((day) => ({ day, ...grid[day] }));
 
+/** Build a timings object from the current timeSlots state */
+const slotsToTimings = (slots: TimeSlot[]): Record<string, string> => {
+  const out: Record<string, string> = {};
+  slots.forEach((slot) => {
+    const slotKey = slot.isBreak ? slot.breakKey! : slot.key!;
+    out[slotKey] = slot.label;
+  });
+  return out;
+};
+
+/** Restore timeSlots from a saved timings object (falls back to defaults for missing keys) */
+const timingsToSlots = (timings: Record<string, string>): TimeSlot[] =>
+  DEFAULT_TIME_SLOTS.map((slot) => {
+    const lookupKey = slot.isBreak ? slot.breakKey! : slot.key!;
+    return { ...slot, label: timings[lookupKey] ?? slot.label };
+  });
+
+// ─────────────────────────────────────────────────────────────────────────────
+
 const Timetable: React.FC = () => {
   const queryClient = useQueryClient();
   const { classNameData, isClassLoading } = useClasses();
@@ -71,6 +91,7 @@ const Timetable: React.FC = () => {
   const [selectedTerm, setSelectedTerm] = useState<string>('First Term');
   const [selectedYear, setSelectedYear] = useState<string>('2025/2026');
   const [grid, setGrid] = useState<GridState>(emptyGrid());
+  const [timeSlots, setTimeSlots] = useState<TimeSlot[]>(DEFAULT_TIME_SLOTS);
   const [viewMode, setViewMode] = useState<'edit' | 'list'>('list');
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
@@ -88,8 +109,15 @@ const Timetable: React.FC = () => {
   useEffect(() => {
     if (existingTimetable?.timetable?.length > 0) {
       setGrid(scheduleToGrid(existingTimetable.timetable));
+      // Restore saved times if available
+      if (existingTimetable.timings && Object.keys(existingTimetable.timings).length > 0) {
+        setTimeSlots(timingsToSlots(existingTimetable.timings));
+      } else {
+        setTimeSlots(DEFAULT_TIME_SLOTS);
+      }
     } else {
       setGrid(emptyGrid());
+      setTimeSlots(DEFAULT_TIME_SLOTS);
     }
   }, [selectedClassId, selectedTerm, selectedYear, existingTimetable?.timetableId]);
 
@@ -122,9 +150,20 @@ const Timetable: React.FC = () => {
     setGrid((prev) => ({ ...prev, [day]: { ...prev[day], [periodKey]: value } }));
   };
 
+  /** Update the label of a single time slot */
+  const handleTimeChange = (index: number, value: string) => {
+    setTimeSlots((prev) => prev.map((slot, i) => i === index ? { ...slot, label: value } : slot));
+  };
+
   const handleSave = () => {
     if (!selectedClassId) { toast.error('Please select a class'); return; }
-    saveMutation.mutate({ classId: selectedClassId, term: selectedTerm, academicYear: selectedYear, schedule: gridToSchedule(grid) });
+    saveMutation.mutate({
+      classId: selectedClassId,
+      term: selectedTerm,
+      academicYear: selectedYear,
+      schedule: gridToSchedule(grid),
+      timings: slotsToTimings(timeSlots),
+    });
   };
 
   const handleEdit = (t: any) => {
@@ -141,6 +180,7 @@ const Timetable: React.FC = () => {
     setSelectedTerm('First Term');
     setSelectedYear('2025/2026');
     setGrid(emptyGrid());
+    setTimeSlots(DEFAULT_TIME_SLOTS);
     setViewMode('edit');
   };
 
@@ -205,6 +245,7 @@ const Timetable: React.FC = () => {
       {/* EDIT VIEW */}
       {viewMode === 'edit' && (
         <div>
+          {/* Class / Term / Year selectors */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6 bg-[#f0fafb] border border-[#046A7E33] rounded-xl p-4">
             <div className="flex flex-col gap-1">
               <label className="text-[11px] text-gray-500 font-medium">Class</label>
@@ -239,29 +280,49 @@ const Timetable: React.FC = () => {
 
           {selectedClassId ? (
             <>
-              <p className="text-[13px] text-gray-500 mb-3">
+              <p className="text-[13px] text-gray-500 mb-1">
                 Editing: <span className="font-semibold text-gray-800">{selectedClassName}</span> — {selectedTerm}, {selectedYear}
                 {existingTimetable && <span className="ml-2 text-clr1 text-[11px]">(existing — will be updated)</span>}
+              </p>
+              <p className="text-[11px] text-gray-400 mb-4 flex items-center gap-1">
+                <span>✏️</span> Click on any time in the <strong>Time</strong> column to edit it.
               </p>
 
               <div className="overflow-x-auto rounded-xl border border-gray-100 shadow-sm mb-6">
                 <table className="w-full text-[12px] min-w-[700px]">
                   <thead className="bg-clr1 text-white">
                     <tr>
-                      <th className="text-left px-3 py-3 font-semibold w-36">Time</th>
+                      <th className="text-left px-3 py-3 font-semibold w-44">Time</th>
                       {DAYS.map((day) => <th key={day} className="text-center px-2 py-3 font-semibold">{day}</th>)}
                     </tr>
                   </thead>
                   <tbody>
-                    {TIME_SLOTS.map((slot, i) =>
+                    {timeSlots.map((slot, i) =>
                       slot.isBreak ? (
-                        <tr key={i} className="bg-gray-50">
-                          <td className="px-3 py-2 text-gray-400 text-[11px] italic font-medium">{slot.label}</td>
-                          {DAYS.map((day) => <td key={day} className="px-2 py-2 text-center text-gray-400 font-semibold text-[11px]">BREAK</td>)}
+                        <tr key={i} className="bg-amber-50">
+                          {/* Editable break time */}
+                          <td className="px-2 py-1.5">
+                            <input
+                              type="text"
+                              value={slot.label}
+                              onChange={(e) => handleTimeChange(i, e.target.value)}
+                              className="w-full border border-amber-200 rounded px-2 py-1 text-[11px] text-amber-700 italic font-medium bg-amber-50 focus:outline-none focus:ring-1 focus:ring-amber-400"
+                            />
+                          </td>
+                          {DAYS.map((day) => <td key={day} className="px-2 py-2 text-center text-amber-500 font-semibold text-[11px]">BREAK</td>)}
                         </tr>
                       ) : (
                         <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-[#f8fdfd]'}>
-                          <td className="px-3 py-2 text-gray-500 text-[11px] whitespace-nowrap">{slot.label}</td>
+                          {/* Editable period time */}
+                          <td className="px-2 py-1.5">
+                            <input
+                              type="text"
+                              value={slot.label}
+                              onChange={(e) => handleTimeChange(i, e.target.value)}
+                              placeholder="e.g. 8:00 – 8:40 am"
+                              className="w-full border border-gray-200 rounded px-2 py-1 text-[11px] text-gray-600 bg-white focus:outline-none focus:ring-1 focus:ring-clr1"
+                            />
+                          </td>
                           {DAYS.map((day) => (
                             <td key={day} className="px-1 py-1">
                               <input

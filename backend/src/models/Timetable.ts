@@ -19,6 +19,7 @@ export interface ITimetable extends Document {
   academicYear: string;
   term: string;
   schedule: IDaySchedule[];
+  timings: Map<string, string>;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -46,6 +47,9 @@ const timetableSchema = new Schema<ITimetable>(
     academicYear: { type: String, required: true },
     term:         { type: String, required: true, enum: ['First Term', 'Second Term', 'Third Term'] },
     schedule:     [dayScheduleSchema],
+    // Custom time labels per period/break — stored as a flexible key→label map.
+    // Keys match period keys (e.g. 'first_period') and break keys ('break_1', 'break_2').
+    timings:      { type: Map, of: String, default: {} },
   },
   { timestamps: true }
 );
