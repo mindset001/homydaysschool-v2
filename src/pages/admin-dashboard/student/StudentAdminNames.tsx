@@ -8,7 +8,7 @@ import {
   useParams,
 } from "react-router-dom";
 import useClasses from "../../../hooks/useClasses";
-import { getClassStudentsId, getPaymentsByClass, getBaseClass, getStaff } from "../../../services/api/calls/getApis";
+import { getClassStudentsId, getPaymentsByClass, getStaff } from "../../../services/api/calls/getApis";
 import { calculateAge } from "../../../utils/regex";
 import {
   Add,
@@ -324,17 +324,7 @@ const StudentAdminNames: React.FC = () => {
     console.log("classNameActiveID :", classNameID[0]);
   }, [classNameID]);
   
-  // FETCH CLASS FEE INFORMATION
-  const {
-    data: classFeeData,
-    isLoading: _isClassFeeLoading,
-  } = useQuery({
-    queryKey: ["baseClassFee", classNameID[0]],
-    queryFn: () => getBaseClass(),
-    enabled: classNameID.length > 0,
-  });
-  
-  // FETCH PAYMENT DATA FOR THIS CLASS
+  // FETCH PAYMENT DATA FOR THIS CLASS (includes server-computed per-student summaries)
   const {
     data: classPaymentsData,
     isLoading: isPaymentsLoading,
@@ -346,61 +336,23 @@ const StudentAdminNames: React.FC = () => {
     staleTime: 0,
     refetchOnMount: true,
   });
-  
+
   useEffect(() => {
-    console.log('=== Payment Data Debug ===');
-    console.log('Class Payments Data:', classPaymentsData);
-    console.log('Payments Loading:', isPaymentsLoading);
-    if (classPaymentsData?.data?.payments) {
-      console.log('Number of payments:', classPaymentsData.data.payments.length);
-      console.log('Payment details:', classPaymentsData.data.payments);
+    if (classPaymentsData?.data) {
+      console.log('Class Payments Data loaded. Payments:', classPaymentsData.data.payments?.length ?? 0);
+      console.log('Student summaries:', classPaymentsData.data.studentSummaries);
     }
-    console.log('========================');
-  }, [classPaymentsData, isPaymentsLoading]);
-  
-  // Calculate total fee for a class
-  const totalClassFee = useMemo(() => {
-    if (!classFeeData?.data?.classes) return 0;
-    
-    const classInfo = classFeeData.data.classes.find((c: any) => c._id === classNameID[0] || c.id === classNameID[0]);
-    if (!classInfo) return 0;
-    
-    const schoolFee = classInfo.schoolFee || 0;
-    const uniform = classInfo.uniform || 0;
-    const sportWear = classInfo.sportWear || 0;
-    const schoolBus = classInfo.schoolBus || 0;
-    const snack = classInfo.snack || 0;
-    const science = classInfo.science || 0;
-    const games = classInfo.games || 0;
-    const libraryFee = classInfo.libraryFee || 0;
-    const extraActivities = classInfo.extraActivities || 0;
-    
-    return schoolFee + uniform + sportWear + schoolBus + snack + science + games + libraryFee + extraActivities;
-  }, [classFeeData, classNameID]);
-  
-  // Create payment map by student ID
-  const studentPaymentMap = useMemo(() => {
-    if (!classPaymentsData?.data?.payments) return new Map();
-    
-    const paymentMap = new Map<string, number>();
-    classPaymentsData.data.payments.forEach((payment: any) => {
-      const studentId = payment.studentId?._id || payment.studentId;
-      const currentTotal = paymentMap.get(studentId) || 0;
-      paymentMap.set(studentId, currentTotal + (payment.amount || 0));
-      
-      console.log('Processing payment:', {
-        paymentId: payment._id,
-        studentId: studentId,
-        amount: payment.amount,
-        newTotal: currentTotal + (payment.amount || 0)
-      });
-    });
-    
-    console.log('=== Student Payment Map ===');
-    console.log('Payment Map:', Array.from(paymentMap.entries()));
-    console.log('===========================');
-    
-    return paymentMap;
+  }, [classPaymentsData]);
+
+  /**
+   * Map of studentId -> server-computed { totalPaid, totalDue, balance }.
+   * This is driven by AcademicSession records on the backend so it
+   * reflects cumulative multi-term billing, not just a single term fee.
+   */
+  const studentSummaryMap = useMemo(() => {
+    const raw: Record<string, { totalPaid: number; totalDue: number; balance: number; paymentStatus: string }> =
+      classPaymentsData?.data?.studentSummaries ?? {};
+    return new Map(Object.entries(raw));
   }, [classPaymentsData]);
   
   // GETTING CLASS Students Data by ID
@@ -441,17 +393,14 @@ const StudentAdminNames: React.FC = () => {
     }
     
     // Backend returns { students: [...] }
-    // Map backend structure to frontend structure
+    // Map backend structure to frontend structure.
+    // tuition_paid and tuition_balance come from the server-computed
+    // studentSummaries map — this reflects cumulative multi-term billing.
     const mappedStudents = classStudentsIdData.data.students.map((student: any) => {
       const studentId = student._id || '';
-      const tuitionPaid = studentPaymentMap.get(studentId) || 0;
-      const tuitionBalance = totalClassFee - tuitionPaid;
-      
-      console.log(`Student ${student.userId?.firstName} ${student.userId?.lastName} (${studentId}):`, {
-        tuitionPaid,
-        tuitionBalance,
-        totalClassFee
-      });
+      const summary = studentSummaryMap.get(studentId);
+      const tuitionPaid = summary?.totalPaid ?? 0;
+      const tuitionBalance = summary?.balance ?? 0;
       
       return {
         id: studentId,
@@ -483,13 +432,9 @@ const StudentAdminNames: React.FC = () => {
       };
     });
     
-    console.log('=== Mapped Students ===');
-    console.log('Total students:', mappedStudents.length);
-    console.log('Students with payments:', mappedStudents.filter((s: any) => s.tuition_paid > 0).length);
-    console.log('=======================');
-    
     return mappedStudents;
-  }, [classStudentsIdData, studentPaymentMap, totalClassFee]);
+  }, [classStudentsIdData, studentSummaryMap]);
+
 
   const filteredClassStudentId: studentDataI[] = useMemo(() => {
     return classStudentsId.map((student) => ({

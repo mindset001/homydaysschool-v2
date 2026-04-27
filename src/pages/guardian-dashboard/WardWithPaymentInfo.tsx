@@ -172,7 +172,7 @@ export function WardWithPaymentInfo({ ward }: { ward: Ward }) {
         ) : isError ? (
           <p className="text-red-400 text-xs">Could not load payment breakdown</p>
         ) : termSummaries.length === 0 ? (
-          <p className="text-gray-400 text-[12px]">No payment records found. Payments made by the school admin will appear here.</p>
+          <p className="text-gray-400 text-[12px]">No billing terms have been created yet. Once the school creates an academic session, payment records will appear here automatically.</p>
         ) : (
           <div className="space-y-3">
             {termSummaries.map((ts) => (
