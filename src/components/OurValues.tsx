@@ -32,7 +32,7 @@ const OurValues: React.FC = () => (
         >
           <div className="flex items-center gap-2">
             <span className="font-semibold text-lg">{value.title}</span>
-            <img src={value.icon} alt="Value Icon" className="w-8 h-8" />
+            {/* <img src={value.icon} alt="Value Icon" className="w-8 h-8" /> */}
           </div>
           <p className="text-gray-700 text-sm text-center">{value.description}</p>
         </div>

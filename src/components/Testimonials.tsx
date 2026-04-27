@@ -1,41 +1,42 @@
 import React from "react";
+import Homy from "../../public/logo.png"
 
 const testimonials = [
   {
     name: "Mrs. Adepoju",
     rating: 5.0,
     text: "Enrolling my children in Homydays Schools was the best decision I ever made. The teachers are dedicated and the environment is very conducive for learning.",
-    image: "/assets/images/testimonial1.jpg",
+    image: Homy,
   },
   {
     name: "Mr. Odewale",
     rating: 4.5,
     text: "My son's academic performance improved tremendously since he joined Homydays. The management is responsive and the school portal makes it easy to monitor his progress.",
-    image: "/assets/images/testimonial1.jpg",
+    image: Homy,
   },
   {
     name: "Mr. Alabi",
     rating: 5.0,
-    text: "I am very impressed with the level of discipline and academic excellence at Homydays Schools. My daughter loves going to school every day!",
-    image: "/assets/images/testimonial1.jpg",
+    text: "I am very impressed with the level of discipline and academic excellence at Homydays Schools. My children loves going to school every day!",
+    image: Homy,
   },
   {
     name: "Mrs. Williams",
     rating: 4.5,
     text: "The staff are caring and professional. The school's commitment to the all-round development of every student is evident in everything they do.",
-    image: "/assets/images/testimonial1.jpg",
+    image: Homy,
   },
   {
     name: "Mr. AbdulGaniyu",
     rating: 5.0,
     text: "Homydays Schools gave my children a solid educational foundation. I have no hesitation recommending this school to any parent who wants the best for their child.",
-    image: "/assets/images/testimonial1.jpg",
+    image: Homy,
   },
   {
-    name: "Mr. Afolayanka",
+    name: "Mrs Alafe",
     rating: 4.5,
     text: "The school portal is a fantastic tool — I can check my child's results and timetable anytime. Homydays truly embraces modern education.",
-    image: "/assets/images/testimonial1.jpg",
+    image: Homy
   },
 ];
 
