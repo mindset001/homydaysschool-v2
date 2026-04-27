@@ -42,13 +42,15 @@ import StaffLayout from "./layouts/role/StaffLayout";
 import TuitionLayout from "./layouts/role/TuitionLayout";
 import ToastNotification from "./shared/ToastNotification";
 import UserProvider from "./hooks/UseUserContext";
-import Results from "./pages/dashboard/Results";
-import ClassesPage from "./pages/dashboard/Classes";
-import ResultNames from "./pages/dashboard/ResultNames";
-import ResultNamesMobile from "./pages/dashboard/ResultNamesMobile";
-import ResultGuardian from "./pages/guardian-dashboard/ResultGuardian";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import { getRole } from "./utils/authTokens";
+
+// Pages that were still eagerly loaded — now lazy for code splitting
+const Results = lazy(() => import("./pages/dashboard/Results"));
+const ClassesPage = lazy(() => import("./pages/dashboard/Classes"));
+const ResultNames = lazy(() => import("./pages/dashboard/ResultNames"));
+const ResultNamesMobile = lazy(() => import("./pages/dashboard/ResultNamesMobile"));
+const ResultGuardian = lazy(() => import("./pages/guardian-dashboard/ResultGuardian"));
 
 const LandingPage = lazy(() => import("./pages/LandingPage"));
 const ForgotPassword = lazy(() => import("./pages/login/ForgotPassword"));
@@ -100,6 +102,16 @@ const ChangePasswordPage = lazy(
   () => import("./pages/dashboard/ChangePassword")
 );
 
+// Created OUTSIDE App so they are never recreated on re-renders
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60_000,       // 1 min — reduce redundant refetches
+      retry: 1,
+    },
+  },
+});
+
 const TimetablePage = () => {
   const role = getRole();
   if (role === "admin") return <AdminTimetable />;
@@ -107,88 +119,56 @@ const TimetablePage = () => {
   return <TimetablesGuardian />;
 };
 
-const queryClient = new QueryClient();
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route>
+      <Route path="/" element={<RootLayout />}>
+        <Route index element={<LandingPage />} />
+        <Route path="login" element={<Login />} />
+        <Route element={<LoginLayout />}>
+          <Route path="login/admin" element={<AdminLogin />} />
+          <Route path="login/staff" element={<StaffLogin />} />
+          <Route path="login/guardian" element={<GuardianLogin />} />
+        </Route>
+        <Route path={`forgot-password/:id`} element={<ForgotPassword />} />
+      </Route>
+      <Route element={<ProtectedRoute />}>
+        <Route path="dashboard" element={<DashboardLayout />}>
+          <Route index element={<Overview />} />
+          <Route path="student" element={<StudentAdminLayout />}>
+            <Route index element={<StudentAdminOverview />} />
+            <Route path="all" element={<StudentAdminAll />} />
+            <Route path=":id" element={<StudentAdminNames />}>
+              <Route index element={<StudentAdminNamesOverviewMobile />} />
+              <Route path=":id" element={<StudentAdminDatabase />} />
+            </Route>
+          </Route>
+          <Route path="profile" element={<ProfileLayout />} />
+          <Route path="staff" element={<StaffLayout />} />
+          <Route path="subjects" element={<Subjects />} />
+          <Route path="classes" element={<ClassesPage />} />
+          <Route path="calendar" element={<Calendar />} />
+          <Route path="tuition" element={<TuitionLayout />} />
+          <Route path="timetable" element={<TimetablePage />} />
+          <Route path="academic-session" element={<AcademicSessionPage />} />
+          <Route path="student-promotion" element={<StudentPromotionPage />} />
+          <Route path="change-password" element={<ChangePasswordPage />} />
+          <Route path="guardian-result/:id" element={<ResultGuardian />} />
+          <Route path="results" element={<ResultsLayout />}>
+            <Route index element={<Results />} />
+            <Route path=":id" element={<ResultNames />}>
+              <Route index element={<ResultNamesMobile />} />
+            </Route>
+          </Route>
+          <Route path="chat" element={<Chat />} />
+        </Route>
+      </Route>
+      <Route path="*" element={<ErrorPage />} />
+    </Route>
+  )
+);
 
 function App() {
-
-  const router = createBrowserRouter(
-    createRoutesFromElements(
-      <Route>
-        <Route path="/" element={<RootLayout />}>
-          <Route index element={<LandingPage />} />
-          <Route path="login" element={<Login />} />
-          <Route element={<LoginLayout />}>
-            <Route path="login/admin" element={<AdminLogin />} />
-            <Route path="login/staff" element={<StaffLogin />} />
-            <Route path="login/guardian" element={<GuardianLogin />} />
-          </Route>
-          <Route path={`forgot-password/:id`} element={<ForgotPassword />} />
-        </Route>
-        <Route element={<ProtectedRoute />}>
-          <Route path="dashboard" element={<DashboardLayout />}>
-            <Route index element={<Overview />} />
-            {/* ROLE INTERCHANGING FOR STUDENT*/}
-            {/* {role === "admin" ? ( */}
-            <Route path="student" element={<StudentAdminLayout />}>
-              <Route index element={<StudentAdminOverview />} />
-              <Route path="all" element={<StudentAdminAll />} />
-              <Route path=":id" element={<StudentAdminNames />}>
-                <Route index element={<StudentAdminNamesOverviewMobile />} />
-                <Route path=":id" element={<StudentAdminDatabase />} />
-              </Route>
-            </Route>
-            {/* ) : role === "staff" ? ( */}
-            {/* <Route path="student"  /> */}
-            {/* ) : role === "guardian" ? null : null} */}
-            {/* ENDS */}
-
-            {/* ROLE INTERCHANGING FOR PROFILE*/}
-            <Route path="profile" element={<ProfileLayout />} />
-            {/* {role === "admin" ? null : role === "staff" ? (
-            <Route path="profile" element={<ProfileStaff />} />
-          ) : role === "guardian" ? (
-            <Route path="profile" element={<ProfileGuardian />} />
-          ) : null} */}
-            {/* ENDS */}
-
-            {/* ROLE INTERCHANGING FOR STAFF*/}
-            <Route path="staff" element={<StaffLayout />} />
-            {/* {role === "admin" || role === "guardian" ? (
-            <Route path="staff" element={<Staff />} />
-          ) : role === "staff" ? null : null} */}
-            {/* ENDS */}
-            <Route path="subjects" element={<Subjects />} />
-            <Route path="classes" element={<ClassesPage />} />
-            <Route path="calendar" element={<Calendar />} />
-            {/* ROLE INTERCHANGING FOR TUITION*/}
-            <Route path="tuition" element={<TuitionLayout />} />
-            {/* {role === "admin" ? (
-            <Route path="tuition" element={<Tuition />} />
-          ) : null} */}
-            {/* ENDS */}
-            <Route path="timetable" element={<TimetablePage />} />
-            <Route path="academic-session" element={<AcademicSessionPage />} />
-            <Route path="student-promotion" element={<StudentPromotionPage />} />
-            <Route path="change-password" element={<ChangePasswordPage />} />
-            <Route path="guardian-result/:id" element={<ResultGuardian />} />
-            {/* <Route path="attendance" element={<Attendance />} /> */}
-            {/* {role === "admin" || role === "guardian" ? (
-            <Route path="staff" element={<Staff />} />
-          ) : role === "staff" ? null : null} */}
-            <Route path="results" element={<ResultsLayout />}>
-              <Route index element={<Results />} />
-              <Route path=":id" element={<ResultNames />}>
-                <Route index element={<ResultNamesMobile />} />
-              </Route>
-            </Route>
-            <Route path="chat" element={<Chat />} />
-            {/* <Route path="certificates" element={<Certificates />} /> */}
-          </Route>
-        </Route>
-        <Route path="*" element={<ErrorPage />} />
-      </Route>
-    )
-  );
   return (
     <div className="min-h-screen">
       <ToastNotification />
