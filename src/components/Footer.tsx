@@ -1,11 +1,12 @@
 import React from "react";
+import Logo from "../../public/logo.png";
 
 const Footer: React.FC = () => (
   <footer className="w-full bg-gray-900 text-white pt-12 pb-4 px-4 mt-8">
     <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-8">
       <div className="flex flex-col gap-2 max-w-xs">
         <div className="flex items-center gap-2 mb-2">
-          <img src="/public/logo.png" alt="homydays Logo" className="h-12 w-12" />
+          <img src={Logo} alt="homydays Logo" className="h-12 w-12" />
           <span className="font-bold text-lg">HOMYDAYS SCHOOLS</span>
         </div>
         <div className="text-sm">
