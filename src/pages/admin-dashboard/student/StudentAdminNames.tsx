@@ -327,7 +327,7 @@ const StudentAdminNames: React.FC = () => {
   // FETCH PAYMENT DATA FOR THIS CLASS (includes server-computed per-student summaries)
   const {
     data: classPaymentsData,
-    isLoading: isPaymentsLoading,
+    isLoading: _isPaymentsLoading,
     refetch: refetchPayments,
   } = useQuery({
     queryKey: ["classPayments", classNameID[0]],
