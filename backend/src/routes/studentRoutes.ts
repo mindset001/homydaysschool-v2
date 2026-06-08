@@ -6,6 +6,7 @@ import {
   updateStudent,
   deleteStudent,
   uploadStudentDocument,
+  updateCarriedBalance,
 } from '../controllers/studentController.js';
 import { getPromotionPreview, promoteStudents } from '../controllers/promotionController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
@@ -19,6 +20,9 @@ router.use(authenticate);
 // Promotion routes — must be before /:id to avoid param collision
 router.get('/promotion-preview', authorize('admin'), getPromotionPreview);
 router.post('/promote', authorize('admin'), promoteStudents);
+
+// Carried balance (previous-term outstanding) — must be before /:id
+router.patch('/:id/carried-balance', authorize('admin'), updateCarriedBalance);
 
 router.get('/', authorize('admin', 'staff'), getAllStudents);
 router.get('/:id', authorize('admin', 'staff', 'student', 'guardian'), getStudentById);

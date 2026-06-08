@@ -19,7 +19,7 @@ const useActiveSession = () => {
   const { data: activeSession, isLoading, isError } = useQuery<ISession | null>({
     queryKey: ['activeAcademicSession'],
     queryFn: fetchActiveSession,
-    staleTime: 2 * 60 * 1000,
+    staleTime: 30 * 1000,
   });
 
   return { activeSession: activeSession ?? null, isLoading, isError };

@@ -31,19 +31,10 @@ const classStatsTableHeader: string[] = [
 const Tuition: React.FC = () => {
   const [classFee, setClassFee] = useState<baseClassInterface>({
     id: "",
-    total_starterpack: 0,
-    total_others: 0,
     name: "",
     abbreviation: "",
-    school_fee: 0,
-    uniform: 0,
-    sport_wear: 0,
-    school_bus: 0,
-    snack: 0,
-    science: 0,
-    games: 0,
-    library_fee: 0,
-    extra_activities: 0,
+    termFee: 0,
+    starterPack: 0,
     teacher: "",
     teacherName: "",
   });
@@ -287,20 +278,13 @@ const Tuition: React.FC = () => {
         baseclass.name?.toLowerCase() === ActiveClass.classNow.toLowerCase()
     );
     
-    // Map backend camelCase fields to frontend snake_case and include teacher
     return matchedClasses.map((cls: any) => ({
       ...cls,
       id: cls._id || cls.id,
-      school_fee: cls.schoolFee || 0,
-      sport_wear: cls.sportWear || 0,
-      school_bus: cls.schoolBus || 0,
-      library_fee: cls.libraryFee || 0,
-      extra_activities: cls.extraActivities || 0,
+      termFee: cls.termFee || 0,
+      starterPack: cls.starterPack || 0,
       teacher: cls.teacher?._id || cls.teacher || "",
       teacherName: cls.teacher ? `${cls.teacher.firstName || ''} ${cls.teacher.lastName || ''}` : "",
-      // Calculate totals
-      total_starterpack: (cls.uniform || 0) + (cls.sportWear || 0) + (cls.schoolBus || 0) + (cls.snack || 0),
-      total_others: (cls.science || 0) + (cls.games || 0) + (cls.libraryFee || 0) + (cls.extraActivities || 0),
     }));
   }, [ActiveClass.classNow, baseClass]);
 
@@ -316,15 +300,7 @@ const Tuition: React.FC = () => {
   useEffect(() => {
     if (classFee && classFee.id) {
       setEditFormData({
-        schoolFee: classFee.school_fee || 0,
-        uniform: classFee.uniform || 0,
-        sportWear: classFee.sport_wear || 0,
-        schoolBus: classFee.school_bus || 0,
-        snack: classFee.snack || 0,
-        science: classFee.science || 0,
-        games: classFee.games || 0,
-        libraryFee: classFee.library_fee || 0,
-        extraActivities: classFee.extra_activities || 0,
+        termFee: classFee.termFee || 0,
         starterPack: classFee.starterPack || 0,
         teacher: classFee.teacher || "",
       });
@@ -339,15 +315,7 @@ const Tuition: React.FC = () => {
     setIsEditMode(false);
     // Reset form data
     setEditFormData({
-      schoolFee: classFee.school_fee || 0,
-      uniform: classFee.uniform || 0,
-      sportWear: classFee.sport_wear || 0,
-      schoolBus: classFee.school_bus || 0,
-      snack: classFee.snack || 0,
-      science: classFee.science || 0,
-      games: classFee.games || 0,
-      libraryFee: classFee.library_fee || 0,
-      extraActivities: classFee.extra_activities || 0,
+      termFee: classFee.termFee || 0,
       starterPack: classFee.starterPack || 0,
     });
   };
@@ -591,152 +559,34 @@ const Tuition: React.FC = () => {
                       )}
                     </div>
                     <div className="fees-entries mb-[20px] font-Poppins text-[15px] font-medium xl:font-normal leading-[22.5px] md:leading-[16.5px]">
-                      <div>School Fees:</div>
+                      <div>Term Fee:</div>
                       {isEditMode ? (
                         <input
                           type="number"
-                          value={editFormData.schoolFee || 0}
-                          onChange={(e) => handleInputChange('schoolFee', e.target.value)}
+                          value={editFormData.termFee || 0}
+                          onChange={(e) => handleInputChange('termFee', e.target.value)}
                           className="border border-gray-300 rounded px-2 py-1 w-32 text-right"
                         />
                       ) : (
-                        <div>₦{classFee.school_fee}</div>
+                        <div>₦{classFee.termFee}</div>
                       )}
                     </div>
-                    <div className="mb-[20px]">
-                      <div className="mb-[10px] font-Lora font-bold leading-[19.2px] xl:font-Poppins xl:font-semibold text-[17px] xl:leading-[19.5px]">
-                        Starter Pack
-                      </div>
-                      <div>
-                        <div className="fees-entries mb-[10px] md:mb-[15px] font-Poppins text-[15px] font-medium xl:font-normal leading-[22.5px] md:leading-[16.5px]">
-                          <div>School Uniform :</div>
-                          {isEditMode ? (
-                            <input
-                              type="number"
-                              value={editFormData.uniform || 0}
-                              onChange={(e) => handleInputChange('uniform', e.target.value)}
-                              className="border border-gray-300 rounded px-2 py-1 w-32 text-right"
-                            />
-                          ) : (
-                            <div>₦{classFee.uniform}</div>
-                          )}
-                        </div>
-                        <div className="fees-entries mb-[10px] md:mb-[15px] font-Poppins text-[15px] font-medium xl:font-normal leading-[22.5px] md:leading-[16.5px]">
-                          <div>Sport Wear :</div>
-                          {isEditMode ? (
-                            <input
-                              type="number"
-                              value={editFormData.sportWear || 0}
-                              onChange={(e) => handleInputChange('sportWear', e.target.value)}
-                              className="border border-gray-300 rounded px-2 py-1 w-32 text-right"
-                            />
-                          ) : (
-                            <div>₦{classFee.sport_wear}</div>
-                          )}
-                        </div>
-                        <div className="fees-entries mb-[10px] md:mb-[15px] font-Poppins text-[15px] font-medium xl:font-normal leading-[22.5px] md:leading-[16.5px]">
-                          <div>School Bus :</div>
-                          {isEditMode ? (
-                            <input
-                              type="number"
-                              value={editFormData.schoolBus || 0}
-                              onChange={(e) => handleInputChange('schoolBus', e.target.value)}
-                              className="border border-gray-300 rounded px-2 py-1 w-32 text-right"
-                            />
-                          ) : (
-                            <div>₦{classFee.school_bus}</div>
-                          )}
-                        </div>
-                        <div className="fees-entries mb-[10px] md:mb-[15px] font-Poppins text-[15px] font-medium xl:font-normal leading-[22.5px] md:leading-[16.5px]">
-                          <div>Snacks :</div>
-                          {isEditMode ? (
-                            <input
-                              type="number"
-                              value={editFormData.snack || 0}
-                              onChange={(e) => handleInputChange('snack', e.target.value)}
-                              className="border border-gray-300 rounded px-2 py-1 w-32 text-right"
-                            />
-                          ) : (
-                            <div>₦{classFee.snack}</div>
-                          )}
-                        </div>
-                      </div>
-                      <div className="fees-entries mb-[10px] md:mb-[15px] font-Lora text-[15px] font-bold leading-[19.2px] xl:font-Poppins xl:font-semibold xl:leading-[16.5px]">
-                        <div>Total Starterpack :</div>
-                        <div>₦{classFee.total_starterpack}</div>
-                      </div>
-                    </div>
-                    <div className="mb-[30px] md:mb-[24px]">
-                      <div className="mb-[10px] font-Lora font-bold leading-[19.2px] xl:font-Poppins xl:font-semibold text-[17px] xl:leading-[19.5px]">
-                        Others
-                      </div>
-                      <div>
-                        <div className="fees-entries mb-[10px] md:mb-[15px] font-Poppins text-[15px] font-medium xl:font-normal leading-[22.5px] md:leading-[16.5px]">
-                          <div>Science :</div>
-                          {isEditMode ? (
-                            <input
-                              type="number"
-                              value={editFormData.science || 0}
-                              onChange={(e) => handleInputChange('science', e.target.value)}
-                              className="border border-gray-300 rounded px-2 py-1 w-32 text-right"
-                            />
-                          ) : (
-                            <div>₦{classFee.science}</div>
-                          )}
-                        </div>
-                        <div className="fees-entries mb-[10px] md:mb-[15px] font-Poppins text-[15px] font-medium xl:font-normal leading-[22.5px] md:leading-[16.5px]">
-                          <div>Games :</div>
-                          {isEditMode ? (
-                            <input
-                              type="number"
-                              value={editFormData.games || 0}
-                              onChange={(e) => handleInputChange('games', e.target.value)}
-                              className="border border-gray-300 rounded px-2 py-1 w-32 text-right"
-                            />
-                          ) : (
-                            <div>₦{classFee.games}</div>
-                          )}
-                        </div>
-                        <div className="fees-entries mb-[10px] md:mb-[15px] font-Poppins text-[15px] font-medium xl:font-normal leading-[22.5px] md:leading-[16.5px]">
-                          <div>Library Fee :</div>
-                          {isEditMode ? (
-                            <input
-                              type="number"
-                              value={editFormData.libraryFee || 0}
-                              onChange={(e) => handleInputChange('libraryFee', e.target.value)}
-                              className="border border-gray-300 rounded px-2 py-1 w-32 text-right"
-                            />
-                          ) : (
-                            <div>₦{classFee.library_fee}</div>
-                          )}
-                        </div>
-                        <div className="fees-entries mb-[10px] md:mb-[15px] font-Poppins text-[15px] font-medium xl:font-normal leading-[22.5px] md:leading-[16.5px]">
-                          <div>Extra Activities :</div>
-                          {isEditMode ? (
-                            <input
-                              type="number"
-                              value={editFormData.extraActivities || 0}
-                              onChange={(e) => handleInputChange('extraActivities', e.target.value)}
-                              className="border border-gray-300 rounded px-2 py-1 w-32 text-right"
-                            />
-                          ) : (
-                            <div>₦{classFee.extra_activities}</div>
-                          )}
-                        </div>
-                      </div>
-                      <div className="fees-entries mb-[10px] md:mb-[15px] font-Lora text-[15px] font-bold leading-[19.2px] xl:font-Poppins xl:font-semibold xl:leading-[16.5px]">
-                        <div>Total Others :</div>
-                        <div>₦{classFee.total_others}</div>
-                      </div>
+                    <div className="fees-entries mb-[20px] font-Poppins text-[15px] font-medium xl:font-normal leading-[22.5px] md:leading-[16.5px]">
+                      <div>Starter Pack:</div>
+                      {isEditMode ? (
+                        <input
+                          type="number"
+                          value={editFormData.starterPack || 0}
+                          onChange={(e) => handleInputChange('starterPack', e.target.value)}
+                          className="border border-gray-300 rounded px-2 py-1 w-32 text-right"
+                        />
+                      ) : (
+                        <div>₦{classFee.starterPack}</div>
+                      )}
                     </div>
                     <div className="font-Lora text-[15px] leading-[19.2px] font-bold md:font-Poppins md:text-base text-center flex flex-row justify-center">
                       <div className="mr-[7px]">Total:</div>
-                      <div>
-                        ₦
-                        {(classFee.school_fee || 0) +
-                          (classFee.total_starterpack || 0) +
-                          (classFee.total_others || 0)}
-                      </div>
+                      <div>₦{(classFee.termFee || 0) + (classFee.starterPack || 0)}</div>
                     </div>
                   </>
                 )}

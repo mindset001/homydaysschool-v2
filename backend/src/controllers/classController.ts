@@ -8,7 +8,13 @@ import { AuthRequest } from '../middleware/auth.js';
 export const getAllClasses = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const classes = await Class.find()
-      .populate('teacher', 'firstName lastName email')
+      .populate({
+        path: 'teacher',
+        populate: {
+          path: 'userId',
+          select: 'firstName lastName email'
+        }
+      })
       .populate('students', 'firstName lastName');
     
     res.json({ classes });
@@ -22,7 +28,13 @@ export const getClassById = async (req: AuthRequest, res: Response): Promise<voi
     const { id } = req.params;
     
     const classData = await Class.findById(id)
-      .populate('teacher', 'firstName lastName email phoneNumber')
+      .populate({
+        path: 'teacher',
+        populate: {
+          path: 'userId',
+          select: 'firstName lastName email phoneNumber'
+        }
+      })
       .populate('students', 'firstName lastName studentId');
     
     if (!classData) {
@@ -225,6 +237,47 @@ export const removeSubjectFromClass = async (req: AuthRequest, res: Response): P
     }
     
     res.json({ message: 'Subject removed from class successfully', class: classData });
+  } catch (error: any) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+export const assignTeacher = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params; // class id
+    const { teacherId } = req.body;
+
+    const classData = await Class.findById(id);
+    if (!classData) {
+      res.status(404).json({ message: 'Class not found' });
+      return;
+    }
+
+    // if previous teacher exists, remove class name from their record
+    const oldTeacherId = classData.teacher ? classData.teacher.toString() : null;
+    const className = classData.name;
+
+    if (oldTeacherId && oldTeacherId !== teacherId) {
+      await Staff.findByIdAndUpdate(oldTeacherId, { $pull: { classes: className } });
+    }
+
+    // assign new teacher
+    classData.teacher = teacherId;
+    await classData.save();
+
+    // add class to new teacher
+    if (teacherId) {
+      await Staff.findByIdAndUpdate(teacherId, { $addToSet: { classes: className } });
+    }
+
+    const populated = await Class.findById(id).populate({
+      path: 'teacher',
+      populate: {
+        path: 'userId',
+        select: 'firstName lastName email'
+      }
+    });
+    res.json({ message: 'Teacher assigned successfully', class: populated });
   } catch (error: any) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }

@@ -1,4 +1,4 @@
-import React, { memo, ReactNode } from "react";
+import React, { memo, ReactNode, useEffect, useRef, useState } from "react";
 import { BookNav, Logout, Paper } from "../../assets/images";
 import { NavLink, useNavigate } from "react-router-dom";
 import OverviewSVG from "../svg/dashboard navbar svg/OverviewSVG";
@@ -14,13 +14,22 @@ import ChatSVG from "../svg/dashboard navbar svg/ChatSVG";
 import SessionSVG from "../svg/dashboard navbar svg/SessionSVG";
 import PromotionSVG from "../svg/dashboard navbar svg/PromotionSVG";
 import DropdownSVG from "../svg/dashboard navbar svg/DropdownSVG";
+import AttendanceSVG from "../svg/dashboard navbar svg/AttendanceSVG";
 import {
   clearRole,
   clearTokens,
   clearUser,
   getRole,
 } from "../../utils/authTokens";
-import useActiveSession from "../../hooks/useActiveSession";
+import useActiveSession, { ISession } from "../../hooks/useActiveSession";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import apiClient from "../../services/api/apiClient";
+
+const fetchAllSessions = (): Promise<ISession[]> =>
+  apiClient.get("academic-sessions").then((r) => r.data?.data ?? r.data ?? []);
+const apiActivate = (id: string) =>
+  apiClient.patch(`academic-sessions/${id}/activate`);
+
 interface SideNavProps {
   mobileToggle: boolean;
   setMobileToggle: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,6 +38,39 @@ const SideNav: React.FC<SideNavProps> = ({ mobileToggle, setMobileToggle }) => {
   const navigate = useNavigate();
   const role = getRole();
   const { activeSession } = useActiveSession();
+  const queryClient = useQueryClient();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const { data: allSessions = [] } = useQuery<ISession[]>({
+    queryKey: ["allAcademicSessions"],
+    queryFn: fetchAllSessions,
+    enabled: dropdownOpen,
+    staleTime: 60 * 1000,
+  });
+
+  const activateMutation = useMutation({
+    mutationFn: (id: string) => apiActivate(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["allAcademicSessions"] });
+      queryClient.invalidateQueries({ queryKey: ["activeAcademicSession"] });
+      queryClient.invalidateQueries({ queryKey: ["home-analytic"] });
+      queryClient.invalidateQueries({ queryKey: ["classPayments"] });
+      queryClient.invalidateQueries({ queryKey: ["debtors"] });
+      setDropdownOpen(false);
+    },
+  });
+
+  // Close on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+    if (dropdownOpen) document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [dropdownOpen]);
 
   const navs: {
     item: ReactNode;
@@ -55,8 +97,12 @@ const SideNav: React.FC<SideNavProps> = ({ mobileToggle, setMobileToggle }) => {
       text: "Student",
       roles: ["admin", "staff"],
     },
-    {
-      item: <ClassSVG />, 
+    {      item: <ClassSVG />,
+      to: "staff",
+      text: "My Classes",
+      roles: ["staff"],
+    },
+    {      item: <ClassSVG />, 
       to: "classes",
       text: "Class",
       roles: ["admin"],
@@ -98,12 +144,35 @@ const SideNav: React.FC<SideNavProps> = ({ mobileToggle, setMobileToggle }) => {
       text: "Timetable",
       roles: ["admin", "staff", "guardian"],
     },
-    // {
-    //   item: <AttendanceSVG />,
-    //   to: "attendance",
-    //   text: "Attendance",
-    //   roles: ["admin", "staff", "guardian"],
-    // },
+    {
+      item: <AttendanceSVG />,
+      to: "attendance",
+      text: "Attendance",
+      roles: ["admin", "staff"],
+    },
+    {
+      item: (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2" />
+          <path d="M3 9h18M9 21V9" />
+        </svg>
+      ),
+      to: "assignments",
+      text: "Assignments",
+      roles: ["admin", "staff"],
+    },
+    {
+      item: (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg>
+      ),
+      to: "quizzes",
+      text: "Quizzes",
+      roles: ["admin", "staff"],
+    },
     {
       item: <ResultsSVG />,
       to: "results",
@@ -166,14 +235,62 @@ const SideNav: React.FC<SideNavProps> = ({ mobileToggle, setMobileToggle }) => {
           Master
         </div>
       </div>
-      <div className="bg-[#ECFEFF] hidden md:flex flex-row justify-center items-center font-Lora py-[14px]">
-        <div className="text-base text-center leading-[20.48px] font-semibold 2xl:font-bold mr-[11px] text-[#05878F]">
-          {activeSession
-            ? <>{activeSession.academicYear}<br className="hidden md:block xl:hidden" />{" "}{activeSession.term}</>            : <>No Active<br className="hidden md:block xl:hidden" />Session</>}
-        </div>
-        <div className="max-w-[13.17px] max-h-[7.59px]">
-          <DropdownSVG />
-        </div>
+      <div className="relative hidden md:block font-Lora" ref={dropdownRef}>
+        <button
+          onClick={() => setDropdownOpen((o) => !o)}
+          className="w-full bg-[#ECFEFF] flex flex-row justify-center items-center py-[14px] hover:bg-[#d9f5f7] transition-colors"
+        >
+          <div className="text-base text-center leading-[20.48px] font-semibold 2xl:font-bold mr-[11px] text-[#05878F]">
+            {activeSession
+              ? <>{activeSession.academicYear}<br className="hidden md:block xl:hidden" />{" "}{activeSession.term}</>
+              : <>No Active<br className="hidden md:block xl:hidden" />Session</>}
+          </div>
+          <div className={`max-w-[13.17px] max-h-[7.59px] transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`}>
+            <DropdownSVG />
+          </div>
+        </button>
+
+        {dropdownOpen && (
+          <div className="absolute left-0 right-0 top-full z-50 bg-white shadow-lg border border-gray-100 rounded-b-xl overflow-hidden">
+            {allSessions.length === 0 ? (
+              <div className="text-xs text-gray-400 text-center py-3">Loading…</div>
+            ) : (
+              allSessions
+                .slice()
+                .sort((a, b) =>
+                  a.academicYear !== b.academicYear
+                    ? a.academicYear.localeCompare(b.academicYear)
+                    : ["First Term","Second Term","Third Term"].indexOf(a.term) -
+                      ["First Term","Second Term","Third Term"].indexOf(b.term)
+                )
+                .map((session) => (
+                  <button
+                    key={session._id}
+                    onClick={() => {
+                      if (!session.isActive && role === "admin") {
+                        activateMutation.mutate(session._id);
+                      } else {
+                        setDropdownOpen(false);
+                      }
+                    }}
+                    disabled={activateMutation.isPending}
+                    className={`w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors ${
+                      session.isActive
+                        ? "bg-[#ECFEFF] text-[#05878F] font-semibold cursor-default"
+                        : role === "admin"
+                        ? "text-gray-700 hover:bg-gray-50 cursor-pointer"
+                        : "text-gray-500 cursor-default"
+                    }`}
+                  >
+                    <span>{session.academicYear} · {session.term}</span>
+                    {session.isActive && (
+                      <span className="text-[10px] bg-[#05878F] text-white rounded-full px-2 py-0.5 ml-2">Active</span>
+                    )}
+                  </button>
+                ))
+            )}
+          </div>
+        )}
       </div>
       <div className="block md:hidden font-Lora font-bold text-white ml-[57px]">
         Main Menu

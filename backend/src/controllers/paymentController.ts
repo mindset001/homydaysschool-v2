@@ -15,23 +15,8 @@ const TERM_ORDER: Record<string, number> = {
   'Third Term': 3,
 };
 
-/**
- * Build the class term-fee total from a Class document.
- * starterPack is intentionally excluded from recurring per-term billing.
- */
 function computeTermFee(classDoc: any): number {
-  return (
-    (classDoc.schoolFee || 0) +
-    (classDoc.uniform || 0) +
-    (classDoc.sportWear || 0) +
-    (classDoc.schoolBus || 0) +
-    (classDoc.snack || 0) +
-    (classDoc.science || 0) +
-    (classDoc.games || 0) +
-    (classDoc.libraryFee || 0) +
-    (classDoc.extraActivities || 0) +
-    (classDoc.starterPack || 0)
-  );
+  return classDoc.termFee || 0;
 }
 
 /**
@@ -313,57 +298,63 @@ export const getPaymentsByClass = async (req: AuthRequest, res: Response): Promi
 
     const termFee = computeTermFee(classDoc);
 
+    // Use the active session to scope payments to the current term only
+    const activeSession = await AcademicSession.findOne({ isActive: true }).lean() as any;
+    const activeTerm = activeSession?.term;
+    const activeYear = activeSession?.academicYear;
+
     // All students in this class
     const students = await Student.find({ class: classDoc.name }).lean();
     const studentIds = students.map((s) => s._id);
     console.log(`Found ${students.length} students in class ${classDoc.name}`);
 
-    // All payments for this class
+    // All payments for this class — all terms (for the payment history list)
     const payments = await Payment.find({ studentId: { $in: studentIds } })
       .populate('studentId')
       .populate({
         path: 'studentId',
-        populate: {
-          path: 'userId',
-          select: 'firstName lastName'
-        }
+        populate: { path: 'userId', select: 'firstName lastName' }
       })
       .populate('receivedBy', 'firstName lastName email')
       .sort({ paymentDate: -1 });
 
     console.log('Found payments:', payments.length);
 
-    // Sum payments per student
+    // Sum payments per student for the ACTIVE term only
     const paidByStudent = new Map<string, number>();
-    payments.forEach((payment) => {
-      const sid = (payment.studentId as any)?._id?.toString() ?? payment.studentId?.toString();
-      paidByStudent.set(sid, (paidByStudent.get(sid) ?? 0) + (payment.amount || 0));
+    payments.forEach((payment: any) => {
+      const sid = payment.studentId?._id?.toString() ?? payment.studentId?.toString();
+      const isActiveTerm = activeTerm && activeYear
+        ? payment.term === activeTerm && payment.academicYear === activeYear
+        : true;
+      if (isActiveTerm) {
+        paidByStudent.set(sid, (paidByStudent.get(sid) ?? 0) + (payment.amount || 0));
+      }
     });
 
-    // All academic sessions, sorted chronologically
-    const allSessions = sortSessions(await AcademicSession.find().lean());
-
-    // Build per-student summaries using server-computed cumulative balances
+    // Build per-student summaries scoped to the active term
     const studentSummaries: Record<string, {
       totalPaid: number;
       totalDue: number;
       balance: number;
+      carriedBalance: number;
       applicableTerms: number;
       paymentStatus: string;
     }> = {};
 
     for (const student of students) {
       const sid = (student._id as any).toString();
-      const applicable = applicableSessionsForStudent(allSessions, student);
-      const totalDue = termFee * applicable.length;
+      const totalDue = termFee;
       const totalPaid = paidByStudent.get(sid) ?? 0;
       const balance = Math.max(0, totalDue - totalPaid);
+      const carriedBalance = (student as any).carriedBalance ?? 0;
 
       studentSummaries[sid] = {
         totalPaid,
         totalDue,
         balance,
-        applicableTerms: applicable.length,
+        carriedBalance,
+        applicableTerms: 1,
         paymentStatus: balance <= 0 ? 'Paid' : totalPaid > 0 ? 'Partial' : 'Unpaid',
       };
     }

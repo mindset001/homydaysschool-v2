@@ -77,6 +77,8 @@ export interface IStudent extends Document {
     date: Date;
     status: 'present' | 'absent' | 'late' | 'excused';
   }[];
+  /** Manually-set outstanding balance carried forward from previous terms */
+  carriedBalance?: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -234,6 +236,10 @@ const studentSchema = new Schema<IStudent>(
         },
       },
     ],
+    carriedBalance: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

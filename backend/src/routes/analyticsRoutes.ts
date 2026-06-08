@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getHomeAnalytics } from '../controllers/analyticsController.js';
+import { getHomeAnalytics, getDebtors, resetTermData, migrateTermFees } from '../controllers/analyticsController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 
 const router = Router();
@@ -8,5 +8,8 @@ const router = Router();
 router.use(authenticate);
 
 router.get('/homeanalytic', authorize('admin', 'staff', 'guardian', 'student'), getHomeAnalytics);
+router.get('/debtors', authorize('admin'), getDebtors);
+router.delete('/reset-term', authorize('admin'), resetTermData);
+router.post('/migrate-term-fees', authorize('admin'), migrateTermFees);
 
 export default router;

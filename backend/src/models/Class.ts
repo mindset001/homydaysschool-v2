@@ -14,16 +14,7 @@ export interface IClass extends Document {
     endTime: string;
     subject: string;
   }[];
-  // Tuition fee fields
-  schoolFee?: number;
-  uniform?: number;
-  sportWear?: number;
-  schoolBus?: number;
-  snack?: number;
-  science?: number;
-  games?: number;
-  libraryFee?: number;
-  extraActivities?: number;
+  termFee?: number;
   starterPack?: number;
   createdAt: Date;
   updatedAt: Date;
@@ -65,40 +56,7 @@ const classSchema = new Schema<IClass>(
         subject: String,
       },
     ],
-    // Tuition fee fields (in Naira)
-    schoolFee: {
-      type: Number,
-      default: 0,
-    },
-    uniform: {
-      type: Number,
-      default: 0,
-    },
-    sportWear: {
-      type: Number,
-      default: 0,
-    },
-    schoolBus: {
-      type: Number,
-      default: 0,
-    },
-    snack: {
-      type: Number,
-      default: 0,
-    },
-    science: {
-      type: Number,
-      default: 0,
-    },
-    games: {
-      type: Number,
-      default: 0,
-    },
-    libraryFee: {
-      type: Number,
-      default: 0,
-    },
-    extraActivities: {
+    termFee: {
       type: Number,
       default: 0,
     },

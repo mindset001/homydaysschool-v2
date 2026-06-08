@@ -39,22 +39,12 @@ export interface IEvent {
 }
 export interface baseClassInterface {
   id?: number | string;
-  total_starterpack?: number;
-  total_others?: number;
   name?: string;
   abbreviation?: string;
-  school_fee?: number;
-  uniform?: number;
-  sport_wear?: number;
-  school_bus?: number;
-  snack?: number;
-  science?: number;
-  games?: number;
-  library_fee?: number;
-  extra_activities?: number;
+  termFee?: number;
   starterPack?: number;
-  teacher?: string;            // ObjectId of assigned teacher
-  teacherName?: string;        // human readable name
+  teacher?: string;
+  teacherName?: string;
 }
 
 export interface totalPercentageValueI {
@@ -66,6 +56,8 @@ export interface totalPercentageValueI {
   paid_half: number;
   paid_nothing: number;
   starter_pack_collected: number;
+  debtors_count: number;
+  total_debt_amount: number;
 }
 
 export interface userGuardWardDataI {

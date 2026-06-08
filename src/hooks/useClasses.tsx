@@ -10,6 +10,14 @@ interface classesInterface {
   abbreviation?: string;
   grade: string;
   section?: string;
+  teacher?: {
+    _id: string;
+    userId?: {
+      firstName: string;
+      lastName: string;
+      email: string;
+    };
+  };
 }
 interface useClassesI {
     classNameData: classesInterface[];
@@ -67,6 +75,7 @@ const useClasses = () : useClassesI => {
       grade: cls.grade,
       section: cls.section,
       abbreviation: cls.name, // Use name as abbreviation
+      teacher: cls.teacher || undefined,
     }));
   }, [classData]);
 //   useEffect(() => {

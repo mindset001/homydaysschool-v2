@@ -59,6 +59,10 @@ export const createPayment = (paymentData: object) => {
   return apiClient.post(`/payments/`, paymentData);
 };
 
+export const updateCarriedBalance = (studentId: string, carriedBalance: number) => {
+  return apiClient.patch(`students/${studentId}/carried-balance`, { carriedBalance });
+};
+
 export const createSubject = (subjectData: object) => {
   return apiClient.post(`/subjects/`, subjectData);
 };
@@ -73,4 +77,20 @@ export const markChatRead = () => {
 
 export const promoteStudents = (data: { studentIds: string[] }) => {
   return apiClient.post('students/promote', data);
+};
+
+export const assignTeacher = (classId: string | number, teacherId: string) => {
+  return apiClient.put(`classes/${classId}/assign-teacher`, { teacherId });
+};
+
+export const createAttendance = (classId: string | number, attendanceData: object) => {
+  return apiClient.post(`attendance/${classId}`, attendanceData);
+};
+
+export const createAssignment = (classId: string | number, data: object) => {
+  return apiClient.post(`assignments/${classId}`, data);
+};
+
+export const createQuiz = (classId: string | number, data: object) => {
+  return apiClient.post(`quizzes/${classId}`, data);
 };

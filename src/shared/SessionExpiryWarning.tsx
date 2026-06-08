@@ -1,9 +1,14 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAccessToken, clearTokens, clearRole, clearUser } from "../utils/authTokens";
+import axios from "axios";
+import { getAccessToken, getRefreshToken, saveTokens, clearTokens, clearRole, clearUser } from "../utils/authTokens";
 
 const WARNING_BEFORE_MS = 5 * 60 * 1000; // Warn 5 minutes before expiry
 const TICK_INTERVAL_MS = 1000;
+
+const baseURL =
+  import.meta.env.VITE_REACT_APP_API_URL || "http://localhost:5000/api";
+const API_KEY = import.meta.env.VITE_REACT_APP_API_KEY || "";
 
 function getTokenExpiry(): number | null {
   const token = getAccessToken();
@@ -29,6 +34,32 @@ const SessionExpiryWarning: React.FC = () => {
     clearUser();
     navigate("/login", { replace: true });
   }, [navigate]);
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const stayLoggedIn = useCallback(async () => {
+    const refreshToken = getRefreshToken();
+    if (!refreshToken) {
+      logout();
+      return;
+    }
+    setRefreshing(true);
+    try {
+      const response = await axios.post(
+        `${baseURL}/refresh`,
+        { token: refreshToken },
+        { headers: { "Content-Type": "application/json", "X-API-Key": API_KEY } }
+      );
+      const { accessToken } = response.data;
+      saveTokens(accessToken, refreshToken);
+      setVisible(false);
+      setSecondsLeft(null);
+    } catch {
+      logout();
+    } finally {
+      setRefreshing(false);
+    }
+  }, [logout]);
 
   const dismiss = () => {
     setVisible(false);
@@ -99,14 +130,15 @@ const SessionExpiryWarning: React.FC = () => {
             </p>
             <div className="flex gap-2">
               <button
-                onClick={() => window.location.reload()}
-                className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+                onClick={stayLoggedIn}
+                disabled={refreshing}
+                className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-colors disabled:opacity-60 ${
                   urgency
                     ? "bg-red-600 hover:bg-red-700 text-white"
                     : "bg-amber-500 hover:bg-amber-600 text-white"
                 }`}
               >
-                Stay Logged In
+                {refreshing ? "Refreshing…" : "Stay Logged In"}
               </button>
               <button
                 onClick={logout}

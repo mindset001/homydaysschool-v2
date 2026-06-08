@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { getStudentTermSummary } from "../../services/api/calls/getApis";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { getStudentTermSummary, getAssignmentsByClass, getQuizzesByClass } from "../../services/api/calls/getApis";
+import { submitAssignment } from "../../services/api/calls/submissionsApis";
 import { profileImage } from "../../assets/images/users";
 import { DetailRow } from "./ProfileGuardian";
 
@@ -217,6 +219,144 @@ export function WardWithPaymentInfo({ ward }: { ward: Ward }) {
           </div>
         )}
       </div>
+      
+      {/* Assignments & Quizzes for this ward's class */}
+      <div className="mt-6 md:mx-[30px]">
+        <h2 className="text-[16px] font-Lora font-bold text-gray-800 mb-3">Class Activities</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <ClassAssignments ward={ward} />
+          <ClassQuizzes ward={ward} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ClassAssignments({ ward }: { ward: Ward }) {
+  const classId = ward.class || ward._id;
+  const queryClient = useQueryClient();
+  const { data, isLoading } = useQuery({ queryKey: ["guardian_assignments", classId], queryFn: () => getAssignmentsByClass(classId), enabled: !!classId });
+  const assignments: any[] = data?.data?.assignments || [];
+  const [open, setOpen] = useState(false);
+  const [record, setRecord] = useState<any | null>(null);
+
+  // submission state
+  const [answer, setAnswer] = useState<string>("");
+  const [attachments, setAttachments] = useState<string>(""); // comma-separated URLs
+
+  const submitMutation = useMutation({
+    mutationFn: (payload: any) => submitAssignment(record._id, payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["guardian_assignments", classId] });
+      setOpen(false);
+      setAnswer("");
+      setAttachments("");
+    },
+  });
+
+  const handleSubmit = () => {
+    if (!record) return;
+    const payload = {
+      studentId: ward.studentId || ward._id,
+      content: answer,
+      attachments: attachments ? attachments.split(',').map(s => s.trim()).filter(Boolean) : [],
+    };
+    submitMutation.mutate(payload);
+  };
+
+  return (
+    <div className="rounded-xl border bg-white p-4">
+      <h3 className="font-semibold mb-2">Assignments</h3>
+      {isLoading ? <div className="text-sm text-gray-500">Loading...</div> : assignments.length ? (
+        assignments.map((a) => (
+          <button key={a._id} onClick={() => { setRecord(a); setOpen(true); }} className="w-full text-left py-2 text-sm border-b last:border-b-0 hover:bg-gray-50">{a.title} {a.dueDate ? `(due ${new Date(a.dueDate).toLocaleDateString()})` : ''}</button>
+        ))
+      ) : (
+        <div className="text-sm text-gray-500">No assignments for this class.</div>
+      )}
+
+      {open && record && (
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-40">
+          <div className="bg-white rounded-lg max-w-2xl w-full p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h4 className="font-semibold">{record.title}</h4>
+              <button className="px-2 py-1 bg-gray-100 rounded" onClick={() => setOpen(false)}>Close</button>
+            </div>
+            <div className="text-sm text-gray-700 space-y-3">
+              <div>{record.description || 'No description'}</div>
+              <div>
+                <h5 className="font-medium">Questions</h5>
+                <ol className="list-decimal ml-6 mt-2">
+                  {(record.questions || []).map((q: any, i: number) => (
+                    <li key={i} className="mb-2">
+                      <div className="font-medium">{q.prompt}</div>
+                      {q.type === 'objective' && (<ul className="list-disc ml-6">{q.options.map((opt: string, oi: number) => <li key={oi}>{opt}</li>)}</ul>)}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+
+              <div className="mt-4">
+                <h5 className="font-medium">Submit Answer</h5>
+                <textarea value={answer} onChange={(e) => setAnswer(e.target.value)} className="w-full border rounded p-2 mt-2" rows={5} placeholder="Type the student's answer or notes here"></textarea>
+                <input value={attachments} onChange={(e) => setAttachments(e.target.value)} className="w-full border rounded p-2 mt-2" placeholder="Attachment URLs (comma separated)" />
+                <div className="flex items-center gap-2 mt-3">
+                  <button onClick={handleSubmit} disabled={submitMutation.isPending} className="px-4 py-2 bg-clr1 text-white rounded">{submitMutation.isPending ? 'Submitting...' : 'Submit'}</button>
+                  {submitMutation.isError && <span className="text-red-500 text-sm">Could not submit. Try again.</span>}
+                  {submitMutation.isSuccess && <span className="text-green-600 text-sm">Submitted</span>}
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ClassQuizzes({ ward }: { ward: Ward }) {
+  const classId = ward.class || ward._id;
+  const { data, isLoading } = useQuery({ queryKey: ["guardian_quizzes", classId], queryFn: () => getQuizzesByClass(classId), enabled: !!classId });
+  const quizzes: any[] = data?.data?.quizzes || [];
+  const [open, setOpen] = useState(false);
+  const [record, setRecord] = useState<any | null>(null);
+
+  return (
+    <div className="rounded-xl border bg-white p-4">
+      <h3 className="font-semibold mb-2">Quizzes</h3>
+      {isLoading ? <div className="text-sm text-gray-500">Loading...</div> : quizzes.length ? (
+        quizzes.map((q) => (
+          <button key={q._id} onClick={() => { setRecord(q); setOpen(true); }} className="w-full text-left py-2 text-sm border-b last:border-b-0 hover:bg-gray-50">{q.title} {q.scheduledAt ? `(on ${new Date(q.scheduledAt).toLocaleString()})` : ''}</button>
+        ))
+      ) : (
+        <div className="text-sm text-gray-500">No quizzes for this class.</div>
+      )}
+
+      {open && record && (
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-40">
+          <div className="bg-white rounded-lg max-w-2xl w-full p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h4 className="font-semibold">{record.title}</h4>
+              <button className="px-2 py-1 bg-gray-100 rounded" onClick={() => setOpen(false)}>Close</button>
+            </div>
+            <div className="text-sm text-gray-700 space-y-3">
+              <div>{record.description || 'No description'}</div>
+              <div>
+                <h5 className="font-medium">Questions</h5>
+                <ol className="list-decimal ml-6 mt-2">
+                  {(record.questions || []).map((q: any, i: number) => (
+                    <li key={i} className="mb-2">
+                      <div className="font-medium">{q.prompt}</div>
+                      {q.type === 'objective' && (<ul className="list-disc ml-6">{q.options.map((opt: string, oi: number) => <li key={oi}>{opt}</li>)}</ul>)}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

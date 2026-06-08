@@ -22,7 +22,7 @@ import MessageSVG from "../../../components/svg/student/MessageSVG";
 import Loader from "../../../shared/Loader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { createPayment } from "../../../services/api/calls/postApis";
+import { createPayment, updateCarriedBalance } from "../../../services/api/calls/postApis";
 import { getUser, getRole } from "../../../utils/authTokens";
 import useActiveSession from "../../../hooks/useActiveSession";
 
@@ -37,7 +37,7 @@ const tableHeader: string[] = [
   "Gender",
   "Tuition Paid",
   "Balance",
-  "Starter's Pack",
+  "Prev. Debt",
   "Contact",
 ];
 
@@ -53,6 +53,7 @@ interface classStudentIdI {
   gender: string;
   tuition_paid: number;
   tuition_balance: number;
+  carried_balance: number;
   fathers_name: string;
   mothers_name: string;
   fathers_contact: string;
@@ -94,6 +95,7 @@ interface studentDataI {
   total_tuition_paid: number;
   tuition_paid: number;
   tuition_balance: number;
+  carried_balance: number;
 }
 
 const StudentAdminNames: React.FC = () => {
@@ -115,6 +117,11 @@ const StudentAdminNames: React.FC = () => {
   // Payment modal state
   const [paymentModalOpen, setPaymentModalOpen] = useState<boolean>(false);
   const [selectedStudent, setSelectedStudent] = useState<studentDataI | null>(null);
+
+  // Carried balance (previous-term debt) edit state
+  const [debtModalOpen, setDebtModalOpen] = useState<boolean>(false);
+  const [debtStudent, setDebtStudent] = useState<studentDataI | null>(null);
+  const [debtInput, setDebtInput] = useState<number>(0);
   const [paymentFormData, setPaymentFormData] = useState({
     academicYear: activeSession?.academicYear ?? '',
     term: activeSession?.term ?? 'First Term',
@@ -169,7 +176,19 @@ const StudentAdminNames: React.FC = () => {
       toast.error('Failed to record payment');
     },
   });
-  
+
+  const updateDebtMutation = useMutation({
+    mutationFn: ({ studentId, amount }: { studentId: string; amount: number }) =>
+      updateCarriedBalance(studentId, amount),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['classPayments', classNameID[0]] });
+      setDebtModalOpen(false);
+      setDebtStudent(null);
+      toast.success('Previous debt updated');
+    },
+    onError: () => toast.error('Failed to update previous debt'),
+  });
+
   // Sync form year/term once active session loads
   useEffect(() => {
     if (activeSession) {
@@ -330,7 +349,7 @@ const StudentAdminNames: React.FC = () => {
     isLoading: _isPaymentsLoading,
     refetch: refetchPayments,
   } = useQuery({
-    queryKey: ["classPayments", classNameID[0]],
+    queryKey: ["classPayments", classNameID[0], activeSession?._id ?? null],
     queryFn: () => getPaymentsByClass(classNameID[0]),
     enabled: classNameID.length > 0,
     staleTime: 0,
@@ -344,13 +363,8 @@ const StudentAdminNames: React.FC = () => {
     }
   }, [classPaymentsData]);
 
-  /**
-   * Map of studentId -> server-computed { totalPaid, totalDue, balance }.
-   * This is driven by AcademicSession records on the backend so it
-   * reflects cumulative multi-term billing, not just a single term fee.
-   */
   const studentSummaryMap = useMemo(() => {
-    const raw: Record<string, { totalPaid: number; totalDue: number; balance: number; paymentStatus: string }> =
+    const raw: Record<string, { totalPaid: number; totalDue: number; balance: number; carriedBalance: number; paymentStatus: string }> =
       classPaymentsData?.data?.studentSummaries ?? {};
     return new Map(Object.entries(raw));
   }, [classPaymentsData]);
@@ -392,16 +406,13 @@ const StudentAdminNames: React.FC = () => {
       return [];
     }
     
-    // Backend returns { students: [...] }
-    // Map backend structure to frontend structure.
-    // tuition_paid and tuition_balance come from the server-computed
-    // studentSummaries map — this reflects cumulative multi-term billing.
     const mappedStudents = classStudentsIdData.data.students.map((student: any) => {
       const studentId = student._id || '';
       const summary = studentSummaryMap.get(studentId);
       const tuitionPaid = summary?.totalPaid ?? 0;
       const tuitionBalance = summary?.balance ?? 0;
-      
+      const carriedBalance = summary?.carriedBalance ?? 0;
+
       return {
         id: studentId,
         student_class: student.class || '',
@@ -414,6 +425,7 @@ const StudentAdminNames: React.FC = () => {
         gender: student.gender || '',
         tuition_paid: tuitionPaid,
         tuition_balance: tuitionBalance,
+        carried_balance: carriedBalance,
         fathers_name: student.fathersName || '',
         mothers_name: student.mothersName || '',
         fathers_contact: student.fathersContact || student.userId?.phoneNumber || '',
@@ -452,6 +464,7 @@ const StudentAdminNames: React.FC = () => {
         : "Not Collected",
       tuition_paid: student.tuition_paid || 0,
       tuition_balance: student.tuition_balance || 0,
+      carried_balance: student.carried_balance || 0,
     }));
   }, [className, classStudentsId]);
   useEffect(() => {
@@ -748,7 +761,27 @@ const StudentAdminNames: React.FC = () => {
                           <td className={`text-right pr-4 ${data.tuition_balance > 0 ? 'text-red-600 font-semibold' : 'text-green-600'}`}>
                             ₦{data.tuition_balance?.toLocaleString() || 0}
                           </td>
-                          <td className="">{data.starter_pack}</td>
+                          <td className="text-right pr-4">
+                            <div className="flex items-center justify-end gap-1">
+                              <span className={data.carried_balance > 0 ? 'text-orange-600 font-semibold' : 'text-gray-400'}>
+                                ₦{(data.carried_balance || 0).toLocaleString()}
+                              </span>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setDebtStudent(data);
+                                  setDebtInput(data.carried_balance || 0);
+                                  setDebtModalOpen(true);
+                                }}
+                                className="p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-[#05878F] transition-colors"
+                                title="Edit previous term debt"
+                              >
+                                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                </svg>
+                              </button>
+                            </div>
+                          </td>
                           <td className="text-center">
                             <div className="flex flex-row justify-center">
                               <Link
@@ -1058,6 +1091,54 @@ const StudentAdminNames: React.FC = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Previous Term Debt Edit Modal */}
+      {debtModalOpen && debtStudent && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-bold text-gray-800">Previous Term Debt</h2>
+              <button onClick={() => setDebtModalOpen(false)} className="text-gray-400 hover:text-gray-600">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <p className="text-sm text-gray-500 mb-1">Student</p>
+            <p className="font-semibold text-gray-800 mb-4">{debtStudent.full_name}</p>
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Outstanding from previous terms (₦)
+              </label>
+              <input
+                type="number"
+                value={debtInput}
+                onChange={(e) => setDebtInput(Number(e.target.value))}
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                min="0"
+                step="1"
+                autoFocus
+              />
+              <p className="text-xs text-gray-400 mt-1">Set to 0 if fully cleared.</p>
+            </div>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setDebtModalOpen(false)}
+                className="flex-1 border border-gray-300 text-gray-700 rounded-lg py-2 font-medium hover:bg-gray-50 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => updateDebtMutation.mutate({ studentId: String(debtStudent.id), amount: debtInput })}
+                disabled={updateDebtMutation.isPending}
+                className="flex-1 bg-[#05878F] text-white rounded-lg py-2 font-medium hover:bg-[#046e75] transition-colors disabled:opacity-50"
+              >
+                {updateDebtMutation.isPending ? 'Saving…' : 'Save'}
+              </button>
+            </div>
           </div>
         </div>
       )}

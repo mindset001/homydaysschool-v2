@@ -26,6 +26,10 @@ import chatRoutes from './routes/chatRoutes.js';
 import timetableRoutes from './routes/timetableRoutes.js';
 import academicSessionRoutes from './routes/academicSessionRoutes.js';
 import testRoutes from './routes/testRoutes.js';
+import attendanceRoutes from './routes/attendanceRoutes.js';
+import assignmentRoutes from './routes/assignmentRoutes.js';
+import quizRoutes from './routes/quizRoutes.js';
+import submissionRoutes from './routes/submissionRoutes.js';
 
 const app: Application = express();
 
@@ -114,6 +118,10 @@ app.use('/api/chat', chatRoutes);
 app.use('/api/timetables', timetableRoutes);
 app.use('/api/academic-sessions', academicSessionRoutes);
 console.log('Routes registered successfully');
+app.use('/api/attendance', attendanceRoutes);
+app.use('/api/assignments', assignmentRoutes);
+app.use('/api/submissions', submissionRoutes);
+app.use('/api/quizzes', quizRoutes);
 
 // Error handler (must be last)
 app.use(errorHandler);

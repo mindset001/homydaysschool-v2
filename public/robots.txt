@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Block all authenticated/dashboard pages — no value indexing them
+Disallow: /dashboard/
+Disallow: /login/
+Disallow: /forgot-password/
+
+# Sitemap location
+Sitemap: https://homydaysschools.sch.ng/sitemap.xml

@@ -401,6 +401,34 @@ export const updateStudent = async (req: AuthRequest, res: Response): Promise<vo
   }
 };
 
+export const updateCarriedBalance = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const { carriedBalance } = req.body;
+
+    if (carriedBalance === undefined || isNaN(Number(carriedBalance))) {
+      res.status(400).json({ message: 'carriedBalance must be a number' });
+      return;
+    }
+
+    const student = await Student.findByIdAndUpdate(
+      id,
+      { $set: { carriedBalance: Math.max(0, Number(carriedBalance)) } },
+      { new: true }
+    );
+
+    if (!student) {
+      res.status(404).json({ message: 'Student not found' });
+      return;
+    }
+
+    res.json({ message: 'Carried balance updated', carriedBalance: student.carriedBalance });
+  } catch (error: any) {
+    console.error('Error updating carried balance:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
 export const deleteStudent = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { id } = req.params;

@@ -44,6 +44,10 @@ export const getHomeAnalytic = (params?: { term?: string; academicYear?: string 
   return apiClient.get(`homeanalytic${qs}`);
 };
 
+export const getDebtors = () => {
+  return apiClient.get('debtors');
+};
+
 export const getStudentTermSummary = (studentId: string) => {
   return apiClient.get(`payments/student/${studentId}/term-summary`);
 };
@@ -141,4 +145,25 @@ export const getUnreadChatCount = async (): Promise<number> => {
 
 export const getPromotionPreview = () => {
   return apiClient.get('students/promotion-preview');
+};
+
+export const getAttendance = (classId: string | number, date?: string) => {
+  const qs = date ? `?date=${encodeURIComponent(date)}` : '';
+  return apiClient.get(`attendance/${classId}${qs}`);
+};
+
+export const getAssignmentsByClass = (classId: string | number) => {
+  return apiClient.get(`assignments/${classId}`);
+};
+
+export const getQuizzesByClass = (classId: string | number) => {
+  return apiClient.get(`quizzes/${classId}`);
+};
+
+export const getAssignmentMarks = (assignmentId: string | number) => {
+  return apiClient.get(`assignments/marks/${assignmentId}`);
+};
+
+export const getQuizMarks = (quizId: string | number) => {
+  return apiClient.get(`quizzes/marks/${quizId}`);
 };

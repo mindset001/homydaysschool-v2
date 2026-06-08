@@ -58,6 +58,10 @@ const AcademicSessionPage: React.FC = () => {
   const invalidate = () => {
     queryClient.invalidateQueries({ queryKey: ['allAcademicSessions'] });
     queryClient.invalidateQueries({ queryKey: ['activeAcademicSession'] });
+    // Flush all session-scoped caches so the whole UI updates immediately
+    queryClient.invalidateQueries({ queryKey: ['home-analytic'] });
+    queryClient.invalidateQueries({ queryKey: ['classPayments'] });
+    queryClient.invalidateQueries({ queryKey: ['debtors'] });
   };
 
   const createMutation = useMutation({

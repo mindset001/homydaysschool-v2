@@ -19,6 +19,8 @@ interface HomeAnalyticDataInterface {
   void: number;
   incompleted_tuition: number;
   starter_pack_collected: number;
+  debtors_count: number;
+  total_debt_amount: number;
   events: EventInterface[];
 }
 
@@ -33,6 +35,8 @@ const useTotalPercentageValue = (): totalPercentageValueI => {
       paid_half: 0,
       paid_nothing: 0,
       starter_pack_collected: 0,
+      debtors_count: 0,
+      total_debt_amount: 0,
     });
 
   const { activeSession } = useActiveSession();
@@ -66,6 +70,8 @@ const useTotalPercentageValue = (): totalPercentageValueI => {
     incompleted_tuition,
     void: void_tuition,
     starter_pack_collected,
+    debtors_count,
+    total_debt_amount,
   } = homeAnalytic;
 
   useEffect(() => {
@@ -89,6 +95,8 @@ const useTotalPercentageValue = (): totalPercentageValueI => {
         paid_half: incompleted_tuition,
         paid_nothing: void_tuition,
         starter_pack_collected: calculatePercentage(starter_pack_collected),
+        debtors_count: debtors_count || 0,
+        total_debt_amount: total_debt_amount || 0,
       });
     }
   }, [
@@ -97,6 +105,8 @@ const useTotalPercentageValue = (): totalPercentageValueI => {
     incompleted_tuition,
     void_tuition,
     starter_pack_collected,
+    debtors_count,
+    total_debt_amount,
   ]);
 
   // console.log(
