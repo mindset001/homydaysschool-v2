@@ -38,7 +38,7 @@ const AttendancePage: React.FC = () => {
   const attendanceRecords: any[] = attendanceData?.data?.attendance ?? attendanceData?.data ?? [];
 
   const markMutation = useMutation({
-    mutationFn: (payload: any) => createAttendance(payload),
+    mutationFn: ({ classId, ...rest }: any) => createAttendance(classId, rest),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["attendance", selectedClassId] });
       showSuccessToast("Attendance saved");
