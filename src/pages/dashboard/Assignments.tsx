@@ -6,7 +6,7 @@ import { getRole } from "../../utils/authTokens";
 import { showSuccessToast, showErrorToast } from "../../shared/ToastNotification";
 import useActiveSession from "../../hooks/useActiveSession";
 import useClasses from "../../hooks/useClasses";
-import QuestionBuilder, { IQuestion, emptyQuestion } from "../../components/admin-dashboard/QuestionBuilder";
+import QuestionBuilder, { IQuestion } from "../../components/admin-dashboard/QuestionBuilder";
 
 const AssignmentsPage: React.FC = () => {
   const role = getRole();

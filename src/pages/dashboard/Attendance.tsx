@@ -30,7 +30,7 @@ const AttendancePage: React.FC = () => {
 
   const { data: attendanceData } = useQuery({
     queryKey: ["attendance", selectedClassId],
-    queryFn: () => getAttendance(selectedClassId),
+    queryFn: () => getAttendance(selectedClassId, date),
     enabled: !!selectedClassId,
     staleTime: 60 * 1000,
   });

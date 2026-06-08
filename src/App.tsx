@@ -41,6 +41,8 @@ import ProfileLayout from "./layouts/role/ProfileLayout";
 import StaffLayout from "./layouts/role/StaffLayout";
 import TuitionLayout from "./layouts/role/TuitionLayout";
 import ToastNotification from "./shared/ToastNotification";
+import PWAInstallPrompt from "./shared/PWAInstallPrompt";
+import PWAUpdateBanner from "./shared/PWAUpdateBanner";
 import UserProvider from "./hooks/UseUserContext";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import { getRole } from "./utils/authTokens";
@@ -177,6 +179,8 @@ function App() {
   return (
     <div className="min-h-screen">
       <ToastNotification />
+      <PWAInstallPrompt />
+      <PWAUpdateBanner />
       {/* <h1 className="text-purple-700 text-2xl">Hello World</h1> */}
       <QueryClientProvider client={queryClient}>
         <UserProvider>
