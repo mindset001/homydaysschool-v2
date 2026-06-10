@@ -352,11 +352,11 @@ const Tuition: React.FC = () => {
   //   return <Loader />;
   // }
   return (
-    <div className="m-0 md:my-[30px] bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none heightprob">
+    <div className="m-0 md:my-[30px] bg-[linear-gradient(259.46deg,_#F97316_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none heightprob">
       <div className="tuition-header block md:hidden">Tuition</div>
       <div className="tuition-body-container flex-grow">
         <div className="tuition-body-container-header">
-          <div className="hidden md:block shadow-[0px_1px_25px_0px_#389FA61A] p-4 rounded-[20px] text-[18px] leading-[23.04px] font-bold font-Lora text-[#05878F] mr-5 heightprob">
+          <div className="hidden md:block shadow-[0px_1px_25px_0px_#389FA61A] p-4 rounded-[20px] text-[18px] leading-[23.04px] font-bold font-Lora text-[#F97316] mr-5 heightprob">
             Finance
           </div>
           <div className="hidden flex-row self-center">
@@ -392,7 +392,7 @@ const Tuition: React.FC = () => {
                   className="object-contain object-center size-full"
                 />
               </div>
-              <div className=" font-Poppins font-normal text-[14px] leading-[19.5px] text-[#05878F]">
+              <div className=" font-Poppins font-normal text-[14px] leading-[19.5px] text-[#F97316]">
                 Edit
               </div>
             </button>
@@ -404,7 +404,7 @@ const Tuition: React.FC = () => {
           </>
           <div
             className={`tuition-class-fees-overview ${
-              tuitionFeesDropDown ? "bg-white" : "bg-[#ECFEFF] md:bg-white"
+              tuitionFeesDropDown ? "bg-white" : "bg-[#FFF7ED] md:bg-white"
             }`}
           >
             <button
@@ -511,7 +511,7 @@ const Tuition: React.FC = () => {
                       {!isEditMode ? (
                         <button
                           onClick={handleEditClick}
-                          className="flex items-center gap-2 px-4 py-2 bg-[#05878F] text-white rounded-lg font-Poppins text-sm hover:bg-[#046970] transition-colors"
+                          className="flex items-center gap-2 px-4 py-2 bg-[#F97316] text-white rounded-lg font-Poppins text-sm hover:bg-[#046970] transition-colors"
                         >
                           <img src={Pencil} alt="edit" className="w-4 h-4" />
                           Edit Fees
@@ -527,7 +527,7 @@ const Tuition: React.FC = () => {
                           <button
                             onClick={handleSaveEdit}
                             disabled={updateClassMutation.isPending}
-                            className="px-4 py-2 bg-[#05878F] text-white rounded-lg font-Poppins text-sm hover:bg-[#046970] transition-colors disabled:opacity-50"
+                            className="px-4 py-2 bg-[#F97316] text-white rounded-lg font-Poppins text-sm hover:bg-[#046970] transition-colors disabled:opacity-50"
                           >
                             {updateClassMutation.isPending ? 'Saving...' : 'Save Changes'}
                           </button>
@@ -694,7 +694,7 @@ const Tuition: React.FC = () => {
               <div
                 className={`flex-1 text-center text-lg md:text-[20px] 2xl:text-[24px] font-semibold font-Poppins ${
                   studentDropDown === "Crèche"
-                    ? "text-black md:text-[#05878F]"
+                    ? "text-black md:text-[#F97316]"
                     : "text-black"
                 }`}
               >
@@ -792,7 +792,7 @@ const Tuition: React.FC = () => {
               })()}
               <Link
                 to={"creche"}
-                className="content-center right-0 bottom-[-37px] absolute p-2 rounded-full size-[30px] bg-[#05878F]"
+                className="content-center right-0 bottom-[-37px] absolute p-2 rounded-full size-[30px] bg-[#F97316]"
               >
                 <div className="max-w-[15px] max-h-[12px] student-overview-class-desktop-nav">
                   <GuardianSVG />
@@ -819,7 +819,7 @@ const Tuition: React.FC = () => {
               <div
                 className={`flex-1 text-center text-lg md:text-[20px] 2xl:text-[24px] font-semibold font-Poppins ${
                   studentDropDown === "K.G 1"
-                    ? "text-black md:text-[#05878F]"
+                    ? "text-black md:text-[#F97316]"
                     : "text-black"
                 }`}
               >
@@ -917,7 +917,7 @@ const Tuition: React.FC = () => {
               })()}
               <Link
                 to={"k.g 1"}
-                className="content-center right-0 bottom-[-37px] absolute p-2 rounded-full size-[30px] bg-[#05878F]"
+                className="content-center right-0 bottom-[-37px] absolute p-2 rounded-full size-[30px] bg-[#F97316]"
               >
                 <div className=" max-w-[15px] max-h-[12px] student-overview-class-desktop-nav">
                   <GuardianSVG />
@@ -944,7 +944,7 @@ const Tuition: React.FC = () => {
               <div
                 className={`flex-1 text-center text-lg md:text-[20px] 2xl:text-[24px] font-semibold font-Poppins ${
                   studentDropDown === "K.G 2"
-                    ? "text-black md:text-[#05878F]"
+                    ? "text-black md:text-[#F97316]"
                     : "text-black"
                 }`}
               >
@@ -1042,7 +1042,7 @@ const Tuition: React.FC = () => {
               })()}
               <Link
                 to={"k.g 2"}
-                className="content-center right-0 bottom-[-37px] absolute p-2 rounded-full size-[30px] bg-[#05878F]"
+                className="content-center right-0 bottom-[-37px] absolute p-2 rounded-full size-[30px] bg-[#F97316]"
               >
                 <div className="max-w-[15px] max-h-[12px] student-overview-class-desktop-nav">
                   <GuardianSVG />
@@ -1071,7 +1071,7 @@ const Tuition: React.FC = () => {
               <div
                 className={`flex-1 text-center text-lg md:text-[20px] 2xl:text-[24px] font-semibold font-Poppins ${
                   studentDropDown === "Nursery 1"
-                    ? "text-black md:text-[#05878F]"
+                    ? "text-black md:text-[#F97316]"
                     : "text-black"
                 }`}
               >
@@ -1169,7 +1169,7 @@ const Tuition: React.FC = () => {
               })()}
               <Link
                 to={"nursery 1"}
-                className="content-center right-0 bottom-[-37px] absolute p-2 rounded-full size-[30px] bg-[#05878F]"
+                className="content-center right-0 bottom-[-37px] absolute p-2 rounded-full size-[30px] bg-[#F97316]"
               >
                 <div className="max-w-[15px] max-h-[12px] student-overview-class-desktop-nav">
                   <GuardianSVG />
@@ -1198,7 +1198,7 @@ const Tuition: React.FC = () => {
               <div
                 className={`flex-1 text-center text-lg md:text-[20px] 2xl:text-[24px] font-semibold font-Poppins ${
                   studentDropDown === "Nursery 2"
-                    ? "text-black md:text-[#05878F]"
+                    ? "text-black md:text-[#F97316]"
                     : "text-black"
                 }`}
               >
@@ -1296,7 +1296,7 @@ const Tuition: React.FC = () => {
               })()}
               <Link
                 to={"nursery 2"}
-                className="content-center right-0 bottom-[-37px] absolute p-2 rounded-full size-[30px] bg-[#05878F]"
+                className="content-center right-0 bottom-[-37px] absolute p-2 rounded-full size-[30px] bg-[#F97316]"
               >
                 <div className="max-w-[15px] max-h-[12px] student-overview-class-desktop-nav">
                   <GuardianSVG />
@@ -1325,7 +1325,7 @@ const Tuition: React.FC = () => {
               <div
                 className={`flex-1 text-center text-lg md:text-[20px] 2xl:text-[24px] font-semibold font-Poppins ${
                   studentDropDown === "Primary 1"
-                    ? "text-black md:text-[#05878F]"
+                    ? "text-black md:text-[#F97316]"
                     : "text-black"
                 }`}
               >
@@ -1423,7 +1423,7 @@ const Tuition: React.FC = () => {
               })()}
               <Link
                 to={"primary 1"}
-                className="content-center right-0 bottom-[-37px] absolute p-2 rounded-full size-[30px] bg-[#05878F]"
+                className="content-center right-0 bottom-[-37px] absolute p-2 rounded-full size-[30px] bg-[#F97316]"
               >
                 <div className="max-w-[15px] max-h-[12px] student-overview-class-desktop-nav">
                   <GuardianSVG />
@@ -1452,7 +1452,7 @@ const Tuition: React.FC = () => {
               <div
                 className={`flex-1 text-center text-lg md:text-[20px] 2xl:text-[24px] font-semibold font-Poppins ${
                   studentDropDown === "Primary 2"
-                    ? "text-black md:text-[#05878F]"
+                    ? "text-black md:text-[#F97316]"
                     : "text-black"
                 }`}
               >
@@ -1550,7 +1550,7 @@ const Tuition: React.FC = () => {
               })()}
               <Link
                 to={"primary 2"}
-                className="content-center right-0 bottom-[-37px] absolute p-2 rounded-full size-[30px] bg-[#05878F]"
+                className="content-center right-0 bottom-[-37px] absolute p-2 rounded-full size-[30px] bg-[#F97316]"
               >
                 <div className="max-w-[15px] max-h-[12px] student-overview-class-desktop-nav">
                   <GuardianSVG />
@@ -1579,7 +1579,7 @@ const Tuition: React.FC = () => {
               <div
                 className={`flex-1 text-center text-lg md:text-[20px] 2xl:text-[24px] font-semibold font-Poppins ${
                   studentDropDown === "Primary 3"
-                    ? "text-black md:text-[#05878F]"
+                    ? "text-black md:text-[#F97316]"
                     : "text-black"
                 }`}
               >
@@ -1677,7 +1677,7 @@ const Tuition: React.FC = () => {
               })()}
               <Link
                 to={"primary 3"}
-                className="content-center right-0 bottom-[-37px] absolute p-2 rounded-full size-[30px] bg-[#05878F]"
+                className="content-center right-0 bottom-[-37px] absolute p-2 rounded-full size-[30px] bg-[#F97316]"
               >
                 <div className="max-w-[15px] max-h-[12px] student-overview-class-desktop-nav">
                   <GuardianSVG />
@@ -1706,7 +1706,7 @@ const Tuition: React.FC = () => {
               <div
                 className={`flex-1 text-center text-lg md:text-[20px] 2xl:text-[24px] font-semibold font-Poppins ${
                   studentDropDown === "Primary 4"
-                    ? "text-black md:text-[#05878F]"
+                    ? "text-black md:text-[#F97316]"
                     : "text-black"
                 }`}
               >
@@ -1804,7 +1804,7 @@ const Tuition: React.FC = () => {
               })()}
               <Link
                 to={"primary 4"}
-                className="content-center right-0 bottom-[-37px] absolute p-2 rounded-full size-[30px] bg-[#05878F]"
+                className="content-center right-0 bottom-[-37px] absolute p-2 rounded-full size-[30px] bg-[#F97316]"
               >
                 <div className="max-w-[15px] max-h-[12px] student-overview-class-desktop-nav">
                   <GuardianSVG />
@@ -1833,7 +1833,7 @@ const Tuition: React.FC = () => {
               <div
                 className={`flex-1 text-center text-lg md:text-[20px] 2xl:text-[24px] font-semibold font-Poppins ${
                   studentDropDown === "Primary 5"
-                    ? "text-black md:text-[#05878F]"
+                    ? "text-black md:text-[#F97316]"
                     : "text-black"
                 }`}
               >
@@ -1931,7 +1931,7 @@ const Tuition: React.FC = () => {
               })()}
               <Link
                 to={"primary 5"}
-                className="content-center right-0 bottom-[-37px] absolute p-2 rounded-full size-[30px] bg-[#05878F]"
+                className="content-center right-0 bottom-[-37px] absolute p-2 rounded-full size-[30px] bg-[#F97316]"
               >
                 <div className="max-w-[15px] max-h-[12px] student-overview-class-desktop-nav">
                   <GuardianSVG />

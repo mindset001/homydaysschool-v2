@@ -225,7 +225,7 @@ const AddButton: React.FC<AddButtonProps> = ({
           className=" my-[40px] md:my-[39px] md:mx-[10px] lg:mx-[20px]"
         >
           <div className="flex flex-col items-center justify-center mb-[40px] md:mb-[15px]">
-            <div className="relative max-w-[200px] size-[200px] md:max-w-[150px] md:size-[150px]  rounded-full overflow-hidden mr-[5px] ml-[10px] border-2 border-solid border-[#05878F] md:border-[#ECFEFF] mb-[15px] md:mb-[5px]">
+            <div className="relative max-w-[200px] size-[200px] md:max-w-[150px] md:size-[150px]  rounded-full overflow-hidden mr-[5px] ml-[10px] border-2 border-solid border-[#F97316] md:border-[#FFF7ED] mb-[15px] md:mb-[5px]">
               <img
                 src={imageFile}
                 alt=""
@@ -265,7 +265,7 @@ const AddButton: React.FC<AddButtonProps> = ({
                   onChange={handleInputChange}
                   // value={data.name}
 
-                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
                 />
               </div>
             </div>
@@ -283,7 +283,7 @@ const AddButton: React.FC<AddButtonProps> = ({
                   onChange={handleInputChange}
                   // value={data.name}
 
-                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
                 />
               </div>
             </div>
@@ -301,7 +301,7 @@ const AddButton: React.FC<AddButtonProps> = ({
                   onChange={handleInputChange}
                   // value={data.name}
 
-                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
                 />
               </div>
             </div>
@@ -321,7 +321,7 @@ const AddButton: React.FC<AddButtonProps> = ({
                   // onChange={() => {setFormData({...formData, class : className})}}
                   // value={data.age}
 
-                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border cursor-not-allowed`}
+                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border cursor-not-allowed`}
                 />
               </div>
             </div>
@@ -337,7 +337,7 @@ const AddButton: React.FC<AddButtonProps> = ({
                   name="student_class"
                   id="student_class"
                   value={formData.schoolclass}
-                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border cursor-not-allowed`}
+                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border cursor-not-allowed`}
                 />
               </div>
             </div>
@@ -353,7 +353,7 @@ const AddButton: React.FC<AddButtonProps> = ({
                   onChange={handleDateChange}
                   // onChange={() => {}}
                   dateFormat="yyyy MM dd" // Format: "05 June 2011"
-                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border datepicker`}
+                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border datepicker`}
                 />
               </div>
             </div>
@@ -374,7 +374,7 @@ const AddButton: React.FC<AddButtonProps> = ({
                   // }
                   name="gender"
                   id="gender"
-                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
                 >
                   <option value={""}>Select Gender:</option>
                   <option value={"Male"}>Male</option>
@@ -396,7 +396,7 @@ const AddButton: React.FC<AddButtonProps> = ({
                   onChange={handleInputChange}
                   // value={data.fathers_name}
 
-                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
                 />
               </div>
             </div>
@@ -414,7 +414,7 @@ const AddButton: React.FC<AddButtonProps> = ({
                   onChange={handleInputChange}
                   // value={data.fathers_occupation}
 
-                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
                 />
               </div>
             </div>
@@ -435,7 +435,7 @@ const AddButton: React.FC<AddButtonProps> = ({
                   placeholder="+234 012 345 6789"
                   // value={data.fathers_contact}
 
-                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
                 />
               </div>
             </div>
@@ -453,7 +453,7 @@ const AddButton: React.FC<AddButtonProps> = ({
                   onChange={handleInputChange}
                   // value={data.mothers_name}
 
-                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
                 />
               </div>
             </div>
@@ -471,7 +471,7 @@ const AddButton: React.FC<AddButtonProps> = ({
                   onChange={handleInputChange}
                   // value={data.mothers_occupation}
 
-                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
                 />
               </div>
             </div>
@@ -492,7 +492,7 @@ const AddButton: React.FC<AddButtonProps> = ({
                   placeholder="+234 012 345 6789"
                   // value={data.mothers_contact}
 
-                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
                 />
               </div>
             </div>
@@ -510,7 +510,7 @@ const AddButton: React.FC<AddButtonProps> = ({
                   onChange={handleInputChange}
                   // value={data.home_address}
 
-                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full inline md:w-full whitespace-pre-wrap  outline-none md:text-left resize-none border-[rgb(16,16,16)] border`}
+                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full inline md:w-full whitespace-pre-wrap  outline-none md:text-left resize-none border-[rgb(16,16,16)] border`}
                 />
               </div>
             </div>
@@ -531,7 +531,7 @@ const AddButton: React.FC<AddButtonProps> = ({
                   // }
                   name="guardian"
                   id="guardian"
-                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
                 >
                   <option value={""}>Select Guardian:</option>
                   <option value={formData.fathers_name}>Father</option>
@@ -559,7 +559,7 @@ const AddButton: React.FC<AddButtonProps> = ({
                   }}
                   // value={data.guardian_email}
 
-                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
                 />
               </div>
             </div>
@@ -577,7 +577,7 @@ const AddButton: React.FC<AddButtonProps> = ({
                   onChange={handleInputChange}
                   // value={data.home_town}
 
-                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
                 />
               </div>
             </div>
@@ -595,7 +595,7 @@ const AddButton: React.FC<AddButtonProps> = ({
                   onChange={handleInputChange}
                   // value={data.state_of_origin}
 
-                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
                 />
               </div>
             </div>
@@ -613,7 +613,7 @@ const AddButton: React.FC<AddButtonProps> = ({
                   onChange={handleInputChange}
                   // value={data.country}
 
-                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
                 />
               </div>
             </div>
@@ -631,7 +631,7 @@ const AddButton: React.FC<AddButtonProps> = ({
                 onChange={handleInputChange}
                 // value={data.religion}
 
-                className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
               /> */}
                 <select
                   required
@@ -645,7 +645,7 @@ const AddButton: React.FC<AddButtonProps> = ({
                   // }
                   name="religion"
                   id="religion"
-                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
                 >
                   <option value={""}>Select Religion:</option>
                   <option value={"Christianity"}>Christianity</option>
@@ -681,7 +681,7 @@ const AddButton: React.FC<AddButtonProps> = ({
                   }
                   name="starter_pack_collected"
                   id="starter_pack_collected"
-                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                  className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
                 >
                   <option value={""}>Select:</option>
                   <option value={"collected"}>Collected</option>
@@ -695,7 +695,7 @@ const AddButton: React.FC<AddButtonProps> = ({
               type="submit"
               disabled={isAdding}
               // onClick={() => {}}
-              className={`mr-[10px] rounded-[15px] bg-[#05878F] py-[2px] px-[12px] ${
+              className={`mr-[10px] rounded-[15px] bg-[#F97316] py-[2px] px-[12px] ${
                 isAdding ? "cursor-not-allowed" : "cursor-auto"
               } `}
               value={isAdding ? "Submitting..." : "Submit"}
@@ -705,7 +705,7 @@ const AddButton: React.FC<AddButtonProps> = ({
               onClick={() => {
                 setAddToggle(false);
               }}
-              className="rounded-[15px] bg-[#05878F] py-[2px] px-[12px]"
+              className="rounded-[15px] bg-[#F97316] py-[2px] px-[12px]"
               value={"Cancel"}
             />
           </div>

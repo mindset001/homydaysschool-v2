@@ -508,7 +508,7 @@ const StudentAdminDatabase: React.FC = () => {
             </div>
             {editable ? (
               <div className="flex flex-col items-center justify-center mb-[40px] md:mb-[15px]">
-                <div className="relative max-w-[200px] size-[200px] md:max-w-[150px] md:size-[150px]  rounded-full overflow-hidden mr-[5px] ml-[10px] border-2 border-solid border-[#05878F] md:border-[#ECFEFF] mb-[15px] md:mb-[5px]">
+                <div className="relative max-w-[200px] size-[200px] md:max-w-[150px] md:size-[150px]  rounded-full overflow-hidden mr-[5px] ml-[10px] border-2 border-solid border-[#F97316] md:border-[#FFF7ED] mb-[15px] md:mb-[5px]">
                   <img
                     src={imageFile}
                     alt=""
@@ -538,7 +538,7 @@ const StudentAdminDatabase: React.FC = () => {
               </div>
             ) : (
               <div className="flex flex-col items-center mb-[40px] md:mb-[15px]">
-                <div className="max-w-[200px] size-[200px] md:max-w-[150px] md:size-[150px]  rounded-full overflow-hidden mr-[5px] ml-[10px] border-2 border-solid border-[#05878F] md:border-[#ECFEFF] mb-[15px] md:mb-[5px]">
+                <div className="max-w-[200px] size-[200px] md:max-w-[150px] md:size-[150px]  rounded-full overflow-hidden mr-[5px] ml-[10px] border-2 border-solid border-[#F97316] md:border-[#FFF7ED] mb-[15px] md:mb-[5px]">
                   <img
                     src={imageFile}
                     alt={`${newStudentData.last_name} ${newStudentData.first_name} ${newStudentData.middle_name}`}
@@ -626,7 +626,7 @@ const StudentAdminDatabase: React.FC = () => {
                     }
                     disabled
                     // disabled={editable true}
-                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
+                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
                       editable ? "hidden" : "border-none block"
                     }`}
                   />
@@ -651,7 +651,7 @@ const StudentAdminDatabase: React.FC = () => {
                     onChange={handleInputChange}
                     // value={data.name}
 
-                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
                   />
                 </div>
               </div>
@@ -672,7 +672,7 @@ const StudentAdminDatabase: React.FC = () => {
                     onChange={handleInputChange}
                     // value={data.name}
 
-                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
                   />
                 </div>
               </div>
@@ -693,7 +693,7 @@ const StudentAdminDatabase: React.FC = () => {
                     onChange={handleInputChange}
                     // value={data.name}
 
-                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
                   />
                 </div>
               </div>
@@ -717,7 +717,7 @@ const StudentAdminDatabase: React.FC = () => {
                     // onChange={() => {setNewStudentData({...newStudentData, class : className})}}
                     // value={data.age}
 
-                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border cursor-not-allowed`}
+                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border cursor-not-allowed`}
                   />
                 </div>
               </div>
@@ -737,7 +737,7 @@ const StudentAdminDatabase: React.FC = () => {
                     name="student_class"
                     id="student_class"
                     value={newStudentData.schoolclass || ""}
-                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border cursor-not-allowed`}
+                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border cursor-not-allowed`}
                   />
                 </div>
               </div>
@@ -764,7 +764,7 @@ const StudentAdminDatabase: React.FC = () => {
                         : ""
                     }
                     // disabled={editable ? false : true}
-                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none flex`}
+                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none flex`}
                   />
                 </div>
               </div>
@@ -778,7 +778,7 @@ const StudentAdminDatabase: React.FC = () => {
                       onChange={() => {}}
                       disabled={editable ? false : true}
                       dateFormat="dd MMMM yyyy" // Format: "05 June 2011"
-                      className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
+                      className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
                         editable
                           ? "border-[rgb(16,16,16)] border"
                           : "border-none"
@@ -791,7 +791,7 @@ const StudentAdminDatabase: React.FC = () => {
                     disabled={editable ? false : true}
                     // onChange={() => {}}
                     dateFormat="yyyy MM dd" // Format: "05 June 2011"
-                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
+                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
                       editable ? "border-[rgb(16,16,16)] border" : "border-none"
                     }`}
                   />
@@ -815,8 +815,8 @@ const StudentAdminDatabase: React.FC = () => {
                       // }
                       name="gender"
                       id="gender"
-                      // className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
-                      className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
+                      // className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                      className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
                         editable
                           ? "border-[rgb(16,16,16)] border"
                           : "border-none"
@@ -835,7 +835,7 @@ const StudentAdminDatabase: React.FC = () => {
                       value={newStudentData.gender || ""}
                       // disabled={editable ? false : true}
                       disabled
-                      className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
+                      className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
                         editable
                           ? "border-[rgb(16,16,16)] border"
                           : "border-none"
@@ -856,7 +856,7 @@ const StudentAdminDatabase: React.FC = () => {
                     value={newStudentData.fathers_name || ""}
                     onChange={handleInputChange}
                     disabled={editable ? false : true}
-                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
+                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
                       editable ? "border-[rgb(16,16,16)] border" : "border-none"
                     }`}
                   />
@@ -876,7 +876,7 @@ const StudentAdminDatabase: React.FC = () => {
                     value={newStudentData.fathers_occupation || ""}
                     onChange={handleInputChange}
                     disabled={editable ? false : true}
-                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
+                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
                       editable ? "border-[rgb(16,16,16)] border" : "border-none"
                     }`}
                   />
@@ -894,7 +894,7 @@ const StudentAdminDatabase: React.FC = () => {
                     value={newStudentData.fathers_contact || 0}
                     onChange={handleInputChange}
                     disabled={editable ? false : true}
-                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
+                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
                       editable ? "border-[rgb(16,16,16)] border" : "border-none"
                     }`}
                   />
@@ -912,7 +912,7 @@ const StudentAdminDatabase: React.FC = () => {
                     value={newStudentData.mothers_name || ""}
                     onChange={handleInputChange}
                     disabled={editable ? false : true}
-                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
+                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
                       editable ? "border-[rgb(16,16,16)] border" : "border-none"
                     }`}
                   />
@@ -932,7 +932,7 @@ const StudentAdminDatabase: React.FC = () => {
                     value={newStudentData.mothers_occupation || ""}
                     onChange={handleInputChange}
                     disabled={editable ? false : true}
-                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
+                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
                       editable ? "border-[rgb(16,16,16)] border" : "border-none"
                     }`}
                   />
@@ -950,7 +950,7 @@ const StudentAdminDatabase: React.FC = () => {
                     value={newStudentData.mothers_contact || 0}
                     onChange={handleInputChange}
                     disabled={editable ? false : true}
-                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
+                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
                       editable ? "border-[rgb(16,16,16)] border" : "border-none"
                     }`}
                   />
@@ -968,7 +968,7 @@ const StudentAdminDatabase: React.FC = () => {
                     value={newStudentData.home_address || ""}
                     onChange={handleInputChange}
                     disabled={editable ? false : true}
-                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full inline md:w-full whitespace-pre-wrap outline-none text-left resize-none ${
+                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full inline md:w-full whitespace-pre-wrap outline-none text-left resize-none ${
                       editable ? "border-[rgb(16,16,16)] border" : "border-none"
                     }`}
                   />
@@ -990,7 +990,7 @@ const StudentAdminDatabase: React.FC = () => {
                     // }
                     name="guardian"
                     id="guardian"
-                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
                   >
                     <option value={""}>Select Guardian:</option>
                     <option value={formData.fathers_name}>Father</option>
@@ -1016,7 +1016,7 @@ const StudentAdminDatabase: React.FC = () => {
                       }));
                     }}
                     disabled={editable ? false : true}
-                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
+                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
                       editable ? "border-[rgb(16,16,16)] border" : "border-none"
                     }`}
                   />
@@ -1034,7 +1034,7 @@ const StudentAdminDatabase: React.FC = () => {
                     value={newStudentData.home_town || ""}
                     onChange={handleInputChange}
                     disabled={editable ? false : true}
-                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
+                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
                       editable ? "border-[rgb(16,16,16)] border" : "border-none"
                     }`}
                   />
@@ -1052,7 +1052,7 @@ const StudentAdminDatabase: React.FC = () => {
                     value={newStudentData.state_of_origin || ""}
                     onChange={handleInputChange}
                     disabled={editable ? false : true}
-                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
+                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
                       editable ? "border-[rgb(16,16,16)] border" : "border-none"
                     }`}
                   />
@@ -1070,7 +1070,7 @@ const StudentAdminDatabase: React.FC = () => {
                     value={newStudentData.country || ""}
                     onChange={handleInputChange}
                     disabled={editable ? false : true}
-                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
+                    className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
                       editable ? "border-[rgb(16,16,16)] border" : "border-none"
                     }`}
                   />
@@ -1094,8 +1094,8 @@ const StudentAdminDatabase: React.FC = () => {
                       // disabled={editable ? false : true}
                       name="religion"
                       id="religion"
-                      // className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
-                      className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
+                      // className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                      className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
                         editable
                           ? "border-[rgb(16,16,16)] border"
                           : "border-none"
@@ -1115,7 +1115,7 @@ const StudentAdminDatabase: React.FC = () => {
                       value={newStudentData.religion || ""}
                       disabled
                       // disabled={editable ? false : true}
-                      className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
+                      className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
                         editable
                           ? "border-[rgb(16,16,16)] border"
                           : "border-none"
@@ -1151,8 +1151,8 @@ const StudentAdminDatabase: React.FC = () => {
                       }
                       name="starter_pack_collected"
                       id="starter_pack_collected"
-                      // className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
-                      className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
+                      // className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none border-[rgb(16,16,16)] border`}
+                      className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
                         editable
                           ? "border-[rgb(16,16,16)] border"
                           : "border-none"
@@ -1177,7 +1177,7 @@ const StudentAdminDatabase: React.FC = () => {
                       }
                       // disabled={editable ? false : true}
                       disabled
-                      className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#ECFEFF] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
+                      className={`rounded-tl-[0px] rounded-[20px] md:rounded-[0px] py-[5px] px-[10px] md:py-0 md:px-[5px] bg-[#FFF7ED] md:bg-white w-full whitespace-nowrap truncate overflow-hidden outline-none ${
                         editable
                           ? "border-[rgb(16,16,16)] border"
                           : "border-none"
@@ -1191,7 +1191,7 @@ const StudentAdminDatabase: React.FC = () => {
               <input
                 type={"button"}
                 onClick={() => setEditable(true)}
-                className={`mr-[8px] rounded-[15px] bg-[#05878F] py-[2px] px-[12px] ${
+                className={`mr-[8px] rounded-[15px] bg-[#F97316] py-[2px] px-[12px] ${
                   editable ? "hidden" : "block"
                 }`}
                 value={"Edit"}
@@ -1200,7 +1200,7 @@ const StudentAdminDatabase: React.FC = () => {
                 type={"submit"}
                 disabled={isUpdating}
                 // onClick={() => (setEditable(true))}
-                className={`mr-[8px] rounded-[15px] bg-[#05878F] py-[2px] px-[12px] ${
+                className={`mr-[8px] rounded-[15px] bg-[#F97316] py-[2px] px-[12px] ${
                   editable ? "block" : "hidden"
                 } ${isUpdating ? "cursor-not-allowed" : "cursor-auto"}`}
                 value={isUpdating ? "Updating..." : "Update"}
@@ -1233,7 +1233,7 @@ const StudentAdminDatabase: React.FC = () => {
                 onClick={() =>
                   editable ? setEditable(false) : navigate("/dashboard/results")
                 }
-                className="rounded-[15px] bg-[#05878F] py-[2px] px-[12px]"
+                className="rounded-[15px] bg-[#F97316] py-[2px] px-[12px]"
                 value={editable ? "Cancel" : "Result"}
               />
             </div>
@@ -1265,14 +1265,14 @@ const StudentAdminDatabase: React.FC = () => {
                     placeholder="New password (min. 6 characters)"
                     value={resetPassword}
                     onChange={(e) => { setResetPassword(e.target.value); setResetError(""); }}
-                    className="w-full border-2 border-[#05878F] rounded-xl py-2 px-4 text-sm outline-none"
+                    className="w-full border-2 border-[#F97316] rounded-xl py-2 px-4 text-sm outline-none"
                   />
                   <input
                     type="password"
                     placeholder="Confirm new password"
                     value={resetConfirm}
                     onChange={(e) => { setResetConfirm(e.target.value); setResetError(""); }}
-                    className="w-full border-2 border-[#05878F] rounded-xl py-2 px-4 text-sm outline-none"
+                    className="w-full border-2 border-[#F97316] rounded-xl py-2 px-4 text-sm outline-none"
                   />
                   {resetError && <p className="text-red-500 text-xs font-semibold">{resetError}</p>}
                 </div>

@@ -16,12 +16,12 @@ const PWAUpdateBanner: React.FC = () => {
 
   return (
     <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[9999] font-Poppins">
-      <div className="bg-[#05878F] text-white rounded-xl shadow-xl px-5 py-3 flex items-center gap-4">
+      <div className="bg-[#F97316] text-white rounded-xl shadow-xl px-5 py-3 flex items-center gap-4">
         <span className="text-sm font-medium">A new version is available!</span>
         <div className="flex gap-2">
           <button
             onClick={() => updateServiceWorker(true)}
-            className="bg-white text-[#05878F] rounded-lg px-3 py-1 text-xs font-semibold hover:bg-gray-100 transition-colors"
+            className="bg-white text-[#F97316] rounded-lg px-3 py-1 text-xs font-semibold hover:bg-gray-100 transition-colors"
           >
             Update now
           </button>

@@ -61,7 +61,7 @@ const UserProfile: React.FC<Props> = ({
         toggleProfile ? "block" : "hidden"
       }`}
     >
-      <div className="flex flex-row gap-2 bg-[#05878F]/90 text-white items-center p-3">
+      <div className="flex flex-row gap-2 bg-[#F97316]/90 text-white items-center p-3">
         <div className="rounded-full border-[white] border-[3px] border-solid size-[44px] 2xl:size-[55px] overflow-hidden">
           <img src={profileImage} alt={`${user.lastName} ${user.firstName}`} />
         </div>

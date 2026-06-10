@@ -576,7 +576,7 @@ const StudentAdminNames: React.FC = () => {
                 <div className="block md:hidden grow">
                   <div className="student-names-list-container-mheader">
                     <div className="font-Lora font-bold mr-5">
-                      <div className="text-[15px] leading-[19.2px] text-[#05878F]">
+                      <div className="text-[15px] leading-[19.2px] text-[#F97316]">
                         TOTAL
                       </div>
                       <div className="text-lg text-center leading-[23.04px]">
@@ -719,7 +719,7 @@ const StudentAdminNames: React.FC = () => {
                                 name="name"
                                 autoComplete="false"
                                 id={data.id.toString()}
-                                className=" size-[14px] checked:bg-black accent-[#05878F] appearance-auto hover:accent-[#05878F] border-[#05878F] cursor-pointer"
+                                className=" size-[14px] checked:bg-black accent-[#F97316] appearance-auto hover:accent-[#F97316] border-[#F97316] cursor-pointer"
                                 onChange={() => {}}
                                 checked={
                                   id === data.id.toString() ? true : false
@@ -753,7 +753,7 @@ const StudentAdminNames: React.FC = () => {
                           >
                             <div className="flex items-center justify-end gap-2">
                               <span>₦{data.tuition_paid?.toLocaleString() || 0}</span>
-                              <svg className="w-4 h-4 text-[#05878F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                               </svg>
                             </div>
@@ -773,7 +773,7 @@ const StudentAdminNames: React.FC = () => {
                                   setDebtInput(data.carried_balance || 0);
                                   setDebtModalOpen(true);
                                 }}
-                                className="p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-[#05878F] transition-colors"
+                                className="p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-[#F97316] transition-colors"
                                 title="Edit previous term debt"
                               >
                                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -788,7 +788,7 @@ const StudentAdminNames: React.FC = () => {
                                 to={`tel:${data.fathers_contact}`}
                                 className={`mr-[15px] size-[20px] rounded-full flex justify-center items-center ${
                                   id === data.id.toString()
-                                    ? "active-call-contact bg-[#05878F]"
+                                    ? "active-call-contact bg-[#F97316]"
                                     : "bg-[white]"
                                 }`}
                               >
@@ -800,7 +800,7 @@ const StudentAdminNames: React.FC = () => {
                                 to={`mailto:${data.guardian_email}`}
                                 className={`size-[20px] rounded-full flex justify-center items-center ${
                                   id === data.id.toString()
-                                    ? "active-message-contact bg-[#05878F]"
+                                    ? "active-message-contact bg-[#F97316]"
                                     : "bg-[white]"
                                 }`}
                               >
@@ -837,7 +837,7 @@ const StudentAdminNames: React.FC = () => {
                 <div className="text-xl mt-2">This class does not exist</div>
                 <button
                   onClick={goBack}
-                  className="text-base border py-2 px-4 border-solid rounded-lg text-nowrap border-[#05878F] text-white bg-[#05878F] mt-5"
+                  className="text-base border py-2 px-4 border-solid rounded-lg text-nowrap border-[#F97316] text-white bg-[#F97316] mt-5"
                 >
                   Go Back
                 </button>
@@ -888,7 +888,7 @@ const StudentAdminNames: React.FC = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white border-b px-6 py-4 flex justify-between items-center">
-              <h2 className="text-xl font-bold text-[#05878F]">
+              <h2 className="text-xl font-bold text-[#F97316]">
                 Record Payment - {selectedStudent.full_name}
               </h2>
               <button
@@ -931,7 +931,7 @@ const StudentAdminNames: React.FC = () => {
                     type="text"
                     value={paymentFormData.academicYear}
                     onChange={(e) => setPaymentFormData({ ...paymentFormData, academicYear: e.target.value })}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                     required
                   />
                 </div>
@@ -944,7 +944,7 @@ const StudentAdminNames: React.FC = () => {
                   <select
                     value={paymentFormData.term}
                     onChange={(e) => setPaymentFormData({ ...paymentFormData, term: e.target.value as "First Term" | "Second Term" | "Third Term" })}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                     required
                   >
                     <option value="First Term">First Term</option>
@@ -961,7 +961,7 @@ const StudentAdminNames: React.FC = () => {
                   <select
                     value={paymentFormData.paymentType}
                     onChange={(e) => setPaymentFormData({ ...paymentFormData, paymentType: e.target.value })}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                     required
                   >
                     <option value="School Fee">School Fee</option>
@@ -986,7 +986,7 @@ const StudentAdminNames: React.FC = () => {
                   <select
                     value={paymentFormData.paymentMethod}
                     onChange={(e) => setPaymentFormData({ ...paymentFormData, paymentMethod: e.target.value })}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                     required
                   >
                     <option value="Cash">Cash</option>
@@ -1006,7 +1006,7 @@ const StudentAdminNames: React.FC = () => {
                     type="number"
                     value={paymentFormData.amount}
                     onChange={(e) => setPaymentFormData({ ...paymentFormData, amount: Number(e.target.value) })}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                     min="0"
                     step="0.01"
                     required
@@ -1022,7 +1022,7 @@ const StudentAdminNames: React.FC = () => {
                     type="number"
                     value={paymentFormData.amountDue}
                     onChange={(e) => setPaymentFormData({ ...paymentFormData, amountDue: Number(e.target.value) })}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#05878F] bg-gray-50"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#F97316] bg-gray-50"
                     min="0"
                     step="0.01"
                   />
@@ -1037,7 +1037,7 @@ const StudentAdminNames: React.FC = () => {
                     type="date"
                     value={paymentFormData.paymentDate}
                     onChange={(e) => setPaymentFormData({ ...paymentFormData, paymentDate: e.target.value })}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                     required
                   />
                 </div>
@@ -1051,7 +1051,7 @@ const StudentAdminNames: React.FC = () => {
                     type="text"
                     value={paymentFormData.referenceNumber}
                     onChange={(e) => setPaymentFormData({ ...paymentFormData, referenceNumber: e.target.value })}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                     placeholder="Transaction/Receipt #"
                   />
                 </div>
@@ -1064,7 +1064,7 @@ const StudentAdminNames: React.FC = () => {
                   <textarea
                     value={paymentFormData.remarks}
                     onChange={(e) => setPaymentFormData({ ...paymentFormData, remarks: e.target.value })}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                     rows={3}
                     placeholder="Additional notes about this payment..."
                   />
@@ -1085,7 +1085,7 @@ const StudentAdminNames: React.FC = () => {
                 <button
                   type="submit"
                   disabled={createPaymentMutation.isPending}
-                  className="px-6 py-2 bg-[#05878F] text-white rounded-lg hover:bg-[#046970] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-6 py-2 bg-[#F97316] text-white rounded-lg hover:bg-[#046970] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {createPaymentMutation.isPending ? 'Recording...' : 'Record Payment'}
                 </button>
@@ -1117,7 +1117,7 @@ const StudentAdminNames: React.FC = () => {
                 type="number"
                 value={debtInput}
                 onChange={(e) => setDebtInput(Number(e.target.value))}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                 min="0"
                 step="1"
                 autoFocus
@@ -1134,7 +1134,7 @@ const StudentAdminNames: React.FC = () => {
               <button
                 onClick={() => updateDebtMutation.mutate({ studentId: String(debtStudent.id), amount: debtInput })}
                 disabled={updateDebtMutation.isPending}
-                className="flex-1 bg-[#05878F] text-white rounded-lg py-2 font-medium hover:bg-[#046e75] transition-colors disabled:opacity-50"
+                className="flex-1 bg-[#F97316] text-white rounded-lg py-2 font-medium hover:bg-[#EA580C] transition-colors disabled:opacity-50"
               >
                 {updateDebtMutation.isPending ? 'Saving…' : 'Save'}
               </button>

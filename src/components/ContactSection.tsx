@@ -87,7 +87,7 @@ const ContactSection: React.FC = () => {
                   placeholder="Your full name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                  className="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                 />
               </div>
               <div className="flex flex-col gap-1">
@@ -98,7 +98,7 @@ const ContactSection: React.FC = () => {
                   placeholder="your@email.com"
                   value={formData.email}
                   onChange={handleChange}
-                  className="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                  className="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                 />
               </div>
               <div className="flex flex-col gap-1">
@@ -109,7 +109,7 @@ const ContactSection: React.FC = () => {
                   placeholder="08XXXXXXXXX"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                  className="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                 />
               </div>
               <div className="flex flex-col gap-1">
@@ -120,13 +120,13 @@ const ContactSection: React.FC = () => {
                   value={formData.message}
                   onChange={handleChange}
                   rows={4}
-                  className="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#05878F] resize-none"
+                  className="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316] resize-none"
                 />
               </div>
               <button
                 type="submit"
                 disabled={sending}
-                className="bg-[#05878F] hover:bg-[#046a71] text-white font-semibold py-2.5 rounded-lg transition-colors text-sm disabled:opacity-60"
+                className="bg-[#F97316] hover:bg-[#046a71] text-white font-semibold py-2.5 rounded-lg transition-colors text-sm disabled:opacity-60"
               >
                 {sending ? "Sending..." : "Send Message"}
               </button>

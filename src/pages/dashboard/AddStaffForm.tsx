@@ -164,7 +164,7 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
         <select
           name="title"
           value={formData.title}
-          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#05878F] hover:border-[#05878F] border-[#05878F] focus:border-2"
+          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#F97316] hover:border-[#F97316] border-[#F97316] focus:border-2"
           onChange={handleChange}
         >
           <option value="">title</option>
@@ -176,7 +176,7 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
       <div className="flex justify-between items-center mb-4">
         <label className="font-Lora text-[15px] font-medium">First Name</label>
         <input
-          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#05878F] hover:border-[#05878F] border-[#05878F] focus:border-2"
+          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#F97316] hover:border-[#F97316] border-[#F97316] focus:border-2"
           type="text"
           name="first_name"
           value={formData.first_name}
@@ -186,7 +186,7 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
       <div className="flex justify-between items-center mb-4">
         <label className="font-Lora text-[15px] font-medium">Last Name:</label>
         <input
-          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#05878F] hover:border-[#05878F] border-[#05878F] focus:border-2"
+          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#F97316] hover:border-[#F97316] border-[#F97316] focus:border-2"
           type="text"
           name="last_name"
           value={formData.last_name}
@@ -198,7 +198,7 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
           Middle Name:
         </label>
         <input
-          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#05878F] hover:border-[#05878F] border-[#05878F] focus:border-2"
+          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#F97316] hover:border-[#F97316] border-[#F97316] focus:border-2"
           type="text"
           name="middle_name"
           value={formData.middle_name}
@@ -208,7 +208,7 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
       <div className="flex justify-between items-center mb-4">
         <label className="font-Lora text-[15px] font-medium">Email:</label>
         <input
-          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#05878F] hover:border-[#05878F] border-[#05878F] focus:border-2"
+          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#F97316] hover:border-[#F97316] border-[#F97316] focus:border-2"
           type="email"
           name="email"
           value={formData.email}
@@ -218,7 +218,7 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
       <div className="flex justify-between items-center mb-4">
         <label className="font-Lora text-[15px] font-medium">DOB:</label>
         <input
-          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#05878F] hover:border-[#05878F] border-[#05878F] focus:border-2"
+          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#F97316] hover:border-[#F97316] border-[#F97316] focus:border-2"
           type="date"
           name="date_of_birth"
           max={today}
@@ -231,7 +231,7 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
         <select
           name="gender"
           value={formData.gender}
-          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#05878F] hover:border-[#05878F] border-[#05878F] focus:border-2"
+          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#F97316] hover:border-[#F97316] border-[#F97316] focus:border-2"
           onChange={handleChange}
         >
           <option value="">Gender</option>
@@ -244,7 +244,7 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
           Home Address
         </label>
         <input
-          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#05878F] hover:border-[#05878F] border-[#05878F] focus:border-2"
+          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#F97316] hover:border-[#F97316] border-[#F97316] focus:border-2"
           type="tel"
           name="home_address"
           value={formData.home_address}
@@ -256,7 +256,7 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
           State Of Origin
         </label>
         <input
-          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#05878F] hover:border-[#05878F] border-[#05878F] focus:border-2"
+          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#F97316] hover:border-[#F97316] border-[#F97316] focus:border-2"
           type="text"
           name="state_of_origin"
           value={formData.state_of_origin}
@@ -266,7 +266,7 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
       <div className="flex justify-between items-center mb-4">
         <label className="font-Lora text-[15px] font-medium">Home Town</label>
         <input
-          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#05878F] hover:border-[#05878F] border-[#05878F] focus:border-2"
+          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#F97316] hover:border-[#F97316] border-[#F97316] focus:border-2"
           type="text"
           name="home_town"
           value={formData.home_town}
@@ -276,7 +276,7 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
       <div className="flex justify-between items-center mb-4">
         <label className="font-Lora text-[15px] font-medium">Country</label>
         <input
-          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#05878F] hover:border-[#05878F] border-[#05878F] focus:border-2"
+          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#F97316] hover:border-[#F97316] border-[#F97316] focus:border-2"
           type="text"
           name="country"
           value={formData.country}
@@ -288,7 +288,7 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
           Qualification
         </label>
         <input
-          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#05878F] hover:border-[#05878F] border-[#05878F] focus:border-2"
+          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#F97316] hover:border-[#F97316] border-[#F97316] focus:border-2"
           type="text"
           name="qualification"
           value={formData.qualification}
@@ -300,7 +300,7 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
         <select
           name="assigned_to"
           value={formData.assigned_to}
-          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#05878F] hover:border-[#05878F] border-[#05878F] focus:border-2"
+          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#F97316] hover:border-[#F97316] border-[#F97316] focus:border-2"
           onChange={handleChange}
           
           disabled={isClassLoading}
@@ -325,7 +325,7 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
       <div className="flex justify-between items-center mb-4">
         <label className="font-Lora text-[15px] font-medium">Subject</label>
         <input
-          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#05878F] hover:border-[#05878F] border-[#05878F] focus:border-2"
+          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#F97316] hover:border-[#F97316] border-[#F97316] focus:border-2"
           type="text"
           name="subject"
           value={formData.subject}
@@ -337,7 +337,7 @@ const AddStaffForm: React.FC<AddStaffFormProps> = ({ onSubmit }) => {
       <menu className="flex justify-center">
         <button
           type="submit"
-          className=" bg-[#05878F] cursor-pointer px-[25px] font-Lora text-white self-center rounded-[25px] text-xl font-bold py-[7px] w-full sm:w-auto text-center mt-[23px] md:mt-[23px]  md:mb-[2px]"
+          className=" bg-[#F97316] cursor-pointer px-[25px] font-Lora text-white self-center rounded-[25px] text-xl font-bold py-[7px] w-full sm:w-auto text-center mt-[23px] md:mt-[23px]  md:mb-[2px]"
         >
           Add Staff
         </button>

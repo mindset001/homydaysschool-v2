@@ -14,7 +14,7 @@
   */
 .student-overview {
   @apply my-0 mx-0 md:my-[30px] md:mx-[15px] 2xl:mx-[20px] flex flex-col items-center;
-  @apply bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none;
+  @apply bg-[linear-gradient(259.46deg,_#F97316_10.76%,_rgba(249,_115,_22,_1)_107.57%)] md:bg-none;
   @apply heightprob;
   /* @apply h-full; */
   /* @apply  pb-[30px]; */
@@ -22,7 +22,7 @@
 .student-overview-header {
   @apply text-[22px] md:text-[24px] md:leading-[30.72px] leading-[28px] font-Lora font-bold text-white md:text-[rgba(5,135,143,1)] bg-transparent md:bg-white shadow-none md:shadow-[0px_1px_25px_0px_rgba(56,_159,_166,_0.1)] rounded-b-[20px] md:rounded-[20px];
   @apply py-[43.5px] ml:py-[46px] md:py-[12px] md:px-[74px];
-  @apply bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none;
+  @apply bg-[linear-gradient(259.46deg,_#F97316_10.76%,_rgba(249,_115,_22,_1)_107.57%)] md:bg-none;
   @apply sticky md:static top-0;
   @apply m-0 md:mb-[30px] w-full md:w-auto text-center;
   @apply z-40;
@@ -51,7 +51,7 @@
 /* Student Names */
 .student-names {
   @apply my-0 flex flex-row justify-center md:flex-row md:justify-start;
-  @apply bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none;
+  @apply bg-[linear-gradient(259.46deg,_#F97316_10.76%,_rgba(249,_115,_22,_1)_107.57%)] md:bg-none;
   @apply min-h-[calc(100vh-80px)] md:min-h-full;
   /* @apply  pb-[30px]; */
 }
@@ -65,7 +65,7 @@
 .student-names-list-header {
   @apply font-Lora font-bold;
   @apply pt-[43.5px] ml:pt-[46px] pb-[15px] md:p-0;
-  @apply bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none;
+  @apply bg-[linear-gradient(259.46deg,_#F97316_10.76%,_rgba(249,_115,_22,_1)_107.57%)] md:bg-none;
   @apply sticky md:static top-0;
   @apply m-0  w-full md:w-auto text-center;
   @apply flex flex-col md:flex-row md:flex-wrap;
@@ -206,7 +206,7 @@
 .student-db-call,
 .student-db-email {
   @apply size-[40px] md:size-[20px] rounded-full;
-  @apply bg-[#05878F] md:bg-white;
+  @apply bg-[#F97316] md:bg-white;
   @apply flex justify-center items-center;
   @apply shadow-[0px_8px_26px_0px_#046A7E2B];
 }
@@ -215,10 +215,10 @@
   @apply size-[18.47px] md:size-[9.24px];
 }
 .student-db-call path {
-  @apply stroke-white md:stroke-[#05878F];
+  @apply stroke-white md:stroke-[#F97316];
 }
 .student-db-email path {
-  @apply fill-white md:fill-[#05878F];
+  @apply fill-white md:fill-[#F97316];
 }
 .student-db-details {
   @apply flex flex-row text-[15px];

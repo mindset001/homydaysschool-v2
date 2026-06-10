@@ -118,7 +118,7 @@ const TuitionFinance: React.FC = () => {
       className={`tuition-finance ${
         totalTuitionDropDown
           ? "max-h-full md:max-h-full rounded-none mx-0 bg-white"
-          : "min-h-[60px] md:max-h-full rounded-[20px] mx-[30px] md:rounded-none bg-[#ECFEFF] md:bg-white"
+          : "min-h-[60px] md:max-h-full rounded-[20px] mx-[30px] md:rounded-none bg-[#FFF7ED] md:bg-white"
       }`}
     >
       <button
@@ -133,7 +133,7 @@ const TuitionFinance: React.FC = () => {
       >
         <div
           className={`flex-1 text-center text-lg md:text-[20px] 2xl:text-[24px] font-semibold font-Poppins ${
-            totalTuitionDropDown ? "text-black md:text-[#05878F]" : "text-black"
+            totalTuitionDropDown ? "text-black md:text-[#F97316]" : "text-black"
           }`}
         >
           Total Tuiton
@@ -150,8 +150,8 @@ const TuitionFinance: React.FC = () => {
 
       {activeSession && (
         <div className="flex justify-center mb-2">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ECFEFF] border border-[#05878F]/30 text-[11px] font-Poppins text-[#05878F] font-medium">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#05878F] inline-block" />
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFF7ED] border border-[#F97316]/30 text-[11px] font-Poppins text-[#F97316] font-medium">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#F97316] inline-block" />
             Showing: {activeSession.term} &middot; {activeSession.academicYear}
           </span>
         </div>

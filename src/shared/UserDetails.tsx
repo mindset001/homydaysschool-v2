@@ -189,7 +189,7 @@ const UserDetails = ({ user }: IUserDetailsProps) => {
                         <select
                           name={prop[0]}
                           value={prop[1]}
-                          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#05878F] hover:border-[#05878F] border-[#05878F] focus:border-2"
+                          className="w-4/6 h-full border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#F97316] hover:border-[#F97316] border-[#F97316] focus:border-2"
                           onChange={(e) => {
                             setEditedAssignedTo(true);
                             handleInputChange(e);

@@ -28,15 +28,12 @@ export const submitAssignment = async (req: AuthRequest, res: Response): Promise
       return;
     }
 
-    const submission = new StudentSubmission({
-      assignmentId,
-      studentId,
-      submittedBy: req.user!.userId,
-      content,
-      attachments,
-    });
-    await submission.save();
-    res.status(201).json({ message: 'Submission created', submission });
+    const submission = await StudentSubmission.findOneAndUpdate(
+      { assignmentId, studentId },
+      { assignmentId, studentId, submittedBy: req.user!.userId, content, attachments },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    );
+    res.status(201).json({ message: 'Submission saved', submission });
   } catch (error: any) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -63,15 +60,12 @@ export const submitQuiz = async (req: AuthRequest, res: Response): Promise<void>
       return;
     }
 
-    const submission = new StudentSubmission({
-      quizId,
-      studentId,
-      submittedBy: req.user!.userId,
-      content,
-      attachments,
-    });
-    await submission.save();
-    res.status(201).json({ message: 'Submission created', submission });
+    const submission = await StudentSubmission.findOneAndUpdate(
+      { quizId, studentId },
+      { quizId, studentId, submittedBy: req.user!.userId, content, attachments },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    );
+    res.status(201).json({ message: 'Submission saved', submission });
   } catch (error: any) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -80,7 +74,9 @@ export const submitQuiz = async (req: AuthRequest, res: Response): Promise<void>
 export const getSubmissionsForAssignment = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { assignmentId } = req.params;
-    const submissions = await StudentSubmission.find({ assignmentId }).populate('studentId', 'userId').populate('submittedBy', 'firstName lastName');
+    const query: any = { assignmentId };
+    if (req.query.studentId) query.studentId = req.query.studentId;
+    const submissions = await StudentSubmission.find(query).populate('studentId', 'userId').populate('submittedBy', 'firstName lastName');
     res.json({ submissions });
   } catch (error: any) {
     res.status(500).json({ message: 'Server error', error: error.message });
@@ -90,7 +86,9 @@ export const getSubmissionsForAssignment = async (req: AuthRequest, res: Respons
 export const getSubmissionsForQuiz = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { quizId } = req.params;
-    const submissions = await StudentSubmission.find({ quizId }).populate('studentId', 'userId').populate('submittedBy', 'firstName lastName');
+    const query: any = { quizId };
+    if (req.query.studentId) query.studentId = req.query.studentId;
+    const submissions = await StudentSubmission.find(query).populate('studentId', 'userId').populate('submittedBy', 'firstName lastName');
     res.json({ submissions });
   } catch (error: any) {
     res.status(500).json({ message: 'Server error', error: error.message });

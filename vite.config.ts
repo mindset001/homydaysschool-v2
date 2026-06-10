@@ -16,7 +16,7 @@ export default defineConfig({
         scope: '/',
         display: 'standalone',
         background_color: '#ffffff',
-        theme_color: '#05878F',
+        theme_color: '#F97316',
         lang: 'en-NG',
         orientation: 'portrait-primary',
         categories: ['education'],
@@ -96,9 +96,7 @@ export default defineConfig({
         ],
       },
       devOptions: {
-        // Enable the service worker in dev so you can test offline behaviour
-        enabled: true,
-        type: 'module',
+        enabled: false,
       },
     }),
   ],

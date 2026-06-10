@@ -11,7 +11,7 @@ const LoginLayout: React.FC = () => {
     <div className=" flex flex-col justify-center items-center bg-white md:bg-transparent min-h-screen">
       {/* lg:min-h-[65vh] xl:min-h-[70vh] 2xl:min-h-[75vh] */}
       <div className="min-h-[70vh] md:min-h-0 min-w-full md:min-w-[67%] lg:min-w-[57%] 2xl:min-w-[43.055%] flex flex-col justify-center items-center my-[30px] md:my-[20px]">
-        <div className="mx-auto size-[60px] bg-white shadow-[0px_8px_26px_0px_#046A7E2B] md:size-[68px] lg:size-[75px] 2xl:size-[82px] md:bg-[#ECFEFF] rounded-full flex justify-center items-center mb-[75px] lg:mb-[50px]">
+        <div className="mx-auto size-[60px] bg-white shadow-[0px_8px_26px_0px_#046A7E2B] md:size-[68px] lg:size-[75px] 2xl:size-[82px] md:bg-[#FFF7ED] rounded-full flex justify-center items-center mb-[75px] lg:mb-[50px]">
           <img
             src={Paper}
             alt="logo"

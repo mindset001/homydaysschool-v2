@@ -363,7 +363,7 @@ const ResultNames: React.FC = () => {
                 <div className="block md:hidden grow">
                   <div className="student-names-list-container-mheader relative">
                     <div className="font-Lora font-bold mr-5">
-                      <div className="text-[15px] leading-[19.2px] text-[#05878F]">
+                      <div className="text-[15px] leading-[19.2px] text-[#F97316]">
                         TOTAL
                       </div>
                       <div className="text-lg text-center leading-[23.04px]">
@@ -496,7 +496,7 @@ const ResultNames: React.FC = () => {
                                 name="name"
                                 autoComplete="false"
                                 id={data.id.toString()}
-                                className=" size-[14px] checked:bg-black accent-[#05878F] appearance-auto hover:accent-[#05878F] border-[#05878F] cursor-pointer"
+                                className=" size-[14px] checked:bg-black accent-[#F97316] appearance-auto hover:accent-[#F97316] border-[#F97316] cursor-pointer"
                                 onChange={() => {}}
                                 checked={
                                   id === data.id.toString() ? true : false
@@ -527,7 +527,7 @@ const ResultNames: React.FC = () => {
                                 to={`tel:${data.fathers_contact}`}
                                 className={`mr-[15px] size-[20px] rounded-full flex justify-center items-center ${
                                   id === data.id.toString()
-                                    ? "active-call-contact bg-[#05878F]"
+                                    ? "active-call-contact bg-[#F97316]"
                                     : "bg-[white]"
                                 }`}
                               >
@@ -539,7 +539,7 @@ const ResultNames: React.FC = () => {
                                 to={`mailto:${data.guardian_email}`}
                                 className={`size-[20px] rounded-full flex justify-center items-center ${
                                   id === data.id.toString()
-                                    ? "active-message-contact bg-[#05878F]"
+                                    ? "active-message-contact bg-[#F97316]"
                                     : "bg-[white]"
                                 }`}
                               >
@@ -576,7 +576,7 @@ const ResultNames: React.FC = () => {
                 <div className="text-xl mt-2">This class does not exist</div>
                 <button
                   onClick={goBack}
-                  className="text-base border py-2 px-4 border-solid rounded-lg text-nowrap border-[#05878F] text-white bg-[#05878F] mt-5"
+                  className="text-base border py-2 px-4 border-solid rounded-lg text-nowrap border-[#F97316] text-white bg-[#F97316] mt-5"
                 >
                   Go Back
                 </button>

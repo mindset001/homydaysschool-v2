@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getQuizzesByClass, getQuizMarks } from "../../services/api/calls/getApis";
 import { createQuiz } from "../../services/api/calls/postApis";
@@ -6,22 +6,35 @@ import { getRole } from "../../utils/authTokens";
 import { showSuccessToast, showErrorToast } from "../../shared/ToastNotification";
 import useActiveSession from "../../hooks/useActiveSession";
 import useClasses from "../../hooks/useClasses";
+import useGuardianWard from "../../hooks/useGuardianWard";
 import QuestionBuilder, { IQuestion } from "../../components/admin-dashboard/QuestionBuilder";
+import SubmissionModal from "../../components/guardian/SubmissionModal";
 
 const QuizzesPage: React.FC = () => {
   const role = getRole();
   const { activeSession } = useActiveSession();
   const queryClient = useQueryClient();
+  const isGuardian = role === "guardian";
 
   const [selectedClassId, setSelectedClassId] = useState("");
+  const [selectedWardIdx, setSelectedWardIdx] = useState(0);
   const [createOpen, setCreateOpen] = useState(false);
   const [viewQuiz, setViewQuiz] = useState<any | null>(null);
   const [viewMarks, setViewMarks] = useState<any | null>(null);
+  const [submitTarget, setSubmitTarget] = useState<any | null>(null);
 
   const [form, setForm] = useState({ title: "", description: "", scheduledAt: "", durationMinutes: 30 });
   const [questions, setQuestions] = useState<IQuestion[]>([]);
 
   const { classNameData: classes } = useClasses();
+  const { guardianWard } = useGuardianWard();
+  const wards = guardianWard?.students ?? [];
+
+  useEffect(() => {
+    if (!isGuardian) return;
+    const ward = wards[selectedWardIdx];
+    if (ward?.studentClass) setSelectedClassId(ward.studentClass);
+  }, [isGuardian, wards, selectedWardIdx]);
 
   const { data: quizzesData, isLoading } = useQuery({
     queryKey: ["quizzes", selectedClassId],
@@ -65,36 +78,60 @@ const QuizzesPage: React.FC = () => {
   return (
     <div className="p-6 font-Poppins">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-[#05878F]">Quizzes</h1>
+        <h1 className="text-2xl font-bold text-[#F97316]">Quizzes</h1>
         {selectedClassId && (role === "admin" || role === "staff") && (
           <button
             onClick={() => setCreateOpen(true)}
-            className="bg-[#05878F] text-white rounded-lg px-4 py-2 text-sm font-semibold hover:bg-[#046e75] transition-colors"
+            className="bg-[#F97316] text-white rounded-lg px-4 py-2 text-sm font-semibold hover:bg-[#EA580C] transition-colors"
           >
             + New Quiz
           </button>
         )}
+        {isGuardian && wards[selectedWardIdx] && (
+          <span className="text-sm text-gray-500">
+            {wards[selectedWardIdx].firstName}'s class: <span className="font-semibold text-[#F97316]">{wards[selectedWardIdx].studentClass}</span>
+          </span>
+        )}
       </div>
 
-      {/* Class selector */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mb-6">
-        <label className="block text-xs font-medium text-gray-500 mb-1">Select Class</label>
-        <select
-          value={selectedClassId}
-          onChange={(e) => setSelectedClassId(e.target.value)}
-          className="w-full max-w-xs border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#05878F]"
-        >
-          <option value="">Choose a class…</option>
-          {classes.map((c: any) => (
-            <option key={c.id ?? c._id} value={c.id ?? c._id}>{c.name}</option>
-          ))}
-        </select>
-      </div>
+      {/* Class / ward selector */}
+      {isGuardian ? (
+        wards.length > 1 && (
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mb-6">
+            <label className="block text-xs font-medium text-gray-500 mb-1">Select Child</label>
+            <select
+              value={selectedWardIdx}
+              onChange={(e) => setSelectedWardIdx(Number(e.target.value))}
+              className="w-full max-w-xs border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]"
+            >
+              {wards.map((w: any, i: number) => (
+                <option key={w.id} value={i}>{w.firstName} {w.lastName} — {w.studentClass}</option>
+              ))}
+            </select>
+          </div>
+        )
+      ) : (
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mb-6">
+          <label className="block text-xs font-medium text-gray-500 mb-1">Select Class</label>
+          <select
+            value={selectedClassId}
+            onChange={(e) => setSelectedClassId(e.target.value)}
+            className="w-full max-w-xs border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]"
+          >
+            <option value="">Choose a class…</option>
+            {classes.map((c: any) => (
+              <option key={c.id ?? c._id} value={c.id ?? c._id}>{c.name}</option>
+            ))}
+          </select>
+        </div>
+      )}
 
       {/* Quizzes list */}
       {selectedClassId && (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
-          <h2 className="font-semibold text-gray-800 mb-4">{selectedClass?.name} — Quizzes</h2>
+          <h2 className="font-semibold text-gray-800 mb-4">
+            {isGuardian ? wards[selectedWardIdx]?.studentClass : selectedClass?.name} — Quizzes
+          </h2>
           {isLoading ? (
             <p className="text-sm text-gray-400">Loading…</p>
           ) : quizzes.length === 0 ? (
@@ -141,14 +178,24 @@ const QuizzesPage: React.FC = () => {
                         </div>
                       </div>
                       <div className="flex gap-3 ml-4 shrink-0">
-                        {qs.length > 0 && (
+                        {qs.length > 0 && !isGuardian && (
                           <button onClick={() => setViewQuiz(q)} className="text-xs text-gray-500 underline">
                             Questions
                           </button>
                         )}
-                        <button onClick={() => setViewMarks(q)} className="text-xs text-[#05878F] underline">
-                          Marks
-                        </button>
+                        {isGuardian && qs.length > 0 && (
+                          <button
+                            onClick={() => setSubmitTarget(q)}
+                            className="text-xs bg-[#F97316] text-white rounded-lg px-3 py-1 font-medium hover:bg-[#EA580C] transition-colors"
+                          >
+                            Answer
+                          </button>
+                        )}
+                        {!isGuardian && (
+                          <button onClick={() => setViewMarks(q)} className="text-xs text-[#F97316] underline">
+                            Marks
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -174,7 +221,7 @@ const QuizzesPage: React.FC = () => {
                   <input
                     value={form.title}
                     onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                     placeholder="Quiz title"
                   />
                 </div>
@@ -184,7 +231,7 @@ const QuizzesPage: React.FC = () => {
                     value={form.description}
                     onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
                     rows={2}
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                     placeholder="Optional description…"
                   />
                 </div>
@@ -195,7 +242,7 @@ const QuizzesPage: React.FC = () => {
                       type="datetime-local"
                       value={form.scheduledAt}
                       onChange={(e) => setForm((f) => ({ ...f, scheduledAt: e.target.value }))}
-                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                     />
                   </div>
                   <div>
@@ -204,7 +251,7 @@ const QuizzesPage: React.FC = () => {
                       type="number"
                       value={form.durationMinutes}
                       onChange={(e) => setForm((f) => ({ ...f, durationMinutes: Number(e.target.value) }))}
-                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                       min="1"
                     />
                   </div>
@@ -235,13 +282,24 @@ const QuizzesPage: React.FC = () => {
               <button
                 onClick={() => createMutation.mutate()}
                 disabled={!form.title || createMutation.isPending}
-                className="flex-1 bg-[#05878F] text-white rounded-lg py-2.5 text-sm font-semibold disabled:opacity-50"
+                className="flex-1 bg-[#F97316] text-white rounded-lg py-2.5 text-sm font-semibold disabled:opacity-50"
               >
                 {createMutation.isPending ? "Creating…" : "Create Quiz"}
               </button>
             </div>
           </div>
         </div>
+      )}
+
+      {/* Guardian submission modal */}
+      {submitTarget && isGuardian && wards[selectedWardIdx] && (
+        <SubmissionModal
+          type="quiz"
+          item={submitTarget}
+          wardId={wards[selectedWardIdx].id}
+          wardName={`${wards[selectedWardIdx].firstName} ${wards[selectedWardIdx].lastName}`}
+          onClose={() => setSubmitTarget(null)}
+        />
       )}
 
       {/* View questions modal */}

@@ -128,7 +128,7 @@ const AcademicSessionPage: React.FC = () => {
         </div>
         <button
           onClick={() => { setShowCreate(true); setForm(DEFAULT_FORM); }}
-          className="bg-[#05878F] hover:bg-[#046a71] text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
+          className="bg-[#F97316] hover:bg-[#046a71] text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
         >
           + New Session
         </button>
@@ -154,7 +154,7 @@ const AcademicSessionPage: React.FC = () => {
               key={s._id}
               className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl border transition-all ${
                 s.isActive
-                  ? 'border-[#05878F] bg-[#ECFEFF]'
+                  ? 'border-[#F97316] bg-[#FFF7ED]'
                   : 'border-gray-200 bg-white'
               }`}
             >
@@ -162,14 +162,14 @@ const AcademicSessionPage: React.FC = () => {
               <div className="flex items-center gap-3">
                 <div
                   className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${
-                    s.isActive ? 'bg-[#05878F]' : 'bg-gray-300'
+                    s.isActive ? 'bg-[#F97316]' : 'bg-gray-300'
                   }`}
                 />
                 <div>
                   <div className="font-semibold text-gray-800 text-sm sm:text-base">
                     {s.term} &mdash; {s.academicYear}
                     {s.isActive && (
-                      <span className="ml-2 inline-block bg-[#05878F] text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">
+                      <span className="ml-2 inline-block bg-[#F97316] text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">
                         Active
                       </span>
                     )}
@@ -186,7 +186,7 @@ const AcademicSessionPage: React.FC = () => {
                   <button
                     onClick={() => activateMutation.mutate(s._id)}
                     disabled={activateMutation.isPending}
-                    className="text-xs font-semibold text-[#05878F] border border-[#05878F] px-3 py-1.5 rounded-lg hover:bg-[#ECFEFF] transition-colors"
+                    className="text-xs font-semibold text-[#F97316] border border-[#F97316] px-3 py-1.5 rounded-lg hover:bg-[#FFF7ED] transition-colors"
                   >
                     Set Active
                   </button>
@@ -291,7 +291,7 @@ const SessionForm: React.FC<SessionFormProps> = ({
             name="academicYear"
             value={form.academicYear}
             onChange={onChange}
-            className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+            className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]"
           >
             {years.map((y) => <option key={y} value={y}>{y}</option>)}
           </select>
@@ -302,7 +302,7 @@ const SessionForm: React.FC<SessionFormProps> = ({
             name="term"
             value={form.term}
             onChange={onChange}
-            className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+            className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]"
           >
             {terms.map((t) => <option key={t} value={t}>{t}</option>)}
           </select>
@@ -317,7 +317,7 @@ const SessionForm: React.FC<SessionFormProps> = ({
           name="startDate"
           value={form.startDate}
           onChange={onChange}
-          className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+          className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]"
         />
       </label>
       <label className="block">
@@ -327,7 +327,7 @@ const SessionForm: React.FC<SessionFormProps> = ({
           name="endDate"
           value={form.endDate}
           onChange={onChange}
-          className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+          className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]"
         />
       </label>
     </div>
@@ -338,7 +338,7 @@ const SessionForm: React.FC<SessionFormProps> = ({
           name="setActive"
           checked={form.setActive}
           onChange={onChange}
-          className="accent-[#05878F] w-4 h-4"
+          className="accent-[#F97316] w-4 h-4"
         />
         <span className="text-sm text-gray-700">Set as active session immediately</span>
       </label>
@@ -386,7 +386,7 @@ const ModalFooter: React.FC<FooterProps> = ({ onCancel, onConfirm, loading, conf
       className={`text-sm font-semibold text-white px-5 py-2 rounded-lg disabled:opacity-50 transition-colors ${
         danger
           ? 'bg-red-500 hover:bg-red-600'
-          : 'bg-[#05878F] hover:bg-[#046a71]'
+          : 'bg-[#F97316] hover:bg-[#046a71]'
       }`}
     >
       {loading ? 'Please wait…' : confirmLabel}

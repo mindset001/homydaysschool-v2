@@ -107,7 +107,7 @@ const TimetablesGuardian = () => {
     return <div className="w-6/6 text-center mt-[20%]">{error.message}</div>;
   }
   return (
-    <section className=" bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none min-h-[calc(100vh-80px)] md:min-h-0 flex flex-col">
+    <section className=" bg-[linear-gradient(259.46deg,_#F97316_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none min-h-[calc(100vh-80px)] md:min-h-0 flex flex-col">
       <MobileHeader title="Timetable" subtitle="Timetables" />
 
       <div className="rounded-t-[30px] flex flex-col gap-0 md:gap-5 pt-[20px] md:pt-0 md:mt-[30px] md:px-[30px] bg-white">

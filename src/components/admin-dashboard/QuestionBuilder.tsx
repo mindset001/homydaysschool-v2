@@ -71,7 +71,7 @@ const QuestionBuilder: React.FC<Props> = ({ questions, onChange }) => {
                   onClick={() => update(qi, { type: "objective", sampleAnswer: "" })}
                   className={`px-3 py-1.5 transition-colors ${
                     q.type === "objective"
-                      ? "bg-[#05878F] text-white"
+                      ? "bg-[#F97316] text-white"
                       : "bg-white text-gray-600 hover:bg-gray-50"
                   }`}
                 >
@@ -82,7 +82,7 @@ const QuestionBuilder: React.FC<Props> = ({ questions, onChange }) => {
                   onClick={() => update(qi, { type: "theory", options: [], correctAnswer: null })}
                   className={`px-3 py-1.5 transition-colors ${
                     q.type === "theory"
-                      ? "bg-[#05878F] text-white"
+                      ? "bg-[#F97316] text-white"
                       : "bg-white text-gray-600 hover:bg-gray-50"
                   }`}
                 >
@@ -97,7 +97,7 @@ const QuestionBuilder: React.FC<Props> = ({ questions, onChange }) => {
                   min="1"
                   value={q.marks}
                   onChange={(e) => update(qi, { marks: Number(e.target.value) || 1 })}
-                  className="w-12 border border-gray-200 rounded px-1.5 py-1 text-xs text-center focus:outline-none focus:ring-1 focus:ring-[#05878F]"
+                  className="w-12 border border-gray-200 rounded px-1.5 py-1 text-xs text-center focus:outline-none focus:ring-1 focus:ring-[#F97316]"
                 />
               </div>
               <button
@@ -117,7 +117,7 @@ const QuestionBuilder: React.FC<Props> = ({ questions, onChange }) => {
             onChange={(e) => update(qi, { text: e.target.value })}
             rows={2}
             placeholder="Enter question text…"
-            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#05878F] mb-3"
+            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#F97316] mb-3"
           />
 
           {/* Objective options */}
@@ -140,7 +140,7 @@ const QuestionBuilder: React.FC<Props> = ({ questions, onChange }) => {
                     value={opt}
                     onChange={(e) => setOption(qi, oi, e.target.value)}
                     placeholder={`Option ${oi + 1}`}
-                    className="flex-1 border border-gray-200 rounded-lg px-3 py-1.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                    className="flex-1 border border-gray-200 rounded-lg px-3 py-1.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                   />
                   {q.options.length > 2 && (
                     <button
@@ -157,7 +157,7 @@ const QuestionBuilder: React.FC<Props> = ({ questions, onChange }) => {
                 <button
                   type="button"
                   onClick={() => addOption(qi)}
-                  className="text-xs text-[#05878F] hover:underline mt-1"
+                  className="text-xs text-[#F97316] hover:underline mt-1"
                 >
                   + Add option
                 </button>
@@ -176,7 +176,7 @@ const QuestionBuilder: React.FC<Props> = ({ questions, onChange }) => {
                 onChange={(e) => update(qi, { sampleAnswer: e.target.value })}
                 rows={2}
                 placeholder="Enter model answer…"
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#F97316]"
               />
             </div>
           )}
@@ -186,7 +186,7 @@ const QuestionBuilder: React.FC<Props> = ({ questions, onChange }) => {
       <button
         type="button"
         onClick={() => onChange([...questions, emptyQuestion()])}
-        className="w-full border-2 border-dashed border-gray-200 rounded-xl py-3 text-sm text-gray-400 hover:border-[#05878F] hover:text-[#05878F] transition-colors"
+        className="w-full border-2 border-dashed border-gray-200 rounded-xl py-3 text-sm text-gray-400 hover:border-[#F97316] hover:text-[#F97316] transition-colors"
       >
         + Add Question
       </button>

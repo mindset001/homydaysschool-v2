@@ -30,6 +30,7 @@ import attendanceRoutes from './routes/attendanceRoutes.js';
 import assignmentRoutes from './routes/assignmentRoutes.js';
 import quizRoutes from './routes/quizRoutes.js';
 import submissionRoutes from './routes/submissionRoutes.js';
+import weeklyReviewRoutes from './routes/weeklyReviewRoutes.js';
 
 const app: Application = express();
 
@@ -122,6 +123,7 @@ app.use('/api/attendance', attendanceRoutes);
 app.use('/api/assignments', assignmentRoutes);
 app.use('/api/submissions', submissionRoutes);
 app.use('/api/quizzes', quizRoutes);
+app.use('/api/weekly-reviews', weeklyReviewRoutes);
 
 // Error handler (must be last)
 app.use(errorHandler);

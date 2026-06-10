@@ -167,3 +167,9 @@ export const getAssignmentMarks = (assignmentId: string | number) => {
 export const getQuizMarks = (quizId: string | number) => {
   return apiClient.get(`quizzes/marks/${quizId}`);
 };
+
+export const getWeeklyReviewsByClass = (classId: string) =>
+  apiClient.get(`weekly-reviews/class/${classId}`);
+
+export const getWeeklyReviewsForWard = (studentId: string) =>
+  apiClient.get(`weekly-reviews/ward/${studentId}`);

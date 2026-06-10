@@ -6,7 +6,7 @@
 .profile-header {
     @apply text-[22px] md:text-[24px] md:leading-[30.72px] md:hidden leading-[28px] font-Lora;
     @apply py-[43.5px] ml:py-[46px] md:py-[12px] md:px-[74px];
-    @apply bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none;
+    @apply bg-[linear-gradient(259.46deg,_#F97316_10.76%,_rgba(249,_115,_22,_1)_107.57%)] md:bg-none;
     @apply sticky md:static top-0 font-bold text-white md:text-[rgba(5,135,143,1)];
     @apply m-0 md:mb-[30px] w-full md:w-auto text-center rounded-b-[20px] md:rounded-[20px];
     @apply bg-transparent md:bg-white shadow-none md:shadow-[0px_1px_25px_0px_rgba(56,_159,_166,_0.1)];
@@ -58,5 +58,5 @@
 }
 
 .edit-btn {
-	@apply bg-[#05878F] text-[#FFF] text-center font-Poppins font-normal text-[14px] rounded-[50px] px-[30px] py-[8px];
+	@apply bg-[#F97316] text-[#FFF] text-center font-Poppins font-normal text-[14px] rounded-[50px] px-[30px] py-[8px];
 }

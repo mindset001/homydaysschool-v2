@@ -31,7 +31,7 @@
   }
 
   .loginActiveNav path {
-    @apply fill-[#05878F];
+    @apply fill-[#F97316];
   }
 
   .passwordToggleFade path {
@@ -64,7 +64,7 @@
   ////////////////////////////
   */
   .hsmInput {
-    @apply border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#05878F] hover:border-[#05878F] border-[#05878F] focus:border-2;
+    @apply border-2 border-solid rounded-[15px] py-[5px] pl-3 pr-[40px] outline-none font-Poppins text-[15px] focus:border-[#F97316] hover:border-[#F97316] border-[#F97316] focus:border-2;
   }
   .dashboard-main {
     @apply ml-0  md:ml-[26%] lg:ml-[24%] xl:ml-[20.43%] 2xl:ml-[20%];
@@ -109,7 +109,7 @@
     /* @apply hidden md:block; */
     @apply fixed top-0;
     @apply min-w-[75.36%] md:min-w-[26%] lg:min-w-[24%] xl:min-w-[20.43%] 2xl:min-w-[20%] min-h-screen max-h-full;
-    @apply bg-[#05878F] md:bg-[linear-gradient(177.75deg,_#05878F_-31.07%,_rgba(5,_135,_143,_0.74)_98.11%)];
+    @apply bg-[#F97316] md:bg-[linear-gradient(177.75deg,_#F97316_-31.07%,_rgba(249,_115,_22,_0.74)_98.11%)];
     @apply pt-[37px] md:pt-[22px] pb-[30.5px];
     @apply overflow-y-scroll;
     @apply rounded-r-[50px] md:rounded-none;
@@ -130,7 +130,7 @@
     @apply font-Poppins font-medium text-[14px] xl:text-[15px] 2xl:text-base text-white bg-transparent;
   }
   .active-nav path {
-    @apply fill-[#05878F];
+    @apply fill-[#F97316];
   }
   .inactive-nav path {
     @apply fill-white;
@@ -152,7 +152,7 @@
 
   .navbar-route-child::before {
     @apply content-[""];
-    @apply bg-[#ECFEFF] md:bg-[linear-gradient(188.81deg,_rgba(5,_135,_143,_0.2)_6.71%,_rgba(5,_135,_143,_0.2)_6.72%,_rgba(5,_135,_143,_0.08)_93.52%)];
+    @apply bg-[#FFF7ED] md:bg-[linear-gradient(188.81deg,_rgba(249,_115,_22,_0.2)_6.71%,_rgba(249,_115,_22,_0.2)_6.72%,_rgba(249,_115,_22,_0.08)_93.52%)];
     @apply -top-2 -bottom-2 left-[-56.75px] md:left-[-56px] lg:left-[-57.25px] w-[46.5px] absolute;
     @apply rounded-r-full;
   }
@@ -177,7 +177,7 @@
     @apply w-[26px] h-[26px];
   }
   .dashboard-mobile-footer-active path {
-    @apply fill-[#05878F] !important;
+    @apply fill-[#F97316] !important;
   }
 
   /* 
@@ -190,7 +190,7 @@
     @apply px-[30px];
     @apply pt-[30px] pb-[30px];
     @apply rounded-b-[30px];
-    @apply bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)];
+    @apply bg-[linear-gradient(259.46deg,_#F97316_10.76%,_rgba(249,_115,_22,_1)_107.57%)];
     @apply shadow-[0px_8px_26px_0px_rgba(4,_106,_126,_0.17)];
     @apply sticky top-0;
     @apply z-10;
@@ -374,7 +374,7 @@
   }
   .calendar-styling .rbc-today {
     @apply border-[rgba(50,156,163,1)] border-none border-2 xl:border-solid rounded-full size-[35px] xl:h-[50px] my-auto;
-    @apply bg-[rgba(160,236,181,1)] xl:bg-[#ECFEFF];
+    @apply bg-[rgba(160,236,181,1)] xl:bg-[#FFF7ED];
   }
   .calendar-styling .rbc-btn-group:last-of-type {
     @apply hidden;
@@ -414,13 +414,13 @@
   */
   .student {
     @apply py-0 px-0 md:py-[30px] md:px-[15px] 2xl:px-[10px] flex flex-col items-center;
-    @apply bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none;
+    @apply bg-[linear-gradient(259.46deg,_#F97316_10.76%,_rgba(249,_115,_22,_1)_107.57%)] md:bg-none;
     /* @apply  pb-[30px]; */
   }
   .student-header {
     @apply text-[22px] md:text-[24px] md:leading-[30.72px] leading-[28px] font-Lora font-bold text-white md:text-[rgba(5,135,143,1)] bg-transparent md:bg-white shadow-none md:shadow-[0px_1px_25px_0px_rgba(56,_159,_166,_0.1)] rounded-b-[20px] md:rounded-[20px];
     @apply py-[43.5px] ml:py-[46px] md:py-[12px] md:px-[74px];
-    @apply bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none;
+    @apply bg-[linear-gradient(259.46deg,_#F97316_10.76%,_rgba(249,_115,_22,_1)_107.57%)] md:bg-none;
     @apply sticky md:static top-0;
     @apply m-0 md:mb-[30px] w-full md:w-auto text-center;
   }
@@ -464,13 +464,13 @@
   */
   .results {
     @apply py-0 px-0 md:py-[30px] md:px-[10px] flex flex-col items-center;
-    @apply bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none;
+    @apply bg-[linear-gradient(259.46deg,_#F97316_10.76%,_rgba(249,_115,_22,_1)_107.57%)] md:bg-none;
     /* @apply  pb-[30px]; */
   }
   .results-header {
     @apply text-[22px] md:text-[24px] md:leading-[30.72px] leading-[28px] font-Lora font-bold text-white md:text-[rgba(5,135,143,1)] bg-transparent md:bg-white shadow-none md:shadow-[0px_1px_25px_0px_rgba(56,_159,_166,_0.1)] rounded-b-[20px] md:rounded-[20px];
     @apply py-[43.5px] ml:py-[46px] md:py-[12px] md:px-[74px];
-    @apply bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none;
+    @apply bg-[linear-gradient(259.46deg,_#F97316_10.76%,_rgba(249,_115,_22,_1)_107.57%)] md:bg-none;
     @apply sticky md:static top-0;
     @apply m-0 md:mb-[30px] w-full md:w-auto text-center;
   }
@@ -550,7 +550,7 @@
     /* @apply w-full h-[150px] bg-gradient-to-bl from-gradient-from to-gradient-to fixed top-0 left-0 right-0 rounded-b-[30px] block md:hidden; */
     @apply font-Lora font-bold;
     @apply pt-[43.5px] ml:pt-[46px] pb-[15px] md:p-0;
-    @apply bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none;
+    @apply bg-[linear-gradient(259.46deg,_#F97316_10.76%,_rgba(249,_115,_22,_1)_107.57%)] md:bg-none;
     @apply sticky md:static top-0;
     @apply m-0  w-full md:w-auto text-center;
     @apply flex flex-col md:flex-row md:flex-wrap;

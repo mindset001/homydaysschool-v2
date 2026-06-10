@@ -8,10 +8,10 @@ export const submitQuiz = async (quizId: string, payload: { studentId: string; c
   return apiClient.post(`/submissions/quiz/${quizId}`, payload);
 };
 
-export const getAssignmentSubmissions = async (assignmentId: string) => {
-  return apiClient.get(`/submissions/assignment/${assignmentId}`);
+export const getAssignmentSubmissions = async (assignmentId: string, studentId?: string) => {
+  return apiClient.get(`/submissions/assignment/${assignmentId}`, { params: studentId ? { studentId } : {} });
 };
 
-export const getQuizSubmissions = async (quizId: string) => {
-  return apiClient.get(`/submissions/quiz/${quizId}`);
+export const getQuizSubmissions = async (quizId: string, studentId?: string) => {
+  return apiClient.get(`/submissions/quiz/${quizId}`, { params: studentId ? { studentId } : {} });
 };

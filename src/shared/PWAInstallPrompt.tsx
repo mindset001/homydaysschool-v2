@@ -38,7 +38,7 @@ const PWAInstallPrompt: React.FC = () => {
 
   return (
     <div className="fixed bottom-5 left-5 z-[9998] w-full max-w-sm shadow-xl font-Poppins">
-      <div className="bg-white rounded-2xl border border-[#05878F]/20 p-4">
+      <div className="bg-white rounded-2xl border border-[#F97316]/20 p-4">
         <div className="flex items-start gap-3">
           <img src="/logo.png" alt="Homydays" className="w-10 h-10 rounded-xl object-cover shrink-0" />
           <div className="flex-1">
@@ -49,7 +49,7 @@ const PWAInstallPrompt: React.FC = () => {
             <div className="flex gap-2 mt-3">
               <button
                 onClick={handleInstall}
-                className="flex-1 bg-[#05878F] text-white rounded-lg py-1.5 text-xs font-semibold hover:bg-[#046e75] transition-colors"
+                className="flex-1 bg-[#F97316] text-white rounded-lg py-1.5 text-xs font-semibold hover:bg-[#EA580C] transition-colors"
               >
                 Install
               </button>

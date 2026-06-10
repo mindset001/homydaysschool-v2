@@ -7,13 +7,13 @@
 .staff-header {
     @apply md:hidden leading-[28px] font-Lora font-bold text-white bg-transparent shadow-none;
     @apply pt-[43.5px] ml:pb-[20px] ml:pt-[46px] md:py-[12px] md:px-[74px];
-    @apply bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)] md:bg-none;
+    @apply bg-[linear-gradient(259.46deg,_#F97316_10.76%,_rgba(249,_115,_22,_1)_107.57%)] md:bg-none;
     @apply sticky md:static top-0;
     @apply m-0 md:mb-[30px] w-full md:w-auto text-center;
   }
 
 .staff-sub-header {
-    @apply ml:fixed ml:top-20 md:hidden w-full pb-[50px] bg-[linear-gradient(259.46deg,_#05878F_10.76%,_rgba(5,_135,_143,_1)_107.57%)];
+    @apply ml:fixed ml:top-20 md:hidden w-full pb-[50px] bg-[linear-gradient(259.46deg,_#F97316_10.76%,_rgba(249,_115,_22,_1)_107.57%)];
   }
 
 .staff-sub-header > p {
@@ -39,7 +39,7 @@
 }
 
 .total{
-	@apply font-Lora font-bold text-[24px] text-left text-[#05878F] md:hidden;
+	@apply font-Lora font-bold text-[24px] text-left text-[#F97316] md:hidden;
 }
 
 .total > span{
@@ -70,12 +70,12 @@
 }
 
 .contact {
-	@apply ml:p-[10px] lg:bg-transparent ml:bg-[#05878F] ml:rounded-full;
+	@apply ml:p-[10px] lg:bg-transparent ml:bg-[#F97316] ml:rounded-full;
 }
 
 .staff-details-font {
 	@apply font-Poppins text-[14px] text-[#000] mb-[10px];
-	@apply bg-[#ECFEFF] lg:bg-transparent rounded-[0px_20px_20px_20px] lg:rounded-none p-[5px_25px] lg:p-0;
+	@apply bg-[#FFF7ED] lg:bg-transparent rounded-[0px_20px_20px_20px] lg:rounded-none p-[5px_25px] lg:p-0;
 }
 
 .staff-details-container {
@@ -95,7 +95,7 @@
 }
 
 .edit-btn {
-	@apply bg-[#05878F]  text-[#FFF] text-center font-Poppins font-normal text-[14px] rounded-[50px] px-[30px] py-[8px]
+	@apply bg-[#F97316]  text-[#FFF] text-center font-Poppins font-normal text-[14px] rounded-[50px] px-[30px] py-[8px]
 }
 
 .filter{
@@ -103,7 +103,7 @@
 }
 
 .genders, .months{
-	@apply w-full bg-[#05878F] absolute rounded-[15px] hidden  px-[8px] py-[8px] ml:p-[5px] ml:max-w-[300px] ml:min-w-[100px];
+	@apply w-full bg-[#F97316] absolute rounded-[15px] hidden  px-[8px] py-[8px] ml:p-[5px] ml:max-w-[300px] ml:min-w-[100px];
 }
 
 .months > button,
@@ -133,10 +133,10 @@
 }
 
 .staff-card-btn{
-	@apply text-[#05878F] text-[14px];
+	@apply text-[#F97316] text-[14px];
 }
 
 .pagination {
-	@apply font-Lora font-bold text-[#05878F] text-[15px];
+	@apply font-Lora font-bold text-[#F97316] text-[15px];
 	@apply w-full flex justify-between px-[50px] pb-[20px];
 }

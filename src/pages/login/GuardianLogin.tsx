@@ -196,7 +196,7 @@ const StaffLogin: React.FC = () => {
               ${
                 toggleStudentIdError
                   ? " focus:border-[#FF2E2E] hover:border-[#FF2E2E] border-[#FF2E2E] focus:border-2"
-                  : "focus:border-[#05878F] hover:border-[#05878F] border-[#05878F] focus:border-2"
+                  : "focus:border-[#F97316] hover:border-[#F97316] border-[#F97316] focus:border-2"
               }`}
             autoComplete={"off"}
             value={formData.studentId}
@@ -233,7 +233,7 @@ const StaffLogin: React.FC = () => {
               ${
                 togglePasswordError
                   ? " focus:border-[#FF2E2E] hover:border-[#FF2E2E] border-[#FF2E2E] focus:border-2"
-                  : "focus:border-[#05878F] hover:border-[#05878F] border-[#05878F] focus:border-2"
+                  : "focus:border-[#F97316] hover:border-[#F97316] border-[#F97316] focus:border-2"
               }`}
             autoComplete={"on"}
             value={formData.password}
@@ -268,19 +268,19 @@ const StaffLogin: React.FC = () => {
               Remember me
             </label>
           </div>
-          <Link to={"/forgot-password/guardian"} className="text-[#05878F]">
+          <Link to={"/forgot-password/guardian"} className="text-[#F97316]">
             Forgot password?
           </Link>
         </div>
       </div>
       {/* <button
         type="submit"
-        className={`font-Lora bg-[#05878F]/50 border-2 border-[rgba(5,135,143,0.01)] border-solid rounded-[25px] text-xl font-bold lg:font-semibold py-[12px] px-[94px] w-full text-nowrap text-white mt-3 md:mt-4`}
+        className={`font-Lora bg-[#F97316]/50 border-2 border-[rgba(5,135,143,0.01)] border-solid rounded-[25px] text-xl font-bold lg:font-semibold py-[12px] px-[94px] w-full text-nowrap text-white mt-3 md:mt-4`}
         disabled={loading}
       >
         loading
             ? "bg-[rgba(92,70,255,0.5)] hover:bg-[rgba(92,70,255,0.5)] border-[rgba(92,70,255,0.5)] cursor-not-allowed"
-            : "bg-[rgb(92,70,255)] hover:bg-[#05878F] border-[rgb(92,70,255)] cursor-pointer"
+            : "bg-[rgb(92,70,255)] hover:bg-[#F97316] border-[rgb(92,70,255)] cursor-pointer"
         {loading ? "Logging In ..." : "Login"}
       </button>
        */}
@@ -291,9 +291,9 @@ const StaffLogin: React.FC = () => {
           !toggleStudentIdError &&
           !togglePasswordError
             ? loading
-              ? "bg-[#05878F]/50 cursor-not-allowed px-[64px]"
-              : "bg-[#05878F] cursor-pointer px-[94px]"
-            : "bg-[#05878F]/50 cursor-not-allowed px-[94px]"
+              ? "bg-[#F97316]/50 cursor-not-allowed px-[64px]"
+              : "bg-[#F97316] cursor-pointer px-[94px]"
+            : "bg-[#F97316]/50 cursor-not-allowed px-[94px]"
         }`}
         // onClick={handleLogin}
         disabled={
@@ -315,5 +315,5 @@ const StaffLogin: React.FC = () => {
 
 export default StaffLogin;
 //   loginNavLink
-//     ? "bg-[#05878F] cursor-pointer"
-//     : "bg-[#05878F]/50 cursor-not-allowed"
+//     ? "bg-[#F97316] cursor-pointer"
+//     : "bg-[#F97316]/50 cursor-not-allowed"

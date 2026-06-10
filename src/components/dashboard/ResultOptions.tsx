@@ -394,7 +394,7 @@ const ResultOptions: React.FC<{
                       checked={selectedSubjectsData.subjects.includes(
                         subjects.name
                       )}
-                      className="  checked:bg-black accent-[#05878F] appearance-auto hover:accent-[#05878F] border-[#05878F] cursor-pointer"
+                      className="  checked:bg-black accent-[#F97316] appearance-auto hover:accent-[#F97316] border-[#F97316] cursor-pointer"
                     />
                     <span>
                       {subjects.name.length > 17
@@ -415,7 +415,7 @@ const ResultOptions: React.FC<{
             className={`w-full ${
               selectedSubjectsData.subjects.length <= 0 || isSubmittingSubject
                 ? "cursor-not-allowed bg-[#c2cacf] hover:bg-[#c2cacf] text-slate-400"
-                : "cursor-pointer bg-[#05878F] hover:bg-[#05878F]/70 text-white"
+                : "cursor-pointer bg-[#F97316] hover:bg-[#F97316]/70 text-white"
             }`}
           >
             {isSubmittingSubject
@@ -430,7 +430,7 @@ const ResultOptions: React.FC<{
         className={` w-full ${
           !downloadTemplate
             ? "cursor-not-allowed bg-[#c2cacf] hover:bg-[#c2cacf] text-slate-400"
-            : "cursor-pointer bg-[#05878F] hover:bg-[#05878F]/70 text-white"
+            : "cursor-pointer bg-[#F97316] hover:bg-[#F97316]/70 text-white"
         }`}
       >
         Download Template
@@ -444,7 +444,7 @@ const ResultOptions: React.FC<{
         <select
           value={selectedTerm}
           onChange={(e) => setSelectedTerm(e.target.value)}
-          className="w-full px-2 py-2 border-t bg-white focus:outline-none focus:ring-2 focus:ring-[#05878F] cursor-pointer"
+          className="w-full px-2 py-2 border-t bg-white focus:outline-none focus:ring-2 focus:ring-[#F97316] cursor-pointer"
         >
           <option value="First Term">First Term</option>
           <option value="Second Term">Second Term</option>
@@ -460,7 +460,7 @@ const ResultOptions: React.FC<{
         <select
           value={selectedAcademicYear}
           onChange={(e) => setSelectedAcademicYear(e.target.value)}
-          className="w-full px-2 py-2 border-t bg-white focus:outline-none focus:ring-2 focus:ring-[#05878F] cursor-pointer"
+          className="w-full px-2 py-2 border-t bg-white focus:outline-none focus:ring-2 focus:ring-[#F97316] cursor-pointer"
         >
           <option value="2025/2026">2025/2026</option>
           <option value="2026/2027">2026/2027</option>
@@ -513,7 +513,7 @@ const ResultOptions: React.FC<{
         className={
           !selectedFile.file
             ? "cursor-not-allowed bg-[#c2cacf] hover:bg-[#c2cacf] text-slate-400"
-            : "cursor-pointer bg-[#05878F] hover:bg-[#05878F]/70 text-white"
+            : "cursor-pointer bg-[#F97316] hover:bg-[#F97316]/70 text-white"
         }
       >
         {"Preview File"}
@@ -525,7 +525,7 @@ const ResultOptions: React.FC<{
         className={
           !selectedFile.file
             ? "cursor-not-allowed bg-[#c2cacf] hover:bg-[#c2cacf] text-slate-400"
-            : "cursor-pointer bg-[#05878F] hover:bg-[#05878F]/70 text-white"
+            : "cursor-pointer bg-[#F97316] hover:bg-[#F97316]/70 text-white"
         }
       >
         {isUploadingResult ? "Uploading..." : "Upload Result"}

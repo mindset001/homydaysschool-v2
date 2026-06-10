@@ -149,7 +149,7 @@ const Overview: React.FC = () => {
                 className="size-full object-center object-contain"
               />
             </div> */}
-            <div className="size-[55px] ml:size-[60px] py-[11px] px-[12.5px] bg-white md:bg-[#ECFEFF] rounded-full flex justify-center items-center">
+            <div className="size-[55px] ml:size-[60px] py-[11px] px-[12.5px] bg-white md:bg-[#FFF7ED] rounded-full flex justify-center items-center">
               <img
                 src={Paper}
                 alt="logo"
@@ -165,7 +165,7 @@ const Overview: React.FC = () => {
           </div>
         </div>
         <div className="absolute bottom-[-22px] right-[15.22%] left-[15.22%] bg-[#FFFF] flex flex-row justify-between items-center font-Poppins py-[8px] px-[14px] ml:px-[16px] rounded-[20px] shadow-[0px_8px_26px_0px_rgba(4,_106,_126,_0.17)]">
-          <div className="text-[13px] ml:text-[15px] text-center leading-[22.5px] font-medium 2xl:font-bold mr-[11px] text-[#05878F]">
+          <div className="text-[13px] ml:text-[15px] text-center leading-[22.5px] font-medium 2xl:font-bold mr-[11px] text-[#F97316]">
             2026/2027 Acad<span className="hidden ml:inline">emic</span> Session
           </div>
           <div className="max-w-[13px] max-h-[13px] ml:max-w-[15px] ml:max-h-[15px]">

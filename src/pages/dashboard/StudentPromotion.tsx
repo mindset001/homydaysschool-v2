@@ -49,7 +49,7 @@ function IndeterminateCheckbox({
       checked={checked}
       onChange={(e) => onChange(e.target.checked)}
       disabled={disabled}
-      className="accent-[#05878F] w-4 h-4 cursor-pointer"
+      className="accent-[#F97316] w-4 h-4 cursor-pointer"
     />
   );
 }
@@ -180,8 +180,8 @@ export default function StudentPromotion() {
           retain them in their current class. Everyone else moves to the next class.
         </p>
         {activeSession && (
-          <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#ECFEFF] border border-[#05878F]/30 text-[12px] text-[#05878F] font-medium">
-            <span className="w-2 h-2 rounded-full bg-[#05878F]" />
+          <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FFF7ED] border border-[#F97316]/30 text-[12px] text-[#F97316] font-medium">
+            <span className="w-2 h-2 rounded-full bg-[#F97316]" />
             Current Session: {activeSession.term} &middot; {activeSession.academicYear}
           </div>
         )}
@@ -234,7 +234,7 @@ export default function StudentPromotion() {
             <button
               disabled={totalSelected === 0 || mutation.isPending}
               onClick={() => setConfirmOpen(true)}
-              className="px-5 py-2 rounded-[8px] bg-[#05878F] text-white text-[13px] font-semibold
+              className="px-5 py-2 rounded-[8px] bg-[#F97316] text-white text-[13px] font-semibold
                          hover:bg-[#046a71] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             >
               Promote {totalSelected > 0 ? `${totalSelected} Student${totalSelected !== 1 ? "s" : ""}` : "Selected"}
@@ -243,7 +243,7 @@ export default function StudentPromotion() {
 
           {/* Table */}
           <div className="rounded-xl border border-gray-200 overflow-hidden">
-            <div className="grid grid-cols-[48px_1fr_36px_1fr_100px] bg-[#05878F] text-white text-[12px] font-semibold px-4 py-3 gap-2 items-center">
+            <div className="grid grid-cols-[48px_1fr_36px_1fr_100px] bg-[#F97316] text-white text-[12px] font-semibold px-4 py-3 gap-2 items-center">
               <span />
               <span>Current Class</span>
               <span />
@@ -262,7 +262,7 @@ export default function StudentPromotion() {
                 <div key={row.from} className={idx % 2 === 0 ? "bg-white" : "bg-gray-50"}>
                   <div
                     className={`grid grid-cols-[48px_1fr_36px_1fr_100px] px-4 py-3 gap-2 items-center text-[13px] border-b border-gray-100
-                      ${state !== "none" && hasAny ? "bg-[#ECFEFF]/50" : ""}`}
+                      ${state !== "none" && hasAny ? "bg-[#FFF7ED]/50" : ""}`}
                   >
                     <IndeterminateCheckbox
                       checked={state === "all"}
@@ -272,7 +272,7 @@ export default function StudentPromotion() {
                     />
                     <span className="font-semibold text-gray-800">{row.from}</span>
                     <span className="text-gray-400 text-center">→</span>
-                    <span className={`font-medium ${row.graduating ? "text-purple-600" : "text-[#05878F]"}`}>
+                    <span className={`font-medium ${row.graduating ? "text-purple-600" : "text-[#F97316]"}`}>
                       {row.graduating ? "🎓 Graduated" : row.to}
                     </span>
                     <div className="flex flex-col items-end gap-0.5">
@@ -286,7 +286,7 @@ export default function StudentPromotion() {
                           </div>
                           <button
                             onClick={() => toggleExpand(row.from)}
-                            className="text-[10px] text-[#05878F] underline"
+                            className="text-[10px] text-[#F97316] underline"
                           >
                             {isExpanded ? "hide" : "view all"}
                           </button>
@@ -309,7 +309,7 @@ export default function StudentPromotion() {
                                 type="checkbox"
                                 checked={isPromoting}
                                 onChange={() => toggleStudent(s.id)}
-                                className="accent-[#05878F] w-4 h-4 shrink-0"
+                                className="accent-[#F97316] w-4 h-4 shrink-0"
                               />
                               <span className={`text-[12px] truncate ${isPromoting ? "text-gray-800" : "text-orange-500 line-through"}`}>
                                 {s.name}
@@ -352,7 +352,7 @@ export default function StudentPromotion() {
                   <div className="flex items-center gap-2 text-[12px] mb-1 font-bold text-gray-700">
                     <span>{row.from}</span>
                     <span className="text-gray-400 font-normal">→</span>
-                    <span className={row.graduating ? "text-purple-600" : "text-[#05878F]"}>
+                    <span className={row.graduating ? "text-purple-600" : "text-[#F97316]"}>
                       {row.graduating ? "Graduated" : row.to}
                     </span>
                     <span className="ml-auto text-gray-400 font-normal text-[11px]">
@@ -385,7 +385,7 @@ export default function StudentPromotion() {
               <button
                 onClick={handlePromote}
                 disabled={mutation.isPending}
-                className="flex-1 py-2 rounded-[8px] bg-[#05878F] text-white text-[13px] font-semibold
+                className="flex-1 py-2 rounded-[8px] bg-[#F97316] text-white text-[13px] font-semibold
                            hover:bg-[#046a71] transition-colors disabled:opacity-60"
               >
                 {mutation.isPending ? "Promoting..." : `Promote ${totalSelected}`}

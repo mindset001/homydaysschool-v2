@@ -18,7 +18,7 @@ const Login: React.FC = () => {
   return (
     // <div className="text-black  flex flex-col justify-center items-center min-h-screen bg-[#FFFFFF] md:bg-transparent">
     //   <div className="min-h-[70vh] lg:min-h-[65vh] flex flex-col justify-start md:min-w-[78.5%] lg:min-w-[72.5%] 2xl:min-w-[62.5%]">
-    //     <div className="mx-auto size-[60px] bg-white shadow-[0px_8px_26px_0px_#046A7E2B] md:size-[68px] lg:size-[75px] 2xl:size-[82px] md:bg-[#ECFEFF] rounded-full flex justify-center items-center mb-[40px] lg:mb-[50px] 2xl:mb-[60px]">
+    //     <div className="mx-auto size-[60px] bg-white shadow-[0px_8px_26px_0px_#046A7E2B] md:size-[68px] lg:size-[75px] 2xl:size-[82px] md:bg-[#FFF7ED] rounded-full flex justify-center items-center mb-[40px] lg:mb-[50px] 2xl:mb-[60px]">
     //       <img
     //         src={Paper}
     //         alt="logo"
@@ -71,7 +71,7 @@ const Login: React.FC = () => {
     //           </button>
     //         </div>
     //       </div>
-    //       <button className="font-Lora text-white bg-[#05878F]/50 self-center border-2 border-[rgba(5,135,143,0.01)] border-solid hover:bg-[#05878F] rounded-[25px] inline-block text-xl lg:text-2xl xl:text-[28px] font-bold lg:font-semibold py-[13px] px-[95px] min-w-[284px] md:mb-[16px] xl:mb-[32px]">
+    //       <button className="font-Lora text-white bg-[#F97316]/50 self-center border-2 border-[rgba(5,135,143,0.01)] border-solid hover:bg-[#F97316] rounded-[25px] inline-block text-xl lg:text-2xl xl:text-[28px] font-bold lg:font-semibold py-[13px] px-[95px] min-w-[284px] md:mb-[16px] xl:mb-[32px]">
     //         Login
     //       </button>
     //     </div>
@@ -81,7 +81,7 @@ const Login: React.FC = () => {
     <div className=" flex flex-col justify-center items-center bg-white md:bg-transparent min-h-screen">
       {/* min-h-[70vh] lg:min-h-[65vh] xl:min-h-[70vh] 2xl:min-h-[75vh] */}
       <div className="min-h-[70vh] md:min-h-full min-w-full md:min-w-[72.5%] lg:min-w-[62.5%] 2xl:min-w-[62.5%] flex flex-col justify-center items-center my-[30px] md:my-[25px]">
-        <div className="mx-auto size-[60px] bg-white shadow-[0px_8px_26px_0px_#046A7E2B] md:size-[68px] lg:size-[75px] 2xl:size-[82px] md:bg-[#ECFEFF] rounded-full flex justify-center items-center mb-[40px] lg:mb-[50px]">
+        <div className="mx-auto size-[60px] bg-white shadow-[0px_8px_26px_0px_#046A7E2B] md:size-[68px] lg:size-[75px] 2xl:size-[82px] md:bg-[#FFF7ED] rounded-full flex justify-center items-center mb-[40px] lg:mb-[50px]">
           <img
             src={Paper}
             alt="logo"
@@ -167,8 +167,8 @@ const Login: React.FC = () => {
           <button
             className={`font-Lora text-white self-center border-2 border-[rgba(5,135,143,0.01)] border-solid rounded-[25px] inline-block text-xl font-bold lg:font-semibold py-[12px] px-[94px] w-auto sm:min-w-[284px] text-center mx-[30px] md:mx-0 md:mb-[32px] xl:mb-[42px] 2xl:mb-[52px]  ${
               loginNavLink
-                ? "bg-[#05878F] cursor-pointer"
-                : "bg-[#05878F]/50 cursor-not-allowed"
+                ? "bg-[#F97316] cursor-pointer"
+                : "bg-[#F97316]/50 cursor-not-allowed"
             }`}
             onClick={handleLogin}
             disabled={loginNavLink ? false : true}

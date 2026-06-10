@@ -65,7 +65,7 @@ const ChangePassword: React.FC = () => {
     `w-full border-2 rounded-[15px] py-[10px] pl-4 pr-12 text-sm outline-none font-Poppins transition-colors ${
       errors[key]
         ? "border-[#FF2E2E] focus:border-[#FF2E2E]"
-        : "border-[#05878F] focus:border-[#05878F]"
+        : "border-[#F97316] focus:border-[#F97316]"
     }`;
 
   return (
@@ -73,7 +73,7 @@ const ChangePassword: React.FC = () => {
       <div className="bg-white rounded-2xl shadow-md w-full max-w-md p-8">
         <button
           onClick={() => navigate(-1)}
-          className="text-sm text-[#05878F] hover:underline mb-6 flex items-center gap-1"
+          className="text-sm text-[#F97316] hover:underline mb-6 flex items-center gap-1"
         >
           &larr; Back
         </button>
@@ -145,7 +145,7 @@ const ChangePassword: React.FC = () => {
           <button
             type="submit"
             disabled={isPending}
-            className="bg-[#05878F] hover:bg-[#046a71] text-white font-bold font-Lora py-3 rounded-[15px] transition-colors disabled:opacity-60 mt-2"
+            className="bg-[#F97316] hover:bg-[#046a71] text-white font-bold font-Lora py-3 rounded-[15px] transition-colors disabled:opacity-60 mt-2"
           >
             {isPending ? "Saving..." : "Change Password"}
           </button>

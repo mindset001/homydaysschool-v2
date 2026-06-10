@@ -226,7 +226,7 @@ const Subjects: React.FC = () => {
                 placeholder="Search subjects by name or code..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F97316]"
               />
             </div>
             
@@ -247,7 +247,7 @@ const Subjects: React.FC = () => {
                     <tbody>
                       {paginatedSubjects.map((subject) => (
                         <tr key={subject.id} className="hover:bg-gray-50">
-                          <td className="border p-3 font-Poppins font-medium text-[#05878F]">
+                          <td className="border p-3 font-Poppins font-medium text-[#F97316]">
                             {subject.code}
                           </td>
                           <td className="border p-3 font-Poppins">{subject.name}</td>
@@ -259,7 +259,7 @@ const Subjects: React.FC = () => {
                               <div className="flex justify-center gap-2">
                                 <button
                                   onClick={() => handleOpenEditSlider(subject)}
-                                  className="px-3 py-1 bg-[#05878F] text-white rounded hover:bg-[#046a72] transition-colors text-sm"
+                                  className="px-3 py-1 bg-[#F97316] text-white rounded hover:bg-[#046a72] transition-colors text-sm"
                                 >
                                   Edit
                                 </button>
@@ -291,7 +291,7 @@ const Subjects: React.FC = () => {
                 {!searchTerm && (role === "admin" || role === "staff") && (
                   <button
                     onClick={handleOpenAddSlider}
-                    className="mt-4 px-6 py-2 bg-[#05878F] text-white rounded hover:bg-[#046a72] transition-colors"
+                    className="mt-4 px-6 py-2 bg-[#F97316] text-white rounded hover:bg-[#046a72] transition-colors"
                   >
                     Add First Subject
                   </button>
@@ -305,7 +305,7 @@ const Subjects: React.FC = () => {
       {/* Add/Edit Subject Slider */}
       <SlidePanel isOpen={isSliderOpen} onClose={handleCloseSlider}>
         <div className="p-6">
-          <h2 className="text-2xl font-Lora font-bold mb-6 text-[#05878F]">
+          <h2 className="text-2xl font-Lora font-bold mb-6 text-[#F97316]">
             {isEditMode ? "Edit Subject" : "Add New Subject"}
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -317,7 +317,7 @@ const Subjects: React.FC = () => {
                 type="text"
                 value={formData.code}
                 onChange={(e) => setFormData({ ...formData, code: e.target.value.toUpperCase() })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                 placeholder="e.g., MTH, ENG"
                 maxLength={10}
               />
@@ -331,7 +331,7 @@ const Subjects: React.FC = () => {
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                 placeholder="e.g., Mathematics"
                 required
               />
@@ -344,7 +344,7 @@ const Subjects: React.FC = () => {
               <textarea
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                 placeholder="Brief description of the subject"
                 rows={3}
               />
@@ -354,7 +354,7 @@ const Subjects: React.FC = () => {
               <button
                 type="submit"
                 disabled={createSubjectMutation.isPending || updateSubjectMutation.isPending}
-                className="flex-1 px-6 py-3 bg-[#05878F] text-white rounded-lg hover:bg-[#046a72] transition-colors font-Poppins font-medium disabled:opacity-50"
+                className="flex-1 px-6 py-3 bg-[#F97316] text-white rounded-lg hover:bg-[#046a72] transition-colors font-Poppins font-medium disabled:opacity-50"
               >
                 {(createSubjectMutation.isPending || updateSubjectMutation.isPending) 
                   ? "Saving..." 

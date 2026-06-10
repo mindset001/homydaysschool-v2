@@ -168,7 +168,7 @@ const Calendar: React.FC = () => {
       <div className="calendar-body-container">
         <div className="calendar-body-container-header lg:mr-[15px]">
           <div className="font-Lora font-bold mr-5">
-            <div className="text-[15px] leading-[19.2px] text-[#05878F]">
+            <div className="text-[15px] leading-[19.2px] text-[#F97316]">
               TODAY
             </div>
             <div className="text-[15px] text-center leading-[19.2px] font-bold flex flex-col md:flex-row-reverse">
@@ -200,7 +200,7 @@ const Calendar: React.FC = () => {
                   <button
                     key={month.id}
                     onClick={() => filterByMonth(month)}
-                    className={`text-[15px] leading-[19.2px] text-[#05878F] ${
+                    className={`text-[15px] leading-[19.2px] text-[#F97316] ${
                       month.id === new Date().getMonth() + 1 ? "font-bold" : ""
                     }`}
                   >
@@ -281,7 +281,7 @@ const Calendar: React.FC = () => {
         </div>
       </div>
       <SlidePanel isOpen={isSliderOpen} onClose={() => setIsSliderOpen(false)}>
-        <h2 className="my-[20px] text-center text-[#05878F] font-Poppins text-[15px]">
+        <h2 className="my-[20px] text-center text-[#F97316] font-Poppins text-[15px]">
           Add New Event
         </h2>
         <AddCalender

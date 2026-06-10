@@ -103,7 +103,7 @@ const StudentAdminAll: React.FC = () => {
         <div>
           <button
             onClick={() => navigate(-1)}
-            className="text-sm text-[#05878F] hover:underline mb-1 flex items-center gap-1"
+            className="text-sm text-[#F97316] hover:underline mb-1 flex items-center gap-1"
           >
             ← Back
           </button>
@@ -115,7 +115,7 @@ const StudentAdminAll: React.FC = () => {
         <button
           onClick={exportCSV}
           disabled={filtered.length === 0}
-          className="flex items-center gap-2 px-4 py-2 bg-[#05878F] text-white text-sm font-medium rounded-lg hover:bg-[#046e75] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-[#F97316] text-white text-sm font-medium rounded-lg hover:bg-[#EA580C] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -131,12 +131,12 @@ const StudentAdminAll: React.FC = () => {
           placeholder="Search by name or ID..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="border border-gray-300 rounded-lg px-4 py-2 text-sm flex-1 focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+          className="border border-gray-300 rounded-lg px-4 py-2 text-sm flex-1 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
         />
         <select
           value={classFilter}
           onChange={(e) => setClassFilter(e.target.value)}
-          className="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+          className="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]"
         >
           <option value="">All Classes</option>
           {classOptions.map((cls) => (
@@ -148,7 +148,7 @@ const StudentAdminAll: React.FC = () => {
         <select
           value={genderFilter}
           onChange={(e) => setGenderFilter(e.target.value)}
-          className="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+          className="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]"
         >
           <option value="">All Genders</option>
           <option value="male">Male</option>
@@ -175,7 +175,7 @@ const StudentAdminAll: React.FC = () => {
           {/* Desktop Table */}
           <div className="hidden md:block overflow-x-auto rounded-xl shadow-sm border border-gray-200">
             <table className="w-full text-sm text-left">
-              <thead className="bg-[#05878F] text-white">
+              <thead className="bg-[#F97316] text-white">
                 <tr>
                   <th className="px-4 py-3 font-semibold">Student</th>
                   <th className="px-4 py-3 font-semibold">Student ID</th>
@@ -205,7 +205,7 @@ const StudentAdminAll: React.FC = () => {
                           <span className="font-medium text-gray-800">{fullName}</span>
                         </div>
                       </td>
-                      <td className="px-4 py-3 font-mono text-[#05878F] font-semibold">
+                      <td className="px-4 py-3 font-mono text-[#F97316] font-semibold">
                         {student.studentId}
                       </td>
                       <td className="px-4 py-3 text-gray-700">{student.class}</td>
@@ -239,9 +239,9 @@ const StudentAdminAll: React.FC = () => {
                   />
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-gray-800 truncate">{fullName}</p>
-                    <p className="text-xs font-mono text-[#05878F] font-bold">{student.studentId}</p>
+                    <p className="text-xs font-mono text-[#F97316] font-bold">{student.studentId}</p>
                     <div className="flex gap-2 mt-1 flex-wrap">
-                      <span className="text-xs bg-[#e6f7f8] text-[#05878F] px-2 py-0.5 rounded-full">
+                      <span className="text-xs bg-[#e6f7f8] text-[#F97316] px-2 py-0.5 rounded-full">
                         {student.class}
                       </span>
                       <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full capitalize">

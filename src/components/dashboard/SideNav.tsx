@@ -159,7 +159,7 @@ const SideNav: React.FC<SideNavProps> = ({ mobileToggle, setMobileToggle }) => {
       ),
       to: "assignments",
       text: "Assignments",
-      roles: ["admin", "staff"],
+      roles: ["admin", "staff", "guardian"],
     },
     {
       item: (
@@ -171,7 +171,17 @@ const SideNav: React.FC<SideNavProps> = ({ mobileToggle, setMobileToggle }) => {
       ),
       to: "quizzes",
       text: "Quizzes",
-      roles: ["admin", "staff"],
+      roles: ["admin", "staff", "guardian"],
+    },
+    {
+      item: (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+        </svg>
+      ),
+      to: role === "guardian" ? "weekly-reviews-guardian" : "weekly-reviews",
+      text: "Weekly Reviews",
+      roles: ["admin", "staff", "guardian"],
     },
     {
       item: <ResultsSVG />,
@@ -226,7 +236,7 @@ const SideNav: React.FC<SideNavProps> = ({ mobileToggle, setMobileToggle }) => {
       }`}
     >
       <div className="ml-[30px] md:ml-4 lg:ml-7 xl:ml-10 mb-[34px] md:mb-[38px] flex flex-row items-center font-Lora">
-        <div className=" size-[40px] py-[11px] px-[12.5px] bg-white md:bg-[#ECFEFF] rounded-full mr-[18px] md:mr-[10px]">
+        <div className=" size-[40px] py-[11px] px-[12.5px] bg-white md:bg-[#FFF7ED] rounded-full mr-[18px] md:mr-[10px]">
           <img src={Paper} alt="logo" className="size-full object-center" />
         </div>
         <div className="text-lg leading-[23.04px] font-bold text-white">
@@ -238,9 +248,9 @@ const SideNav: React.FC<SideNavProps> = ({ mobileToggle, setMobileToggle }) => {
       <div className="relative hidden md:block font-Lora" ref={dropdownRef}>
         <button
           onClick={() => setDropdownOpen((o) => !o)}
-          className="w-full bg-[#ECFEFF] flex flex-row justify-center items-center py-[14px] hover:bg-[#d9f5f7] transition-colors"
+          className="w-full bg-[#FFF7ED] flex flex-row justify-center items-center py-[14px] hover:bg-[#d9f5f7] transition-colors"
         >
-          <div className="text-base text-center leading-[20.48px] font-semibold 2xl:font-bold mr-[11px] text-[#05878F]">
+          <div className="text-base text-center leading-[20.48px] font-semibold 2xl:font-bold mr-[11px] text-[#F97316]">
             {activeSession
               ? <>{activeSession.academicYear}<br className="hidden md:block xl:hidden" />{" "}{activeSession.term}</>
               : <>No Active<br className="hidden md:block xl:hidden" />Session</>}
@@ -276,7 +286,7 @@ const SideNav: React.FC<SideNavProps> = ({ mobileToggle, setMobileToggle }) => {
                     disabled={activateMutation.isPending}
                     className={`w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors ${
                       session.isActive
-                        ? "bg-[#ECFEFF] text-[#05878F] font-semibold cursor-default"
+                        ? "bg-[#FFF7ED] text-[#F97316] font-semibold cursor-default"
                         : role === "admin"
                         ? "text-gray-700 hover:bg-gray-50 cursor-pointer"
                         : "text-gray-500 cursor-default"
@@ -284,7 +294,7 @@ const SideNav: React.FC<SideNavProps> = ({ mobileToggle, setMobileToggle }) => {
                   >
                     <span>{session.academicYear} · {session.term}</span>
                     {session.isActive && (
-                      <span className="text-[10px] bg-[#05878F] text-white rounded-full px-2 py-0.5 ml-2">Active</span>
+                      <span className="text-[10px] bg-[#F97316] text-white rounded-full px-2 py-0.5 ml-2">Active</span>
                     )}
                   </button>
                 ))
@@ -306,7 +316,7 @@ const SideNav: React.FC<SideNavProps> = ({ mobileToggle, setMobileToggle }) => {
               onClick={() => setMobileToggle(false)}
               className={({ isActive }) =>
                 isActive
-                  ? "active-nav navbar-route-child before:block text-[#05878F] bg-[#ECFEFF]"
+                  ? "active-nav navbar-route-child before:block text-[#F97316] bg-[#FFF7ED]"
                   : "inactive-nav navbar-route-child before:hidden"
               }
             >
@@ -333,7 +343,7 @@ const SideNav: React.FC<SideNavProps> = ({ mobileToggle, setMobileToggle }) => {
             clearTokens(),
             navigate("/login")
           )}
-          className="bg-[#ECFEFF] flex flex-row items-center rounded-r-3xl md:rounded-[20px] py-[11.5px] px-[22.5px] mt-[10px] md:mt-[18.5px]"
+          className="bg-[#FFF7ED] flex flex-row items-center rounded-r-3xl md:rounded-[20px] py-[11.5px] px-[22.5px] mt-[10px] md:mt-[18.5px]"
         >
           <div className="max-w-[28.42px] max-h-[22.21px] mr-[10.58px] ">
             <img
@@ -342,7 +352,7 @@ const SideNav: React.FC<SideNavProps> = ({ mobileToggle, setMobileToggle }) => {
               className="size-full object-contain object-center"
             />
           </div>
-          <div className="text-[15px] leading-[22.5px] md:text-lg font-medium font-Poppins text-[#05878F]">
+          <div className="text-[15px] leading-[22.5px] md:text-lg font-medium font-Poppins text-[#F97316]">
             Logout
           </div>
         </button>

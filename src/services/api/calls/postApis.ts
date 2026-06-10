@@ -94,3 +94,5 @@ export const createAssignment = (classId: string | number, data: object) => {
 export const createQuiz = (classId: string | number, data: object) => {
   return apiClient.post(`quizzes/${classId}`, data);
 };
+export const upsertWeeklyReview = (data: object) =>
+  apiClient.post(`weekly-reviews`, data);

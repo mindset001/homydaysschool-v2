@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getClassStudentsId, getAttendance } from "../../services/api/calls/getApis";
+import { getClassStudentsId, getAttendance, getStaff } from "../../services/api/calls/getApis";
 import { createAttendance } from "../../services/api/calls/postApis";
 import { getRole } from "../../utils/authTokens";
 import { showSuccessToast, showErrorToast } from "../../shared/ToastNotification";
@@ -17,7 +17,21 @@ const AttendancePage: React.FC = () => {
   const [present, setPresent] = useState<Record<string, boolean>>({});
   const [notes, setNotes] = useState("");
 
-  const { classNameData: classes } = useClasses();
+  const { classNameData: allClasses } = useClasses();
+
+  // For staff: fetch their profile to get assigned classes (by name)
+  const { data: staffProfileData } = useQuery({
+    queryKey: ["staffMe"],
+    queryFn: getStaff,
+    enabled: role === "staff",
+    staleTime: 5 * 60 * 1000,
+  });
+  const assignedClassNames: string[] = staffProfileData?.data?.staff?.classes ?? [];
+
+  // Staff only see their assigned classes; admin sees all
+  const classes = role === "staff"
+    ? allClasses.filter((c: any) => assignedClassNames.includes(c.name))
+    : allClasses;
 
   const { data: studentsData } = useQuery({
     queryKey: ["classStudentsId", selectedClassId],
@@ -61,7 +75,7 @@ const AttendancePage: React.FC = () => {
 
   return (
     <div className="p-6 font-Poppins">
-      <h1 className="text-2xl font-bold text-[#05878F] mb-6">Attendance</h1>
+      <h1 className="text-2xl font-bold text-[#F97316] mb-6">Attendance</h1>
 
       {/* Class selector */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mb-6">
@@ -71,7 +85,7 @@ const AttendancePage: React.FC = () => {
             <select
               value={selectedClassId}
               onChange={(e) => { setSelectedClassId(e.target.value); setPresent({}); }}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]"
             >
               <option value="">Select a class…</option>
               {classes.map((c: any) => (
@@ -85,7 +99,7 @@ const AttendancePage: React.FC = () => {
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+              className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]"
             />
           </div>
         </div>
@@ -110,7 +124,7 @@ const AttendancePage: React.FC = () => {
                         students.forEach((s: any) => { all[s._id] = true; });
                         setPresent(all);
                       }}
-                      className="text-xs text-[#05878F] underline"
+                      className="text-xs text-[#F97316] underline"
                     >
                       Mark all present
                     </button>
@@ -148,13 +162,13 @@ const AttendancePage: React.FC = () => {
                       value={notes}
                       onChange={(e) => setNotes(e.target.value)}
                       placeholder="Any notes for this session…"
-                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                     />
                   </div>
                   <button
                     onClick={handleSubmit}
                     disabled={markMutation.isPending}
-                    className="bg-[#05878F] text-white rounded-lg px-6 py-2 text-sm font-semibold hover:bg-[#046e75] transition-colors disabled:opacity-50"
+                    className="bg-[#F97316] text-white rounded-lg px-6 py-2 text-sm font-semibold hover:bg-[#EA580C] transition-colors disabled:opacity-50"
                   >
                     {markMutation.isPending ? "Saving…" : "Save Attendance"}
                   </button>

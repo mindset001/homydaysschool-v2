@@ -125,7 +125,7 @@ const ForgotPassword: React.FC = () => {
     <div className=" flex flex-col justify-center items-center bg-white md:bg-transparent min-h-screen">
       {/* lg:min-h-[65vh] xl:min-h-[70vh] 2xl:min-h-[75vh] */}
       <div className="min-h-[70vh] md:min-h-max  min-w-full md:min-w-[67%] lg:min-w-[57%] 2xl:min-w-[43.055%] flex flex-col justify-center items-center my-[30px] md:my-0">
-        <div className="mx-auto size-[60px] bg-white shadow-[0px_8px_26px_0px_#046A7E2B] md:size-[68px] lg:size-[75px] 2xl:size-[82px] md:bg-[#ECFEFF] rounded-full flex justify-center items-center mb-[75px] lg:mb-[50px]">
+        <div className="mx-auto size-[60px] bg-white shadow-[0px_8px_26px_0px_#046A7E2B] md:size-[68px] lg:size-[75px] 2xl:size-[82px] md:bg-[#FFF7ED] rounded-full flex justify-center items-center mb-[75px] lg:mb-[50px]">
           <img
             src={Paper}
             alt="logo"
@@ -208,7 +208,7 @@ const ForgotPassword: React.FC = () => {
               ${
                 toggleEmailError
                   ? " focus:border-[#FF2E2E] hover:border-[#FF2E2E] border-[#FF2E2E] focus:border-2"
-                  : "focus:border-[#05878F] hover:border-[#05878F] border-[#05878F] focus:border-2"
+                  : "focus:border-[#F97316] hover:border-[#F97316] border-[#F97316] focus:border-2"
               }`}
                     autoComplete={"on"}
                     value={formData.emailAddress}
@@ -239,8 +239,8 @@ const ForgotPassword: React.FC = () => {
             <button
               className={`font-Lora text-white self-center border-2 border-[rgba(5,135,143,0.01)] border-solid rounded-[25px] inline-block text-xl font-bold lg:font-semibold py-[12px] md:px-[94px] w-full sm:max-w-[284px] text-center mt-[54px] lg:mt-[40px] 2xl:mt-[50px] md:mx-auto md:mb-[2px] ${
                 formData.emailAddress && !toggleEmailError
-                  ? "bg-[#05878F] cursor-pointer"
-                  : "bg-[#05878F]/50 cursor-not-allowed"
+                  ? "bg-[#F97316] cursor-pointer"
+                  : "bg-[#F97316]/50 cursor-not-allowed"
               }`}
               // onClick={handleLogin}
               disabled={
@@ -258,5 +258,5 @@ const ForgotPassword: React.FC = () => {
 
 export default ForgotPassword;
 //   loginNavLink
-//     ? "bg-[#05878F] cursor-pointer"
-//     : "bg-[#05878F]/50 cursor-not-allowed"
+//     ? "bg-[#F97316] cursor-pointer"
+//     : "bg-[#F97316]/50 cursor-not-allowed"

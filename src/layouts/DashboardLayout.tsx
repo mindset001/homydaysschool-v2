@@ -99,7 +99,7 @@ const DashboardLayout: React.FC = () => {
             />
           </button>
 
-          {/* <div className="size-[55px] ml:size-[60px] py-[11px] px-[12.5px] bg-white md:bg-[#ECFEFF] rounded-full flex justify-center items-center">
+          {/* <div className="size-[55px] ml:size-[60px] py-[11px] px-[12.5px] bg-white md:bg-[#FFF7ED] rounded-full flex justify-center items-center">
 					<img
 						src={Paper}
 						alt="logo"
@@ -208,7 +208,7 @@ const DashboardLayout: React.FC = () => {
                 }}
                 className="flex flex-row items-center rounded-[20px]"
               >
-                <div className="rounded-full border-[#05878F] border-[3px] border-solid size-[44px] 2xl:size-[55px] overflow-hidden">
+                <div className="rounded-full border-[#F97316] border-[3px] border-solid size-[44px] 2xl:size-[55px] overflow-hidden">
                   <img
                     src={user.profileImage || profileImage}
                     alt={`${user.lastName} ${user.firstName}`}

@@ -258,7 +258,7 @@ const StudentAdminOverview: React.FC = () => {
         {role.toLowerCase() === "admin" && (
           <Link
             to="all"
-            className="text-xs font-Poppins font-medium bg-[#05878F] text-white px-3 py-1.5 rounded-lg hover:bg-[#046f76] transition-colors"
+            className="text-xs font-Poppins font-medium bg-[#F97316] text-white px-3 py-1.5 rounded-lg hover:bg-[#046f76] transition-colors"
           >
             View All Students
           </Link>
@@ -330,7 +330,7 @@ const StudentAdminOverview: React.FC = () => {
                   <div
                     className={`flex-1 text-center text-lg md:text-[20px] 2xl:text-[24px] font-semibold font-Poppins ${
                       studentDropDown.class === classdata.name
-                        ? "text-black md:text-[#05878F]"
+                        ? "text-black md:text-[#F97316]"
                         : "text-black"
                     }`}
                   >
@@ -478,7 +478,7 @@ const StudentAdminOverview: React.FC = () => {
 
                       <Link
                         to={classdata.name.toLowerCase()}
-                        className="content-center right-0 bottom-[-37px] absolute p-2 rounded-full size-[30px] bg-[#05878F]"
+                        className="content-center right-0 bottom-[-37px] absolute p-2 rounded-full size-[30px] bg-[#F97316]"
                       >
                         <div className="max-w-[15px] max-h-[12px] student-overview-class-desktop-nav">
                           <GuardianSVG />

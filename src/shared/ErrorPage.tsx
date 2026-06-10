@@ -14,7 +14,7 @@ const ErrorPage: React.FC = () => {
       <div className="text-xl md:text-2xl mt-2">This page does not exist</div>
       <button
         onClick={goBack}
-        className="text-lg md:text-xl border py-2 px-4 border-solid rounded-lg text-nowrap border-[#05878F] text-white bg-[#05878F] mt-5 md:mt-12"
+        className="text-lg md:text-xl border py-2 px-4 border-solid rounded-lg text-nowrap border-[#F97316] text-white bg-[#F97316] mt-5 md:mt-12"
       >
         Go Back
       </button>

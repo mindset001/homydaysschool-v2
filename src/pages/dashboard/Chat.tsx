@@ -82,7 +82,7 @@ const Chat: React.FC = () => {
                 key={msg._id}
                 className={`p-3 border rounded-lg ${
                   msg.authorRole === "admin"
-                    ? "bg-[#ECFEFF] border-[#05878F]/30"
+                    ? "bg-[#FFF7ED] border-[#F97316]/30"
                     : "bg-white"
                 }`}
               >
@@ -104,14 +104,14 @@ const Chat: React.FC = () => {
         <form onSubmit={handleSubmit} className="flex space-x-2 mt-auto">
           <input
             type="text"
-            className="flex-grow border rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#05878F]"
+            className="flex-grow border rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]"
             placeholder="Type a message…"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
           />
           <button
             type="submit"
-            className="bg-[#05878F] hover:bg-[#046a71] text-white px-5 py-2 rounded-lg text-sm font-medium disabled:opacity-50"
+            className="bg-[#F97316] hover:bg-[#046a71] text-white px-5 py-2 rounded-lg text-sm font-medium disabled:opacity-50"
             disabled={isPosting}
           >
             {isPosting ? "Sending…" : "Send"}

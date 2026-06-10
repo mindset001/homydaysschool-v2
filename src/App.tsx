@@ -66,6 +66,8 @@ const Subjects = lazy(() => import("./pages/dashboard/Subjects"));
 const Attendance = lazy(() => import("./pages/dashboard/Attendance"));
 const Assignments = lazy(() => import("./pages/dashboard/Assignments"));
 const Quizzes = lazy(() => import("./pages/dashboard/Quizzes"));
+const WeeklyReviews = lazy(() => import("./pages/dashboard/WeeklyReviews"));
+const WeeklyReviewsGuardian = lazy(() => import("./pages/guardian-dashboard/WeeklyReviewsGuardian"));
 const ResultsLayout = lazy(() => import("./layouts/role/ResultsLayout"));
 const Chat = lazy(() => import("./pages/dashboard/Chat"));
 // const Certificates = lazy(() => import("./pages/dashboard/Certificates"));
@@ -168,6 +170,8 @@ const router = createBrowserRouter(
           <Route path="attendance" element={<Attendance />} />
           <Route path="assignments" element={<Assignments />} />
           <Route path="quizzes" element={<Quizzes />} />
+          <Route path="weekly-reviews" element={<WeeklyReviews />} />
+          <Route path="weekly-reviews-guardian" element={<WeeklyReviewsGuardian />} />
         </Route>
       </Route>
       <Route path="*" element={<ErrorPage />} />

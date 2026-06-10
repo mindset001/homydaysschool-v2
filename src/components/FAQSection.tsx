@@ -42,7 +42,7 @@ const FAQSection: React.FC = () => {
     <section className="w-full py-14 px-4 bg-white">
       <div className="max-w-3xl mx-auto">
         {/* Heading */}
-        <p className="text-xs font-semibold uppercase tracking-widest text-[#05878F] mb-2 text-center">
+        <p className="text-xs font-semibold uppercase tracking-widest text-[#F97316] mb-2 text-center">
           Got Questions?
         </p>
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-10">
@@ -58,8 +58,8 @@ const FAQSection: React.FC = () => {
                 key={i}
                 className={`rounded-xl border transition-all duration-300 overflow-hidden ${
                   isOpen
-                    ? "border-[#05878F] bg-[#f0fafb]"
-                    : "border-gray-200 bg-white hover:border-[#05878F]/40"
+                    ? "border-[#F97316] bg-[#f0fafb]"
+                    : "border-gray-200 bg-white hover:border-[#F97316]/40"
                 }`}
               >
                 {/* Question row */}
@@ -70,7 +70,7 @@ const FAQSection: React.FC = () => {
                 >
                   <span
                     className={`text-[14px] font-semibold leading-snug ${
-                      isOpen ? "text-[#05878F]" : "text-gray-800"
+                      isOpen ? "text-[#F97316]" : "text-gray-800"
                     }`}
                   >
                     {faq.question}
@@ -78,7 +78,7 @@ const FAQSection: React.FC = () => {
                   <span
                     className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center border transition-all ${
                       isOpen
-                        ? "bg-[#05878F] border-[#05878F] text-white"
+                        ? "bg-[#F97316] border-[#F97316] text-white"
                         : "border-gray-300 text-gray-400"
                     }`}
                   >

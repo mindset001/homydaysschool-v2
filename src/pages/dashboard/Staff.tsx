@@ -263,7 +263,7 @@ const Staff: React.FC = () => {
                         <div
                           className={`staff-card-details ${
                             staff?.first_name === staffProfile?.first_name
-                              ? "text-[#05878F]"
+                              ? "text-[#F97316]"
                               : ""
                           }`}
                         >
@@ -319,7 +319,7 @@ const Staff: React.FC = () => {
       </div>
 
       <SlidePanel isOpen={isSliderOpen} onClose={() => setIsSliderOpen(false)}>
-        <h2 className="my-[20px] text-center text-[#05878F] font-Poppins text-[15px]">
+        <h2 className="my-[20px] text-center text-[#F97316] font-Poppins text-[15px]">
           Add New Staff
         </h2>
         <AddStaffForm
@@ -342,14 +342,14 @@ const Staff: React.FC = () => {
                 placeholder="New password (min. 6 characters)"
                 value={resetPassword}
                 onChange={(e) => { setResetPassword(e.target.value); setResetError(""); }}
-                className="w-full border-2 border-[#05878F] rounded-xl py-2 px-4 text-sm outline-none"
+                className="w-full border-2 border-[#F97316] rounded-xl py-2 px-4 text-sm outline-none"
               />
               <input
                 type="password"
                 placeholder="Confirm new password"
                 value={resetConfirm}
                 onChange={(e) => { setResetConfirm(e.target.value); setResetError(""); }}
-                className="w-full border-2 border-[#05878F] rounded-xl py-2 px-4 text-sm outline-none"
+                className="w-full border-2 border-[#F97316] rounded-xl py-2 px-4 text-sm outline-none"
               />
               {resetError && <p className="text-red-500 text-xs font-semibold">{resetError}</p>}
             </div>

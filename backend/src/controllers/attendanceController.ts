@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import { Attendance } from '../models/Attendance.js';
 import { Class } from '../models/Class.js';
+import { Staff } from '../models/Staff.js';
 import { AuthRequest } from '../middleware/auth.js';
 
 export const createAttendance = async (req: AuthRequest, res: Response): Promise<void> => {
@@ -13,6 +14,15 @@ export const createAttendance = async (req: AuthRequest, res: Response): Promise
     if (!classData) {
       res.status(404).json({ message: 'Class not found' });
       return;
+    }
+
+    // Staff can only mark attendance for their assigned class
+    if (req.user?.role === 'staff') {
+      const staff = await Staff.findOne({ userId: req.user.userId }).lean();
+      if (!staff || !staff.classes?.includes(classData.name)) {
+        res.status(403).json({ message: 'You are not assigned to this class' });
+        return;
+      }
     }
 
     const attendanceDate = date ? new Date(date) : new Date();
