@@ -10,9 +10,9 @@
   .Toastify {
     @apply z-[999999] !important;
   }
-  /* body{
+  body, html {
     @apply overflow-x-hidden !important;
-  } */
+  }
   .student-addbutton-db-details-property .react-datepicker-popper {
     @apply -left-16 !important;
   }
@@ -525,11 +525,11 @@
   }
 
   .timetable-wrapper {
-    @apply w-full md:bg-[#389FA6] md:bg-opacity-10 px-[20px] md:py-[35px] rounded-3xl md:shadow-[0px_8px_10px_0px_rgba(4,_106,_126,_0.17)];
+    @apply w-full overflow-x-auto md:bg-[#389FA6] md:bg-opacity-10 px-[20px] md:py-[35px] rounded-3xl md:shadow-[0px_8px_10px_0px_rgba(4,_106,_126,_0.17)];
   }
 
   .timetable-wrapper-1 {
-    @apply w-full md:bg-[#ffffff] md:bg-opacity-10 px-[20px] md:px-[30px] md:py-[50px] lg:px-[40px] lg:py-[60px] rounded-3xl md:shadow-[0px_8px_10px_0px_rgba(4,_106,_126,_0.17)];
+    @apply w-full overflow-x-auto md:bg-[#ffffff] md:bg-opacity-10 px-[20px] md:px-[30px] md:py-[50px] lg:px-[40px] lg:py-[60px] rounded-3xl md:shadow-[0px_8px_10px_0px_rgba(4,_106,_126,_0.17)];
   }
 
   table,

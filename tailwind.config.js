@@ -8,11 +8,11 @@ export default {
         Lora: ['Lora', 'serif'],
       },
       colors: {
-        clr1: '#05878F',
-        clr2: '#ECFEFF',
+        clr1: '#F97316',
+        clr2: '#FFF7ED',
         gradient: {
-          from: 'rgba(5, 135, 143, 1)',
-          to: 'rgba(5, 135, 143, 1)',
+          from: 'rgba(249, 115, 22, 1)',
+          to: 'rgba(249, 115, 22, 1)',
         },
       },
       boxShadow:{

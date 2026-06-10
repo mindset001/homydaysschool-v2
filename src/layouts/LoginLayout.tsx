@@ -8,9 +8,8 @@ import { setRole } from "../utils/authTokens";
 
 const LoginLayout: React.FC = () => {
   return (
-    <div className=" flex flex-col justify-center items-center bg-white md:bg-transparent min-h-screen">
-      {/* lg:min-h-[65vh] xl:min-h-[70vh] 2xl:min-h-[75vh] */}
-      <div className="min-h-[70vh] md:min-h-0 min-w-full md:min-w-[67%] lg:min-w-[57%] 2xl:min-w-[43.055%] flex flex-col justify-center items-center my-[30px] md:my-[20px]">
+    <div className="flex flex-col justify-center items-center bg-white md:bg-transparent min-h-screen w-full overflow-x-hidden">
+      <div className="min-h-[70vh] md:min-h-0 w-full md:w-[67%] lg:w-[57%] 2xl:w-[43.055%] flex flex-col justify-center items-center my-[30px] md:my-[20px]">
         <div className="mx-auto size-[60px] bg-white shadow-[0px_8px_26px_0px_#046A7E2B] md:size-[68px] lg:size-[75px] 2xl:size-[82px] md:bg-[#FFF7ED] rounded-full flex justify-center items-center mb-[75px] lg:mb-[50px]">
           <img
             src={Paper}
@@ -19,7 +18,7 @@ const LoginLayout: React.FC = () => {
           />
         </div>
         {/* md:min-h-[calc(70vh-68px)] lg:min-h-[calc(65vh-75px)] xl:min-h-[calc(70vh-75px)] 2xl:min-h-[calc(75vh-82px)] */}
-        <div className="flex flex-col justify-center min-h-[calc(70vh-60px)] md:min-h-0  w-full rounded-[20px] bg-white relative md:py-[26px] xl:py-[32px] 2xl:py-[40px]">
+        <div className="flex flex-col justify-center min-h-[calc(70vh-60px)] md:min-h-0 w-full max-w-full rounded-[20px] bg-white relative md:py-[26px] xl:py-[32px] 2xl:py-[40px]">
           <div className="absolute -z-[0] top-[20px] bottom-[20px] left-[20px] md:min-w-[235px] lg:max-w-[354px] hidden md:block">
             <img
               src={TriangleFadeVector}
@@ -36,47 +35,35 @@ const LoginLayout: React.FC = () => {
                 Select an option below to login
               </p>
             </div>
-            <div className="md:flex-grow flex flex-row justify-around md:justify-evenly 2xl:justify-around text-[15px] font-Poppins leading-[18px] w-full mt-[20px] md:mt-[20px] md:mb-0 px-[30px] sm:px-[50px] md:px-[80px] xl:px-[100px] 2xl:px-[130px]">
+            <div className="md:flex-grow grid grid-cols-3 gap-2 text-[15px] font-Poppins leading-[18px] w-full mt-[20px] md:mt-[20px] md:mb-0 px-4 sm:px-[50px] md:px-[80px] xl:px-[100px] 2xl:px-[130px]">
               <NavLink
                 to={"/login/admin"}
-                onClick={() => {
-                  setRole("admin");
-                }}
-                className={({ isActive }) => (isActive ? "loginActiveNav" : "")}
+                onClick={() => setRole("admin")}
+                className={({ isActive }) => (isActive ? "loginActiveNav flex flex-col items-center" : "flex flex-col items-center")}
               >
-                <div className="text-center m-auto mb-[5px]">Admin</div>
-                <div className="svg-size m-auto size-[50px] bg-white shadow-[0px_8px_26px_0px_#046A7E2B] rounded-[20px] flex flex-col justify-center items-center">
-                  <div className="object-center object-cover max-w-[20px] h-[20px]">
-                    <AdminSVG />
-                  </div>
+                <div className="text-center mb-[5px]">Admin</div>
+                <div className="svg-size size-[50px] bg-white shadow-[0px_8px_26px_0px_#046A7E2B] rounded-[20px] flex flex-col justify-center items-center">
+                  <div className="max-w-[20px] h-[20px]"><AdminSVG /></div>
                 </div>
               </NavLink>
               <NavLink
                 to={"/login/staff"}
-                onClick={() => {
-                  setRole("staff");
-                }}
-                className={({ isActive }) => (isActive ? "loginActiveNav" : "")}
+                onClick={() => setRole("staff")}
+                className={({ isActive }) => (isActive ? "loginActiveNav flex flex-col items-center" : "flex flex-col items-center")}
               >
-                <div className="text-center m-auto mb-[5px]">Staff</div>
-                <div className="svg-size m-auto size-[50px] bg-white shadow-[0px_8px_26px_0px_#046A7E2B] rounded-[20px] flex flex-col justify-center items-center">
-                  <div className="object-center object-cover max-w-[20px] h-[20px]">
-                    <StaffSVG />
-                  </div>
+                <div className="text-center mb-[5px]">Staff</div>
+                <div className="svg-size size-[50px] bg-white shadow-[0px_8px_26px_0px_#046A7E2B] rounded-[20px] flex flex-col justify-center items-center">
+                  <div className="max-w-[20px] h-[20px]"><StaffSVG /></div>
                 </div>
               </NavLink>
               <NavLink
                 to={"/login/guardian"}
-                onClick={() => {
-                  setRole("guardian");
-                }}
-                className={({ isActive }) => (isActive ? "loginActiveNav" : "")}
+                onClick={() => setRole("guardian")}
+                className={({ isActive }) => (isActive ? "loginActiveNav flex flex-col items-center" : "flex flex-col items-center")}
               >
-                <div className="text-center m-auto mb-[5px]">Guardian</div>
-                <div className="svg-size-guardian m-auto size-[50px] bg-white shadow-[0px_8px_26px_0px_#046A7E2B] rounded-[20px] flex flex-col justify-center items-center">
-                  <div className="object-center object-cover max-w-[30px] h-[20px]">
-                    <GuardianSVG />
-                  </div>
+                <div className="text-center mb-[5px]">Guardian</div>
+                <div className="svg-size-guardian size-[50px] bg-white shadow-[0px_8px_26px_0px_#046A7E2B] rounded-[20px] flex flex-col justify-center items-center">
+                  <div className="max-w-[30px] h-[20px]"><GuardianSVG /></div>
                 </div>
               </NavLink>
             </div>

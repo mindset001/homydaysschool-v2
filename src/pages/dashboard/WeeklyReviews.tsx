@@ -112,7 +112,7 @@ const WeeklyReviewsPage: React.FC = () => {
   };
 
   return (
-    <div className="p-6 font-Poppins">
+    <div className="p-3 sm:p-6 font-Poppins">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-[#F97316]">Weekly Reviews</h1>
         {selectedClassId && (

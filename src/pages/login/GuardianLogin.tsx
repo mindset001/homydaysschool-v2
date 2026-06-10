@@ -180,7 +180,7 @@ const StaffLogin: React.FC = () => {
   return (
     <form
       onSubmit={handleSignIn}
-      className="mt-[50px] md:mt-[10px] w-auto mx-[30px] md:mx-[80px] z-10 flex flex-col justify-center"
+      className="mt-[50px] md:mt-[10px] w-full px-4 sm:px-8 md:px-[80px] z-10 flex flex-col justify-center"
     >
       <div className="flex flex-col mb-[5px]">
         <label htmlFor="studentId" className="font-Lora text-[15px] font-medium">

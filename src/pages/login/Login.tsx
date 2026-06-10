@@ -78,9 +78,8 @@ const Login: React.FC = () => {
     //   </div>
     //   {/* <div className="font-Poppins text-xs md:text-lg fixed bottom-[11px] md:bottom-[17px] xl:bottom-[22px] 2xl:bottom-[30px]">Powered by DEMLINKS</div> */}
     // </div>
-    <div className=" flex flex-col justify-center items-center bg-white md:bg-transparent min-h-screen">
-      {/* min-h-[70vh] lg:min-h-[65vh] xl:min-h-[70vh] 2xl:min-h-[75vh] */}
-      <div className="min-h-[70vh] md:min-h-full min-w-full md:min-w-[72.5%] lg:min-w-[62.5%] 2xl:min-w-[62.5%] flex flex-col justify-center items-center my-[30px] md:my-[25px]">
+    <div className="flex flex-col justify-center items-center bg-white md:bg-transparent min-h-screen w-full overflow-x-hidden">
+      <div className="min-h-[70vh] md:min-h-full w-full md:w-[72.5%] lg:w-[62.5%] 2xl:w-[62.5%] flex flex-col justify-center items-center my-[30px] md:my-[25px]">
         <div className="mx-auto size-[60px] bg-white shadow-[0px_8px_26px_0px_#046A7E2B] md:size-[68px] lg:size-[75px] 2xl:size-[82px] md:bg-[#FFF7ED] rounded-full flex justify-center items-center mb-[40px] lg:mb-[50px]">
           <img
             src={Paper}
@@ -113,10 +112,10 @@ const Login: React.FC = () => {
                 Select an option below to login
               </p>
             </div>
-            <div className="  flex flex-row justify-around md:justify-evenly 2xl:justify-evenly  text-[13px] md:text-[14px] font-Poppins leading-[19.5px] w-full my-[64px] md:my-[50px] xl:my-[94px] 2xl:my-[108px] px-[30px] sm:px-[50px] md:px-[100px] xl:px-[130px]">
+            <div className="grid grid-cols-3 gap-2 text-[13px] md:text-[14px] font-Poppins leading-[19.5px] w-full my-[64px] md:my-[50px] xl:my-[94px] 2xl:my-[108px] px-4 sm:px-[50px] md:px-[100px] xl:px-[130px]">
               <button
-                className={` hover:scale-125 duration-150 ${
-                  loginNavLink.split("/").includes("admin") ? "scale-125 loginActiveNav" : "scale-100"
+                className={`flex flex-col items-center hover:scale-110 duration-150 ${
+                  loginNavLink.split("/").includes("admin") ? "scale-110 loginActiveNav" : "scale-100"
                 }`}
                 onClick={() => {
                   setRole("admin");
@@ -131,8 +130,8 @@ const Login: React.FC = () => {
                 </div>
               </button>
               <button
-                className={`mx-[15px] md:mx-[5px] hover:scale-125 duration-150 ${
-                  loginNavLink.split("/").includes("staff") ? "scale-125 loginActiveNav" : "scale-100"
+                className={`flex flex-col items-center hover:scale-110 duration-150 ${
+                  loginNavLink.split("/").includes("staff") ? "scale-110 loginActiveNav" : "scale-100"
                 }`}
                 onClick={() => {
                   setRole("staff");
@@ -147,8 +146,8 @@ const Login: React.FC = () => {
                 </div>
               </button>
               <button
-                className={` hover:scale-125 duration-150 ${
-                  loginNavLink.split("/").includes("guardian") ? "scale-125 loginActiveNav" : "scale-100"
+                className={`flex flex-col items-center hover:scale-110 duration-150 ${
+                  loginNavLink.split("/").includes("guardian") ? "scale-110 loginActiveNav" : "scale-100"
                 }`}
                 onClick={() => {
                   setRole("guardian");

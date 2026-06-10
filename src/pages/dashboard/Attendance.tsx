@@ -74,7 +74,7 @@ const AttendancePage: React.FC = () => {
   const selectedClass = classes.find((c: any) => (c.id ?? c._id) === selectedClassId);
 
   return (
-    <div className="p-6 font-Poppins">
+    <div className="p-3 sm:p-6 font-Poppins">
       <h1 className="text-2xl font-bold text-[#F97316] mb-6">Attendance</h1>
 
       {/* Class selector */}

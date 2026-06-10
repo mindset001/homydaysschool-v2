@@ -79,7 +79,7 @@ const AssignmentsPage: React.FC = () => {
   const theoryCount = (qs: any[]) => qs.filter((q) => q.type === "theory").length;
 
   return (
-    <div className="p-6 font-Poppins">
+    <div className="p-3 sm:p-6 font-Poppins">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-[#F97316]">Assignments</h1>
         {selectedClassId && (role === "admin" || role === "staff") && (
@@ -352,7 +352,7 @@ const AssignmentsPage: React.FC = () => {
             {marks.length === 0 ? (
               <p className="text-sm text-gray-400">No marks recorded yet.</p>
             ) : (
-              <table className="w-full text-sm">
+              <div className="overflow-x-auto"><table className="w-full text-sm min-w-[400px]">
                 <thead>
                   <tr className="text-left text-gray-500 border-b">
                     <th className="pb-2 pr-4 font-medium">Student</th>
@@ -370,7 +370,8 @@ const AssignmentsPage: React.FC = () => {
                   ))}
                 </tbody>
               </table>
-            )}
+              </div>
+            )
           </div>
         </div>
       )}
