@@ -16,8 +16,7 @@ const AboutUs: React.FC = () => (
       <video
         src={homyVideo}
         className="rounded-lg shadow-lg max-w-md w-full object-cover max-h-64"
-        autoPlay
-        loop
+        preload="none"
         playsInline
         controls
       />

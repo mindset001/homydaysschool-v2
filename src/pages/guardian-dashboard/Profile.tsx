@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import ProfileImage from '../../assets/images/profile/profile-image.png';
+import ProfileImage from '../../assets/images/profile/profile-image.webp';
 import ProfileImageDesktop from '../../assets/images/profile/profile-image_desktop.png';
 import CallImg from '../../assets/images/profile/call.png';
 import MessageImg from '../../assets/images/profile/message.png';

@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from "react";
 import homy1 from "../assets/images/homy1.jpg";
 import homy2 from "../assets/images/kg2.jpg";
-import homy3 from "../assets/images/korede.jpg";
+import homy3 from "../assets/images/korede.webp";
 import homy5 from "../../public/hero.jpeg"
 import homy6 from "../../public/hero2.jpeg"
 import homy7 from "../../public/hero3.jpeg"
