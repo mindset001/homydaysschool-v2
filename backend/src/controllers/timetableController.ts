@@ -24,8 +24,8 @@ export const getAllTimetables = async (req: AuthRequest, res: Response): Promise
       term: t.term,
       academicYear: t.academicYear,
       timetableId: t._id,
-      // Convert Mongoose Map to a plain object so the frontend can read it
-      timings: t.timings ? Object.fromEntries(t.timings as Map<string, string>) : {},
+      // .lean() already returns Mongoose Map fields as plain objects
+      timings: t.timings ?? {},
       // rename 'day' -> 'days' to match the frontend transform function
       timetable: t.schedule.map((s: any) => ({ ...s, days: s.day })),
     }));
