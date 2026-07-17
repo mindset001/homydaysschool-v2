@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { getClass } from "../services/api/calls/getApis";
+import { getClass, getMyClasses } from "../services/api/calls/getApis";
 import { getAccessToken } from "../utils/authTokens";
 
 // import React from 'react'
@@ -25,10 +25,11 @@ interface useClassesI {
     isClassError: boolean;
     isClassLoading: boolean;
 }
-const useClasses = () : useClassesI => {
+const useClasses = (options?: { mine?: boolean }) : useClassesI => {
   // Check if user is authenticated
   const token = getAccessToken();
-  
+  const mine = options?.mine ?? false;
+
 //   const [classNameData, setClassNameData] = useState<classesInterface[]>([]);
   // GETTING CLASS Data
   const {
@@ -37,8 +38,8 @@ const useClasses = () : useClassesI => {
     error: classError,
     isLoading: isClassLoading,
   } = useQuery({
-    queryKey: ["class"],
-    queryFn: () => getClass(),
+    queryKey: mine ? ["class", "mine"] : ["class"],
+    queryFn: () => (mine ? getMyClasses() : getClass()),
     enabled: !!token, // Only run query if token exists
     retry: 2, // Retry twice on failure
     retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000), // Exponential backoff

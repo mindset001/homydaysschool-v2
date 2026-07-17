@@ -5,6 +5,20 @@ import fs from 'fs';
 import path from 'path';
 import { Student } from '../models/Student.js';
 import { Class } from '../models/Class.js';
+import { Staff } from '../models/Staff.js';
+
+// If the requester is staff, verify the class's assigned teacher is them.
+// Returns true when allowed, and sends a 403 response (returning false) otherwise.
+const ensureStaffOwnsClass = async (req: AuthRequest, res: Response, classTeacherId: any): Promise<boolean> => {
+  if (req.user!.role !== 'staff') return true;
+
+  const staff = await Staff.findOne({ userId: req.user!.userId });
+  if (!staff || !classTeacherId || classTeacherId.toString() !== staff._id.toString()) {
+    res.status(403).json({ message: 'You are not the assigned teacher for this class' });
+    return false;
+  }
+  return true;
+};
 
 // Helper function to calculate grade from average score
 const calculateGrade = (average: number): string => {
@@ -101,6 +115,11 @@ export const uploadResult = async (req: AuthRequest, res: Response): Promise<voi
     if (!classInfo) {
       fs.unlinkSync(req.file.path);
       res.status(400).json({ message: 'Class not found' });
+      return;
+    }
+
+    if (!(await ensureStaffOwnsClass(req, res, classInfo.teacher))) {
+      fs.unlinkSync(req.file.path);
       return;
     }
 
@@ -311,6 +330,13 @@ export const saveStudentTermReport = async (req: AuthRequest, res: Response): Pr
     if (!student) {
       res.status(404).json({ message: 'Student not found' });
       return;
+    }
+
+    if (req.user!.role === 'staff') {
+      const studentClass = await Class.findOne({ name: student.class });
+      if (!(await ensureStaffOwnsClass(req, res, studentClass?.teacher))) {
+        return;
+      }
     }
 
     // Prepare term report data

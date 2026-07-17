@@ -187,7 +187,7 @@ const SideNav: React.FC<SideNavProps> = ({ mobileToggle, setMobileToggle }) => {
       item: <ResultsSVG />,
       to: "results",
       text: "Results",
-      roles: ["admin"],
+      roles: ["admin", "staff"],
     },
     {
       item: <SessionSVG />,

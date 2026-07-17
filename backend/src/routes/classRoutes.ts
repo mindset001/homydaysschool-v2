@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import {
   getAllClasses,
+  getMyClasses,
   getClassById,
   createClass,
   updateClass,
@@ -20,6 +21,7 @@ const router = Router();
 router.use(authenticate);
 
 router.get('/', authorize('admin', 'staff', 'student', 'guardian'), getAllClasses);
+router.get('/mine', authorize('staff'), getMyClasses);
 router.get('/:id', authorize('admin', 'staff', 'student', 'guardian'), getClassById);
 router.get('/:id/students', authorize('admin', 'staff'), getStudentsByClass);
 router.get('/:id/student', authorize('admin', 'staff'), getStudentsByClass);

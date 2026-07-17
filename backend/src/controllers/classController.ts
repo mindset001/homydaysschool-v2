@@ -23,6 +23,31 @@ export const getAllClasses = async (req: AuthRequest, res: Response): Promise<vo
   }
 };
 
+// GET /api/classes/mine — classes assigned to the logged-in staff member
+export const getMyClasses = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const staff = await Staff.findOne({ userId: req.user!.userId });
+    if (!staff) {
+      res.status(404).json({ message: 'Staff record not found' });
+      return;
+    }
+
+    const classes = await Class.find({ teacher: staff._id })
+      .populate({
+        path: 'teacher',
+        populate: {
+          path: 'userId',
+          select: 'firstName lastName email'
+        }
+      })
+      .populate('students', 'firstName lastName');
+
+    res.json({ classes });
+  } catch (error: any) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
 export const getClassById = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { id } = req.params;

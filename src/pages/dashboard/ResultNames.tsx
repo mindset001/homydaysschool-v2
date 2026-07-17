@@ -22,6 +22,7 @@ import { calculateAge } from "../../utils/regex";
 import ResultOptions from "../../components/dashboard/ResultOptions";
 import FilePreview from "../../components/FilePreview";
 import ResultView from "../../components/dashboard/ResultView";
+import { getRole } from "../../utils/authTokens";
 
 // import useClasses from "../../hooks/useClasses";
 // import { getClassStudentsId } from "../../services/api/calls/getApis";
@@ -119,8 +120,11 @@ const ResultNames: React.FC = () => {
   //   "primary 5",
   // ]);
 
-  // GETTING CLASS Data
-  const { classNameData: classes, isClassLoading, isClassError } = useClasses();
+  // GETTING CLASS Data — staff only see the class(es) assigned to them
+  const isStaff = getRole() === "staff";
+  const { classNameData: classes, isClassLoading, isClassError } = useClasses(
+    isStaff ? { mine: true } : undefined
+  );
   //Ends
   const { id } = useParams();
   // const ID: number = Number(id);

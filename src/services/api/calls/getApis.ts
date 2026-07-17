@@ -11,6 +11,10 @@ export const getClass = () => {
   return apiClient.get(`classes/`);
 };
 
+export const getMyClasses = () => {
+  return apiClient.get(`classes/mine`);
+};
+
 export const getSubjects = () => {
   return apiClient.get(`subjects/`);
 };
