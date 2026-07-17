@@ -23,4 +23,7 @@ const studentSubmissionSchema = new Schema<IStudentSubmission>(
   { timestamps: true }
 );
 
+studentSubmissionSchema.index({ assignmentId: 1, studentId: 1 }, { sparse: true });
+studentSubmissionSchema.index({ quizId: 1, studentId: 1 }, { sparse: true });
+
 export const StudentSubmission = mongoose.model<IStudentSubmission>('StudentSubmission', studentSubmissionSchema);

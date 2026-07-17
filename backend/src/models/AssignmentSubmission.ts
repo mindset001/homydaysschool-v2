@@ -35,4 +35,6 @@ const assignmentSubmissionSchema = new Schema<IAssignmentSubmission>(
   { timestamps: true }
 );
 
+assignmentSubmissionSchema.index({ assignmentId: 1, studentId: 1 }, { unique: true });
+
 export const AssignmentSubmission = mongoose.model<IAssignmentSubmission>('AssignmentSubmission', assignmentSubmissionSchema);

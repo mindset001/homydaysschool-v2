@@ -48,4 +48,6 @@ const assignmentSchema = new Schema<IAssignment>(
   { timestamps: true }
 );
 
+assignmentSchema.index({ classId: 1 });
+
 export const Assignment = mongoose.model<IAssignment>('Assignment', assignmentSchema);

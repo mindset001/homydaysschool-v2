@@ -35,4 +35,6 @@ const quizSubmissionSchema = new Schema<IQuizSubmission>(
   { timestamps: true }
 );
 
+quizSubmissionSchema.index({ quizId: 1, studentId: 1 }, { unique: true });
+
 export const QuizSubmission = mongoose.model<IQuizSubmission>('QuizSubmission', quizSubmissionSchema);

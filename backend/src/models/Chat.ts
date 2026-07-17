@@ -17,4 +17,6 @@ const chatSchema = new Schema<IChat>(
   { timestamps: true }
 );
 
+chatSchema.index({ createdAt: 1 });
+
 export default mongoose.model<IChat>('Chat', chatSchema);

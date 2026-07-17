@@ -38,4 +38,6 @@ const quizSchema = new Schema<IQuiz>(
   { timestamps: true }
 );
 
+quizSchema.index({ classId: 1 });
+
 export const Quiz = mongoose.model<IQuiz>('Quiz', quizSchema);
