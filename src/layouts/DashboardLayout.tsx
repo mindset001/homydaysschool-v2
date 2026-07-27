@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import data from "../services/api/db.json";
 import SideNav from "../components/dashboard/SideNav";
+import GlobalSearch from "../components/dashboard/GlobalSearch";
 import SearchSVG from "../components/svg/dashboard navbar svg/SearchSVG";
 import CalendarSVG from "../components/svg/dashboard navbar svg/CalendarSVG";
 import ChatSVG from "../components/svg/dashboard navbar svg/ChatSVG";
@@ -158,16 +159,23 @@ const DashboardLayout: React.FC = () => {
         {/* Dashboard Desktop Header */}
         <div className="dashboard-header-desktop">
           <div className="basis-[44.76%] size-[44px] 2xl:size-[55px] relative mr-[10px] lg:mr-[15px] xl:mr-[20px]">
-            <div className="dashboard-header-desktop-search-svg max-w-[24px] h-auto absolute top-0 bottom-0 left-[15px] lg:left-[20px] 2xl:left-[25px] flex items-center">
-              <SearchSVG />
-            </div>
-            <input
-              type="search"
-              name="search"
-              id="search"
-              placeholder="Search"
-              className="bg-[#F1F0F0] rounded-[20px] w-[calc(100%-20px)] lg:min-w-full min-h-full pl-[45px] lg:pl-[56px] 2xl:pl-[69px] pr-[17px] xl:pr-[25px] py-[8px] 2xl:py-[13px] text-lg font-medium"
-            />
+            {role === "admin" || role === "staff" ? (
+              <GlobalSearch role={role} />
+            ) : (
+              <>
+                <div className="dashboard-header-desktop-search-svg max-w-[24px] h-auto absolute top-0 bottom-0 left-[15px] lg:left-[20px] 2xl:left-[25px] flex items-center">
+                  <SearchSVG />
+                </div>
+                <input
+                  type="search"
+                  name="search"
+                  id="search"
+                  placeholder="Search"
+                  disabled
+                  className="bg-[#F1F0F0] rounded-[20px] w-[calc(100%-20px)] lg:min-w-full min-h-full pl-[45px] lg:pl-[56px] 2xl:pl-[69px] pr-[17px] xl:pr-[25px] py-[8px] 2xl:py-[13px] text-lg font-medium"
+                />
+              </>
+            )}
           </div>
           <div className="basis-[55.24%] flex flex-row justify-between">
             <div className="flex flex-row">

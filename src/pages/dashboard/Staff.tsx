@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { IProfile } from "../../types/user.type";
 import { Add, FilterMobile } from "../../assets/images/dashboard/students";
 import UserDetails from "../../shared/UserDetails";
@@ -94,15 +95,20 @@ const Staff: React.FC = () => {
   const [filteredData, setFilteredData] = useState<IProfile[]>(
     staffs ? staffs : []
   );
+  const [searchParams] = useSearchParams();
 
-  // Use useEffect to set the first staff profile once data is available
+  // Use useEffect to set the first staff profile once data is available.
+  // If a staffId query param is present (e.g. from the header search),
+  // jump straight to that staff member instead of defaulting to the first.
   useEffect(() => {
     setFilteredData(staffs);
 
     if (staffs.length > 0) {
-      setStaffProfile(staffs[0]);
+      const targetId = searchParams.get("staffId");
+      const target = targetId ? staffs.find((s) => String(s.id) === targetId) : undefined;
+      setStaffProfile(target ?? staffs[0]);
     }
-  }, [staffs]);
+  }, [staffs, searchParams]);
 
   const filterByGender = (gender: string) => {
     if (gender === "") {
