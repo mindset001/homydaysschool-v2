@@ -1,5 +1,10 @@
 import apiClient from "../apiClient";
 
+export const markContactMessageRead = async (id: string) => {
+  const response = await apiClient.patch(`contact/${id}/read`);
+  return response.data;
+};
+
 export const updateStudent = async ({
   id,
   updateData,

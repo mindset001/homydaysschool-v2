@@ -15,6 +15,10 @@ export const getMyClasses = () => {
   return apiClient.get(`classes/mine`);
 };
 
+export const getContactMessages = () => {
+  return apiClient.get(`contact`);
+};
+
 export const getSubjects = () => {
   return apiClient.get(`subjects/`);
 };

@@ -13,6 +13,10 @@ export const createClass = (classData: object) => {
   return apiClient.post(`/classes/`, classData);
 };
 
+export const sendContactMessage = (data: { name: string; email: string; phone?: string; message: string }) => {
+  return apiClient.post(`contact`, data);
+};
+
 export const addStudent = async (newData: object) => {
   const response = await apiClient.post(`/students/`, newData, {
     headers: {

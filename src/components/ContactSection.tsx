@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { sendContactMessage } from "../services/api/calls/postApis";
 
 interface FormState {
   name: string;
@@ -13,6 +14,7 @@ const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState<FormState>(initialForm);
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,11 +23,16 @@ const ContactSection: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
-    // Simulate sending — replace with real API call when backend endpoint is ready
-    await new Promise((r) => setTimeout(r, 1000));
-    setSending(false);
-    setSubmitted(true);
-    setFormData(initialForm);
+    setError("");
+    try {
+      await sendContactMessage(formData);
+      setSubmitted(true);
+      setFormData(initialForm);
+    } catch {
+      setError("Something went wrong sending your message. Please try again.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -123,6 +130,7 @@ const ContactSection: React.FC = () => {
                   className="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316] resize-none"
                 />
               </div>
+              {error && <p className="text-sm text-red-600">{error}</p>}
               <button
                 type="submit"
                 disabled={sending}

@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { getChatMessages, postChatMessage } from "../../services/api/calls/getApis";
 import { markChatRead } from "../../services/api/calls/postApis";
 import { getRole } from "../../utils/authTokens";
+import { showErrorToast } from "../../shared/ToastNotification";
 
 interface ChatMessage {
   _id: string;
@@ -31,9 +32,13 @@ const Chat: React.FC = () => {
   // Mark all admin messages as read when this page is opened (guardian / staff only)
   useEffect(() => {
     if (role === "guardian" || role === "staff") {
-      markChatRead().then(() => {
-        queryClient.invalidateQueries({ queryKey: ["unreadChatCount"] });
-      });
+      markChatRead()
+        .then(() => {
+          queryClient.invalidateQueries({ queryKey: ["unreadChatCount"] });
+        })
+        .catch(() => {
+          // Non-critical background call — read-state will just retry next visit
+        });
     }
   }, [role, queryClient]);
 
@@ -47,6 +52,9 @@ const Chat: React.FC = () => {
     onSuccess: () => {
       setNewMessage("");
       queryClient.invalidateQueries({ queryKey: ["chatMessages"] });
+    },
+    onError: (error: any) => {
+      showErrorToast(error?.response?.data?.message || "Failed to send message");
     },
   });
 

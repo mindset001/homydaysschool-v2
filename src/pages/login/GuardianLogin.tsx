@@ -9,7 +9,7 @@ import { Warning } from "../../assets/images";
 import HidePasswordSVG from "../../components/svg/HidePasswordSVG";
 import ShowPasswordSVG from "../../components/svg/ShowPasswordSVG";
 import { useGuardianSignIn } from "../../services/api/auth";
-import { saveTokens, setRole, setuser } from "../../utils/authTokens";
+import { saveTokens, setRememberMe, setRole, setuser } from "../../utils/authTokens";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -19,6 +19,7 @@ const StaffLogin: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   // Toggle visibility
   const [toggleVisibility, setToggleVisibility] = useState<boolean>(false);
+  const [rememberMe, setRememberMeState] = useState<boolean>(false);
   const navigate = useNavigate();
   interface formInterface {
     studentId: string;
@@ -141,6 +142,7 @@ const StaffLogin: React.FC = () => {
       onSuccess: (response: { data: any }) => {
         const userdata = response.data;
         if (userdata) {
+          setRememberMe(rememberMe);
           saveTokens(userdata.accessToken, userdata.refreshToken);
           setRole(userdata.user.role);
           setuser(userdata.user);
@@ -262,6 +264,8 @@ const StaffLogin: React.FC = () => {
               type="checkbox"
               name="remember"
               id="remember"
+              checked={rememberMe}
+              onChange={(e) => setRememberMeState(e.target.checked)}
               className={`custom-checkbox mr-[10px] size-5`}
             />
             <label htmlFor="remember" className="my-auto">

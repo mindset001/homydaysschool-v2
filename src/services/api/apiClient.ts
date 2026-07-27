@@ -49,10 +49,18 @@ apiClient.interceptors.request.use(
   }
 );
 
+// Endpoints that legitimately return 401 for wrong/missing credentials rather
+// than an expired session — must NOT trigger the refresh/redirect flow below.
+const isLoginRequest = (url?: string) =>
+  !!url && (url.includes("auth/login") || url.includes("auth/guardian-login"));
+
 apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+    if (isLoginRequest(originalRequest?.url)) {
+      return Promise.reject(error);
+    }
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       const refreshToken = getRefreshToken();

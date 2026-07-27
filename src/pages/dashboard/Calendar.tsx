@@ -127,16 +127,13 @@ const Calendar: React.FC = () => {
     mutate(newEvent, {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["calender"] });
-        alert("Event created successfully!");
+        showSuccessToast("Event created successfully!");
       },
-      onError: (error: Error) => {
-        console.error("Login failed:", error);
-        // setLoading(false);
-        // Handle error (e.g., show an error message)
+      onError: (error: any) => {
+        showErrorToast(error?.response?.data?.message || "Failed to create event");
       },
     });
     setIsSliderOpen(false);
-    console.log(newEvent);
   };
 
   //DELETE REQUEST

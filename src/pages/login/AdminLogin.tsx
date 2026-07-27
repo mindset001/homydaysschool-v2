@@ -10,7 +10,7 @@ import { Warning } from "../../assets/images";
 import HidePasswordSVG from "../../components/svg/HidePasswordSVG";
 import ShowPasswordSVG from "../../components/svg/ShowPasswordSVG";
 import { useSignIn } from "../../services/api/auth";
-import { getRole, saveTokens, setRole, setuser } from "../../utils/authTokens";
+import { getRole, saveTokens, setRememberMe, setRole, setuser } from "../../utils/authTokens";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import LoginNavigator from "../../components/LoginNavigator";
@@ -19,6 +19,7 @@ const AdminLogin: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   // Toggle visibility
   const [toggleVisibility, setToggleVisibility] = useState<boolean>(false);
+  const [rememberMe, setRememberMeState] = useState<boolean>(false);
   const navigate = useNavigate();
   interface formInterface {
     emailAddress: string;
@@ -169,6 +170,7 @@ const AdminLogin: React.FC = () => {
       onSuccess: (response: { data: any }) => {
         const userdata = response.data;
         if (userdata) {
+          setRememberMe(rememberMe);
           saveTokens(userdata.accessToken, userdata.refreshToken);
           setRole(userdata.user.role);
           setuser(userdata.user);
@@ -178,49 +180,27 @@ const AdminLogin: React.FC = () => {
         setLoading(false);
       },
       onError: (error: any) => {
-        if (error && !(error as any).response) {
+        setLoading(false);
+
+        if (!error?.response) {
           console.error("Login failed:", error);
           toast.error(
             "An error occured. Check your internet connection and/or login credentials"
           );
+          return;
         }
-        setLoading(false);
 
-        // Still working on it
-        if (error && (error as any).response) {
-          if (error.response) {
-            switch (error.response.data.message) {
-              case "Invalid email or password":
-                toast.error("An error occured. Invalid email or password");
-                break;
-              case "You don't have permission to access this page":
-                toast.error("An error occured. Incorrect role details entered");
-                break;
-              case "net::ERR_PROXY_CONNECTION_FAILED":
-                console.error("Check your internet connection");
-                break;
-              case "net::ERR_TIMED_OUT":
-                console.error("Timeout error");
-                break;
-              default:
-            }
-          } else {
-            console.error("Error occurred: ", error.message);
-            toast.error(
-              "An error occured. Check your internet connection and/or login credentials"
-            );
-          }
-          // console.error("Error occurred: ", error.message);
-          // toast.error(
-          //   "An error occured. Check your internet connection and/or login credentials"
-          // );
-        } else {
-          console.error("An unknown error occurred");
-          toast.error(
-            "An error occured. Check your internet connection and/or login credentials"
-          );
+        const msg: string = error.response.data?.message ?? "";
+        if (msg === "Invalid credentials") {
+          setTogglePasswordError(true);
+          setPasswordErrorMessage("Incorrect email or password");
+          return;
         }
-        // Ends here
+        if (msg === "Account is deactivated") {
+          toast.error("This account has been deactivated. Please contact the school.");
+          return;
+        }
+        toast.error(msg || "An error occured. Please try again.");
       },
     });
 
@@ -321,6 +301,8 @@ const AdminLogin: React.FC = () => {
               type="checkbox"
               name="remember"
               id="remember"
+              checked={rememberMe}
+              onChange={(e) => setRememberMeState(e.target.checked)}
               className={`custom-checkbox mr-[10px] size-5`}
             />
             <label htmlFor="remember" className="my-auto">

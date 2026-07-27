@@ -20,3 +20,8 @@ export const deleteTimetable = async (id: string) => {
   const response = await apiClient.delete(`/timetables/${id}`);
   return response.data;
 };
+
+export const deleteContactMessage = async (id: string) => {
+  const response = await apiClient.delete(`contact/${id}`);
+  return response.data;
+};

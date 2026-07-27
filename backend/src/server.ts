@@ -32,6 +32,7 @@ import assignmentRoutes from './routes/assignmentRoutes.js';
 import quizRoutes from './routes/quizRoutes.js';
 import submissionRoutes from './routes/submissionRoutes.js';
 import weeklyReviewRoutes from './routes/weeklyReviewRoutes.js';
+import contactRoutes from './routes/contactRoutes.js';
 
 const app: Application = express();
 
@@ -114,10 +115,15 @@ app.use('/api/class_stat', classStatsRoutes);
 app.use('/api/calender', eventRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/subjects', subjectRoutes);
+app.use('/api/chat', chatRoutes);
+app.use('/api/contact', contactRoutes);
+// Mounted at the bare '/api' prefix — must stay below any route that
+// needs to be reachable without auth (e.g. /api/contact's public POST),
+// since these routers apply `authenticate` unconditionally to everything
+// under them and would otherwise shadow later routes.
 app.use('/api', templateRoutes);
 app.use('/api', resultRoutes);
 app.use('/api', analyticsRoutes);
-app.use('/api/chat', chatRoutes);
 app.use('/api/timetables', timetableRoutes);
 app.use('/api/academic-sessions', academicSessionRoutes);
 console.log('Routes registered successfully');

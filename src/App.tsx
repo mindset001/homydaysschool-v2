@@ -46,6 +46,7 @@ import PWAUpdateBanner from "./shared/PWAUpdateBanner";
 import UserProvider from "./hooks/UseUserContext";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import { getRole } from "./utils/authTokens";
+import ErrorBoundary from "./shared/ErrorBoundary";
 
 // Pages that were still eagerly loaded — now lazy for code splitting
 const Results = lazy(() => import("./pages/dashboard/Results"));
@@ -106,6 +107,9 @@ const StudentPromotionPage = lazy(
 );
 const ChangePasswordPage = lazy(
   () => import("./pages/dashboard/ChangePassword")
+);
+const ContactMessagesPage = lazy(
+  () => import("./pages/dashboard/ContactMessages")
 );
 
 // Created OUTSIDE App so they are never recreated on re-renders
@@ -172,6 +176,7 @@ const router = createBrowserRouter(
           <Route path="quizzes" element={<Quizzes />} />
           <Route path="weekly-reviews" element={<WeeklyReviews />} />
           <Route path="weekly-reviews-guardian" element={<WeeklyReviewsGuardian />} />
+          <Route path="contact-messages" element={<ContactMessagesPage />} />
         </Route>
       </Route>
       <Route path="*" element={<ErrorPage />} />
@@ -186,13 +191,15 @@ function App() {
       <PWAInstallPrompt />
       <PWAUpdateBanner />
       {/* <h1 className="text-purple-700 text-2xl">Hello World</h1> */}
-      <QueryClientProvider client={queryClient}>
-        <UserProvider>
-          <Suspense fallback={<Loader />}>
-            <RouterProvider router={router} />
-          </Suspense>
-        </UserProvider>
-      </QueryClientProvider>
+      <ErrorBoundary>
+        <QueryClientProvider client={queryClient}>
+          <UserProvider>
+            <Suspense fallback={<Loader />}>
+              <RouterProvider router={router} />
+            </Suspense>
+          </UserProvider>
+        </QueryClientProvider>
+      </ErrorBoundary>
     </div>
   );
 }

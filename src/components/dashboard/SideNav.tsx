@@ -24,6 +24,7 @@ import {
 import useActiveSession, { ISession } from "../../hooks/useActiveSession";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import apiClient from "../../services/api/apiClient";
+import { showErrorToast } from "../../shared/ToastNotification";
 
 const fetchAllSessions = (): Promise<ISession[]> =>
   apiClient.get("academic-sessions").then((r) => r.data?.data ?? r.data ?? []);
@@ -58,6 +59,9 @@ const SideNav: React.FC<SideNavProps> = ({ mobileToggle, setMobileToggle }) => {
       queryClient.invalidateQueries({ queryKey: ["classPayments"] });
       queryClient.invalidateQueries({ queryKey: ["debtors"] });
       setDropdownOpen(false);
+    },
+    onError: (error: any) => {
+      showErrorToast(error?.response?.data?.message || "Failed to activate session");
     },
   });
 
@@ -188,6 +192,12 @@ const SideNav: React.FC<SideNavProps> = ({ mobileToggle, setMobileToggle }) => {
       to: "results",
       text: "Results",
       roles: ["admin", "staff"],
+    },
+    {
+      item: <ChatSVG />,
+      to: "contact-messages",
+      text: "Enquiries",
+      roles: ["admin"],
     },
     {
       item: <SessionSVG />,
