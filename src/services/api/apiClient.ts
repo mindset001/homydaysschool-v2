@@ -84,7 +84,7 @@ apiClient.interceptors.response.use(
 
         // Request a new access token using the refresh token
         const response = await refreshClient.post(
-          `/refresh`,
+          `/auth/refresh`,
           { token: refreshToken }
         );
 

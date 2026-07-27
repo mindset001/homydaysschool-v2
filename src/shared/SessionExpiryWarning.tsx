@@ -46,7 +46,7 @@ const SessionExpiryWarning: React.FC = () => {
     setRefreshing(true);
     try {
       const response = await axios.post(
-        `${baseURL}/refresh`,
+        `${baseURL}/auth/refresh`,
         { token: refreshToken },
         { headers: { "Content-Type": "application/json", "X-API-Key": API_KEY } }
       );
