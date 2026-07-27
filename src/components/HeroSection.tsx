@@ -1,5 +1,6 @@
 
 import { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
 import homy1 from "../assets/images/homy1.jpg";
 import homy2 from "../assets/images/kg2.jpg";
 import homy3 from "../assets/images/korede.webp";
@@ -48,9 +49,9 @@ export default function HeroSection() {
           <a href="/login" className="bg-white text-black px-6 py-2 rounded shadow font-semibold hover:bg-blue-100 transition text-center">
             Login
           </a>
-          <a href="#enroll" className="bg-black/60 text-white px-6 py-2 rounded border border-white hover:bg-white hover:text-black transition text-center">
+          <Link to="/enroll" className="bg-black/60 text-white px-6 py-2 rounded border border-white hover:bg-white hover:text-black transition text-center">
             Enroll
-          </a>
+          </Link>
         </div>
         {/* Carousel Thumbnails */}
         <div className="flex gap-2 flex-wrap justify-center sm:justify-start">

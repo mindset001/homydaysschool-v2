@@ -25,3 +25,8 @@ export const deleteContactMessage = async (id: string) => {
   const response = await apiClient.delete(`contact/${id}`);
   return response.data;
 };
+
+export const deleteEnrollmentApplication = async (id: string) => {
+  const response = await apiClient.delete(`enrollment/${id}`);
+  return response.data;
+};

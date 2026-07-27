@@ -200,6 +200,12 @@ const SideNav: React.FC<SideNavProps> = ({ mobileToggle, setMobileToggle }) => {
       roles: ["admin"],
     },
     {
+      item: <GuardianSVG />,
+      to: "enrollment-applications",
+      text: "Enrollment",
+      roles: ["admin"],
+    },
+    {
       item: <SessionSVG />,
       to: "academic-session",
       text: "Session",

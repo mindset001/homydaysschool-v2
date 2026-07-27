@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const AdmissionBanner: React.FC = () => (
   <section className="w-full flex justify-center py-10 px-4">
@@ -15,7 +16,12 @@ const AdmissionBanner: React.FC = () => (
           <li>Secondary</li>
         </ul>
       </div>
-      <button className="bg-blue-400 hover:bg-blue-500 text-white font-semibold px-8 py-3 rounded-lg transition">ENROLL NOW</button>
+      <Link
+        to="/enroll"
+        className="bg-blue-400 hover:bg-blue-500 text-white font-semibold px-8 py-3 rounded-lg transition text-center"
+      >
+        ENROLL NOW
+      </Link>
     </div>
   </section>
 );

@@ -56,6 +56,7 @@ const ResultNamesMobile = lazy(() => import("./pages/dashboard/ResultNamesMobile
 const ResultGuardian = lazy(() => import("./pages/guardian-dashboard/ResultGuardian"));
 
 const LandingPage = lazy(() => import("./pages/LandingPage"));
+const Enroll = lazy(() => import("./pages/Enroll"));
 const ForgotPassword = lazy(() => import("./pages/login/ForgotPassword"));
 const Login = lazy(() => import("./pages/login/Login"));
 const AdminLogin = lazy(() => import("./pages/login/AdminLogin"));
@@ -111,6 +112,9 @@ const ChangePasswordPage = lazy(
 const ContactMessagesPage = lazy(
   () => import("./pages/dashboard/ContactMessages")
 );
+const EnrollmentApplicationsPage = lazy(
+  () => import("./pages/dashboard/EnrollmentApplications")
+);
 
 // Created OUTSIDE App so they are never recreated on re-renders
 const queryClient = new QueryClient({
@@ -134,6 +138,7 @@ const router = createBrowserRouter(
     <Route>
       <Route path="/" element={<RootLayout />}>
         <Route index element={<LandingPage />} />
+        <Route path="enroll" element={<Enroll />} />
         <Route path="login" element={<Login />} />
         <Route element={<LoginLayout />}>
           <Route path="login/admin" element={<AdminLogin />} />
@@ -177,6 +182,7 @@ const router = createBrowserRouter(
           <Route path="weekly-reviews" element={<WeeklyReviews />} />
           <Route path="weekly-reviews-guardian" element={<WeeklyReviewsGuardian />} />
           <Route path="contact-messages" element={<ContactMessagesPage />} />
+          <Route path="enrollment-applications" element={<EnrollmentApplicationsPage />} />
         </Route>
       </Route>
       <Route path="*" element={<ErrorPage />} />

@@ -1,5 +1,6 @@
 
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Logo from "../../public/logo.png"
 
 const Navbar: React.FC = () => {
@@ -39,7 +40,7 @@ const Navbar: React.FC = () => {
       >
         <a href="#about" className="hover:text-black py-2 md:py-0" onClick={() => setMenuOpen(false)}>About</a>
         <a href="login" className="hover:text-black cursor-pointer py-2 md:py-0" onClick={() => setMenuOpen(false)}>Login</a>
-        <a href="#enroll" className="hover:text-black py-2 md:py-0" onClick={() => setMenuOpen(false)}>Enroll</a>
+        <Link to="/enroll" className="hover:text-black py-2 md:py-0" onClick={() => setMenuOpen(false)}>Enroll</Link>
         <a href="#values" className="hover:text-black py-2 md:py-0" onClick={() => setMenuOpen(false)}>Our Values</a>
       </div>
       {/* Contact info */}

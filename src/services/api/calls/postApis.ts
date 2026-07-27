@@ -17,6 +17,18 @@ export const sendContactMessage = (data: { name: string; email: string; phone?: 
   return apiClient.post(`contact`, data);
 };
 
+export const submitEnrollmentApplication = (data: {
+  childFullName: string;
+  dateOfBirth?: string;
+  desiredLevel: string;
+  guardianName: string;
+  guardianEmail: string;
+  guardianPhone: string;
+  message?: string;
+}) => {
+  return apiClient.post(`enrollment`, data);
+};
+
 export const addStudent = async (newData: object) => {
   const response = await apiClient.post(`/students/`, newData, {
     headers: {

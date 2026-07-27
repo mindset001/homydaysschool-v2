@@ -5,6 +5,11 @@ export const markContactMessageRead = async (id: string) => {
   return response.data;
 };
 
+export const updateEnrollmentApplicationStatus = async (id: string, status: string) => {
+  const response = await apiClient.patch(`enrollment/${id}/status`, { status });
+  return response.data;
+};
+
 export const updateStudent = async ({
   id,
   updateData,

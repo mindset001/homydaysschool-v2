@@ -19,6 +19,10 @@ export const getContactMessages = () => {
   return apiClient.get(`contact`);
 };
 
+export const getEnrollmentApplications = () => {
+  return apiClient.get(`enrollment`);
+};
+
 export const getSubjects = () => {
   return apiClient.get(`subjects/`);
 };
