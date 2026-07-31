@@ -355,7 +355,7 @@ const ResultGuardian: React.FC = () => {
                 {activeRecord.promotedToClass && (
                   <> to <span className="font-semibold">{activeRecord.promotedToClass}</span></>
                 )}{" "}
-                for the {activeRecord.term} — {activeRecord.year} session.
+                for the next academic session.
               </p>
             </div>
           )}
@@ -363,11 +363,11 @@ const ResultGuardian: React.FC = () => {
             <div className="mt-4 flex items-center gap-3 rounded-[12px] border border-amber-200 bg-amber-50 px-4 py-3">
               <span className="text-xl">📌</span>
               <p className="text-[13px] text-amber-800">
-                <span className="font-semibold">Advised to repeat</span>
+                <span className="font-semibold">Advised to retain</span>
                 {activeRecord.promotedToClass && (
-                  <> — will remain in <span className="font-semibold">{activeRecord.promotedToClass}</span></>
+                  <> <span className="font-semibold">{activeRecord.promotedToClass}</span></>
                 )}{" "}
-                for the next session.
+                for the next academic session.
               </p>
             </div>
           )}
