@@ -19,6 +19,8 @@ interface AcademicRecord {
   term: string;
   year: number;
   results: AcademicResult[];
+  promotionStatus?: "promoted" | "repeated";
+  promotedToClass?: string;
 }
 
 interface StudentResultData {
@@ -221,6 +223,32 @@ const ResultGuardian: React.FC = () => {
       {allRecords.length === 0 && (
         <div className="text-center py-16 text-gray-400 text-sm">
           No result records are available yet.
+        </div>
+      )}
+
+      {/* Promotion decision for this term */}
+      {activeRecord?.promotionStatus === "promoted" && (
+        <div className="mb-5 flex items-center gap-3 rounded-[12px] border border-green-200 bg-green-50 px-4 py-3">
+          <span className="text-xl">🎉</span>
+          <p className="text-[13px] text-green-800">
+            <span className="font-semibold">Promoted</span>
+            {activeRecord.promotedToClass && (
+              <> to <span className="font-semibold">{activeRecord.promotedToClass}</span></>
+            )}{" "}
+            for the {activeRecord.term} — {activeRecord.year} session.
+          </p>
+        </div>
+      )}
+      {activeRecord?.promotionStatus === "repeated" && (
+        <div className="mb-5 flex items-center gap-3 rounded-[12px] border border-amber-200 bg-amber-50 px-4 py-3">
+          <span className="text-xl">📌</span>
+          <p className="text-[13px] text-amber-800">
+            <span className="font-semibold">Advised to repeat</span>
+            {activeRecord.promotedToClass && (
+              <> — will remain in <span className="font-semibold">{activeRecord.promotedToClass}</span></>
+            )}{" "}
+            for the next session.
+          </p>
         </div>
       )}
 

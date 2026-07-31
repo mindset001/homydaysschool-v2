@@ -63,20 +63,54 @@ export const getPromotionPreview = async (req: AuthRequest, res: Response): Prom
 };
 
 /**
+ * Records the promotion/retention decision on the student's academicRecords
+ * entry for the given term/year — creating that entry if results haven't
+ * been uploaded for the term yet.
+ */
+const setPromotionStatus = async (
+  studentId: any,
+  term: string,
+  year: number,
+  status: 'promoted' | 'repeated',
+  promotedToClass: string
+): Promise<void> => {
+  const updateResult = await Student.updateOne(
+    { _id: studentId, 'academicRecords.term': term, 'academicRecords.year': year },
+    { $set: { 'academicRecords.$.promotionStatus': status, 'academicRecords.$.promotedToClass': promotedToClass } }
+  );
+
+  if (updateResult.matchedCount === 0) {
+    await Student.updateOne(
+      { _id: studentId },
+      { $push: { academicRecords: { term, year, results: [], promotionStatus: status, promotedToClass } } }
+    );
+  }
+};
+
+/**
  * POST /api/students/promote
- * Body: { studentIds: string[] }
- *   — explicit list of student IDs to promote.
- *   — Students NOT in the list stay in their current class (retained).
+ * Body: { studentIds: string[], retainedIds?: string[], term?: string, academicYear?: string }
+ *   — studentIds: explicit list of student IDs to promote.
+ *   — retainedIds: explicit list of student IDs held back (recorded as 'repeated'
+ *     on their current term's academic record, if term/academicYear are provided).
+ *   — Students NOT in either list are left untouched.
  *   — SS3 students are moved to class = 'Graduated'.
  */
 export const promoteStudents = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    const { studentIds } = req.body as { studentIds: string[] };
+    const { studentIds, retainedIds, term, academicYear } = req.body as {
+      studentIds: string[];
+      retainedIds?: string[];
+      term?: string;
+      academicYear?: string;
+    };
 
     if (!Array.isArray(studentIds) || studentIds.length === 0) {
       res.status(400).json({ message: 'studentIds must be a non-empty array.' });
       return;
     }
+
+    const year = academicYear ? parseInt(academicYear) : undefined;
 
     // Fetch only the students that were explicitly selected
     const students = await Student.find({ _id: { $in: studentIds } }, '_id class');
@@ -120,6 +154,19 @@ export const promoteStudents = async (req: AuthRequest, res: Response): Promise<
       const totalInClass = await Student.countDocuments({ class: from });
 
       results.push({ from, to, promoted: ids.length, retained: totalInClass });
+
+      // Record the decision on this term's academic record
+      if (term && year) {
+        await Promise.all(ids.map((id) => setPromotionStatus(id, term, year, 'promoted', to)));
+      }
+    }
+
+    // Record 'repeated' for students explicitly held back this run
+    if (term && year && Array.isArray(retainedIds) && retainedIds.length > 0) {
+      const retained = await Student.find({ _id: { $in: retainedIds } }, '_id class');
+      await Promise.all(
+        retained.map((s) => setPromotionStatus(s._id, term, year, 'repeated', s.class))
+      );
     }
 
     const totalPromoted = results.reduce((sum, r) => sum + r.promoted, 0);

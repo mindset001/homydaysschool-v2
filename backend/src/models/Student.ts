@@ -39,6 +39,8 @@ export interface IStudent extends Document {
       score: number;
       grade: string;
     }[];
+    promotionStatus?: 'promoted' | 'repeated';
+    promotedToClass?: string;
   }[];
   termReports?: {
     term: string;
@@ -190,6 +192,8 @@ const studentSchema = new Schema<IStudent>(
             grade: String,
           },
         ],
+        promotionStatus: { type: String, enum: ['promoted', 'repeated'] },
+        promotedToClass: String,
       },
     ],
     termReports: [

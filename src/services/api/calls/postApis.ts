@@ -91,7 +91,12 @@ export const markChatRead = () => {
   return apiClient.post(`/chat/messages/read`, {});
 };
 
-export const promoteStudents = (data: { studentIds: string[] }) => {
+export const promoteStudents = (data: {
+  studentIds: string[];
+  retainedIds?: string[];
+  term?: string;
+  academicYear?: string;
+}) => {
   return apiClient.post('students/promote', data);
 };
 

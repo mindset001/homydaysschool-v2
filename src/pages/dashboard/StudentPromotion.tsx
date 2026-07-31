@@ -167,7 +167,13 @@ export default function StudentPromotion() {
   const totalSelected = selectedStudents.size;
 
   const handlePromote = () => {
-    mutation.mutate({ studentIds: Array.from(selectedStudents) });
+    const retainedIds = allStudentIds.filter((id) => !selectedStudents.has(id));
+    mutation.mutate({
+      studentIds: Array.from(selectedStudents),
+      retainedIds,
+      term: activeSession?.term,
+      academicYear: activeSession?.academicYear,
+    });
   };
 
   return (
