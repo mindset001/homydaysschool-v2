@@ -226,32 +226,6 @@ const ResultGuardian: React.FC = () => {
         </div>
       )}
 
-      {/* Promotion decision for this term */}
-      {activeRecord?.promotionStatus === "promoted" && (
-        <div className="mb-5 flex items-center gap-3 rounded-[12px] border border-green-200 bg-green-50 px-4 py-3">
-          <span className="text-xl">🎉</span>
-          <p className="text-[13px] text-green-800">
-            <span className="font-semibold">Promoted</span>
-            {activeRecord.promotedToClass && (
-              <> to <span className="font-semibold">{activeRecord.promotedToClass}</span></>
-            )}{" "}
-            for the {activeRecord.term} — {activeRecord.year} session.
-          </p>
-        </div>
-      )}
-      {activeRecord?.promotionStatus === "repeated" && (
-        <div className="mb-5 flex items-center gap-3 rounded-[12px] border border-amber-200 bg-amber-50 px-4 py-3">
-          <span className="text-xl">📌</span>
-          <p className="text-[13px] text-amber-800">
-            <span className="font-semibold">Advised to repeat</span>
-            {activeRecord.promotedToClass && (
-              <> — will remain in <span className="font-semibold">{activeRecord.promotedToClass}</span></>
-            )}{" "}
-            for the next session.
-          </p>
-        </div>
-      )}
-
       {/* Blocked — outstanding balance for this term */}
       {activeRecord && isBlocked && (
         <div className="flex flex-col items-center justify-center py-16 font-Poppins">
@@ -370,6 +344,32 @@ const ResultGuardian: React.FC = () => {
                 )}
               </div>
             </>
+          )}
+
+          {/* Promotion decision — shown below the average score */}
+          {activeRecord.promotionStatus === "promoted" && (
+            <div className="mt-4 flex items-center gap-3 rounded-[12px] border border-green-200 bg-green-50 px-4 py-3">
+              <span className="text-xl">🎉</span>
+              <p className="text-[13px] text-green-800">
+                <span className="font-semibold">Promoted</span>
+                {activeRecord.promotedToClass && (
+                  <> to <span className="font-semibold">{activeRecord.promotedToClass}</span></>
+                )}{" "}
+                for the {activeRecord.term} — {activeRecord.year} session.
+              </p>
+            </div>
+          )}
+          {activeRecord.promotionStatus === "repeated" && (
+            <div className="mt-4 flex items-center gap-3 rounded-[12px] border border-amber-200 bg-amber-50 px-4 py-3">
+              <span className="text-xl">📌</span>
+              <p className="text-[13px] text-amber-800">
+                <span className="font-semibold">Advised to repeat</span>
+                {activeRecord.promotedToClass && (
+                  <> — will remain in <span className="font-semibold">{activeRecord.promotedToClass}</span></>
+                )}{" "}
+                for the next session.
+              </p>
+            </div>
           )}
         </>
       )}
