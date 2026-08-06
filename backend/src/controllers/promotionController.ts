@@ -6,15 +6,19 @@ import { AuthRequest } from '../middleware/auth.js';
 /**
  * Ordered promotion chain.
  * Each student in class[N] moves to class[N+1] on promotion.
- * Students in the last class (SS3) are marked as 'Graduated'.
+ * Students in the last class (Sss3) are marked as 'Graduated'.
+ *
+ * Must match the exact casing used in Class.name / Student.class in the
+ * database (e.g. "Jss1", not "JSS1") — this list is matched by exact
+ * string equality, so a mismatch silently drops students from promotion.
  */
 export const PROMOTION_ORDER = [
   'Creche',
   'KG1', 'KG2',
   'Nur1', 'Nur2',
   'Pry1', 'Pry2', 'Pry3', 'Pry4', 'Pry5',
-  'JSS1', 'JSS2', 'JSS3',
-  'SS1', 'SS2', 'SS3',
+  'Jss1', 'Jss2', 'Jss3',
+  'Sss1', 'Sss2', 'Sss3',
 ];
 
 /**
