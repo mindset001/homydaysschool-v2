@@ -37,21 +37,23 @@ const ResultCommentModal: React.FC<ResultCommentModalProps> = ({ studentId, stud
   }, [activeRecord?.comment, studentId]);
 
   const mutation = useMutation({
-    mutationFn: () =>
+    mutationFn: (commentValue: string) =>
       saveAcademicRecordComment({
         studentId: studentId!,
         term: activeSession!.term,
         year: parseInt(activeSession!.academicYear.split("/")[0]),
-        comment,
+        comment: commentValue,
       }),
-    onSuccess: () => {
-      showSuccessToast("Comment saved");
+    onSuccess: (_data, commentValue) => {
+      showSuccessToast(commentValue ? "Comment saved" : "Comment deleted");
       queryClient.invalidateQueries({ queryKey: ["studentResultForComment", studentId] });
       queryClient.invalidateQueries({ queryKey: ["guardian-student-result", studentId] });
       onClose();
     },
     onError: () => showErrorToast("Failed to save comment"),
   });
+
+  const hasExistingComment = !!activeRecord?.comment?.trim();
 
   if (!isOpen) return null;
 
@@ -87,8 +89,20 @@ const ResultCommentModal: React.FC<ResultCommentModalProps> = ({ studentId, stud
               >
                 Cancel
               </button>
+              {hasExistingComment && (
+                <button
+                  onClick={() => {
+                    setComment("");
+                    mutation.mutate("");
+                  }}
+                  disabled={mutation.isPending}
+                  className="flex-1 py-2 rounded-[8px] border border-red-200 text-red-600 text-sm font-semibold hover:bg-red-50 transition-colors disabled:opacity-60"
+                >
+                  Delete
+                </button>
+              )}
               <button
-                onClick={() => mutation.mutate()}
+                onClick={() => mutation.mutate(comment)}
                 disabled={mutation.isPending}
                 className="flex-1 py-2 rounded-[8px] bg-[#F97316] text-white text-sm font-semibold hover:bg-[#046a71] transition-colors disabled:opacity-60"
               >
