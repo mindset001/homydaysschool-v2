@@ -22,6 +22,7 @@ interface AcademicRecord {
   results: AcademicResult[];
   promotionStatus?: "promoted" | "repeated";
   promotedToClass?: string;
+  comment?: string;
 }
 
 interface StudentResultData {
@@ -160,6 +161,8 @@ const ResultGuardian: React.FC = () => {
   const matchedSummary = activeRecord
     ? findTermSummary(activeRecord, termSummaries)
     : undefined;
+
+  const resultComment = activeRecord?.comment?.trim();
 
   // Block if the term has an outstanding balance (balance > 0)
   const isBlocked = matchedSummary
@@ -362,6 +365,16 @@ const ResultGuardian: React.FC = () => {
                 )}
               </div>
             </>
+          )}
+
+          {/* Comment on this result — shown below the average score */}
+          {resultComment && (
+            <div className="mt-4 rounded-[12px] border border-gray-200 bg-gray-50 px-4 py-3">
+              <p className="text-[11px] font-semibold text-gray-500 uppercase tracking-wide mb-1">
+                Comment
+              </p>
+              <p className="text-[13px] text-gray-700 whitespace-pre-wrap">{resultComment}</p>
+            </div>
           )}
 
           {/* Promotion decision — shown below the average score */}

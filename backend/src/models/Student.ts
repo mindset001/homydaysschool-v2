@@ -41,6 +41,7 @@ export interface IStudent extends Document {
     }[];
     promotionStatus?: 'promoted' | 'repeated';
     promotedToClass?: string;
+    comment?: string;
   }[];
   termReports?: {
     term: string;
@@ -194,6 +195,7 @@ const studentSchema = new Schema<IStudent>(
         ],
         promotionStatus: { type: String, enum: ['promoted', 'repeated'] },
         promotedToClass: String,
+        comment: String,
       },
     ],
     termReports: [

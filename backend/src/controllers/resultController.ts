@@ -405,3 +405,54 @@ export const saveStudentTermReport = async (req: AuthRequest, res: Response): Pr
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
+
+// Save (or clear) a comment on a student's academic record for a specific
+// term — a lightweight comment tied directly to the subject/score table,
+// distinct from the teacherComment inside the full term report.
+export const saveAcademicRecordComment = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const { term, year, comment } = req.body;
+
+    if (!term || !year) {
+      res.status(400).json({ message: 'Term and year are required' });
+      return;
+    }
+
+    const student = await Student.findById(id);
+
+    if (!student) {
+      res.status(404).json({ message: 'Student not found' });
+      return;
+    }
+
+    if (req.user!.role === 'staff') {
+      const studentClass = await Class.findOne({ name: student.class });
+      if (!(await ensureStaffOwnsClass(req, res, studentClass?.teacher))) {
+        return;
+      }
+    }
+
+    const yearNum = parseInt(year);
+    if (!student.academicRecords) {
+      student.academicRecords = [];
+    }
+
+    const existingIndex = student.academicRecords.findIndex(
+      (record) => record.term === term && record.year === yearNum
+    );
+
+    if (existingIndex >= 0) {
+      student.academicRecords[existingIndex].comment = comment || '';
+    } else {
+      student.academicRecords.push({ term, year: yearNum, results: [], comment: comment || '' } as any);
+    }
+
+    await student.save();
+
+    res.json({ message: 'Comment saved successfully' });
+  } catch (error: any) {
+    console.error('Error saving academic record comment:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};

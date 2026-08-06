@@ -22,6 +22,7 @@ import { calculateAge } from "../../utils/regex";
 import ResultOptions from "../../components/dashboard/ResultOptions";
 import FilePreview from "../../components/FilePreview";
 import ResultView from "../../components/dashboard/ResultView";
+import ResultCommentModal from "../../components/dashboard/ResultCommentModal";
 import { getRole } from "../../utils/authTokens";
 
 // import useClasses from "../../hooks/useClasses";
@@ -107,6 +108,7 @@ const ResultNames: React.FC = () => {
   const [fileName, setFileName] = useState("No file selected");
   const [resultViewToggle, setResultViewToggle] = useState(false);
   const [studentID, setStudentID] = useState<string | number>("");
+  const [commentTarget, setCommentTarget] = useState<{ id: string; name: string } | null>(null);
   // const [classes] = useState<string[]>([
   //   "creche",
   //   "k.g 1",
@@ -274,6 +276,13 @@ const ResultNames: React.FC = () => {
         setResultViewToggle={setResultViewToggle}
         totalStudentsInClass={studentData.length}
       />
+      {commentTarget && (
+        <ResultCommentModal
+          studentId={commentTarget.id}
+          studentName={commentTarget.name}
+          onClose={() => setCommentTarget(null)}
+        />
+      )}
       <FilePreview
         filePreview={filePreview}
         className={fileName}
@@ -551,6 +560,17 @@ const ResultNames: React.FC = () => {
                                   <MessageSVG />
                                 </div>
                               </Link>
+                              <button
+                                type="button"
+                                title="Comment on result"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setCommentTarget({ id: data.id.toString(), name: data.full_name });
+                                }}
+                                className="ml-[15px] size-[20px] rounded-full flex justify-center items-center bg-white text-[11px] hover:bg-[#F97316] hover:text-white transition-colors"
+                              >
+                                💬
+                              </button>
                             </div>
                           </td>
                         </tr>

@@ -2,7 +2,7 @@ import { Router } from 'express';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
-import { uploadResult, getStudentResults, saveStudentTermReport } from '../controllers/resultController.js';
+import { uploadResult, getStudentResults, saveStudentTermReport, saveAcademicRecordComment } from '../controllers/resultController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 
 // Ensure uploads/results directory exists
@@ -54,6 +54,9 @@ router.get('/students/:id/results', getStudentResults);
 
 // Save student term report
 router.put('/students/:id/term-report', authorize('admin', 'staff'), saveStudentTermReport);
+
+// Save a comment on a student's academic record for a specific term
+router.put('/students/:id/academic-record-comment', authorize('admin', 'staff'), saveAcademicRecordComment);
 
 // Upload result file
 router.post('/uploadresult', authorize('admin', 'staff'), upload.single('file'), uploadResult);

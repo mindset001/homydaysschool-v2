@@ -106,3 +106,22 @@ export const saveStudentTermReport = async ({
   });
   return response.data;
 };
+
+export const saveAcademicRecordComment = async ({
+  studentId,
+  term,
+  year,
+  comment,
+}: {
+  studentId: string | number;
+  term: string;
+  year: number;
+  comment: string;
+}) => {
+  const response = await apiClient.put(`students/${studentId}/academic-record-comment`, {
+    term,
+    year,
+    comment,
+  });
+  return response.data;
+};
