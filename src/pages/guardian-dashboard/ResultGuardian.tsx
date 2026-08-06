@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getClassStudentResult, getStudentTermSummary } from "../../services/api/calls/getApis";
 import Loader from "../../shared/Loader";
 import ResultView from "../../components/dashboard/ResultView";
+import useActiveSession from "../../hooks/useActiveSession";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -86,6 +87,8 @@ const ResultGuardian: React.FC = () => {
   const navigate = useNavigate();
   const [fullReportOpen, setFullReportOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<number>(0);
+  const { activeSession } = useActiveSession();
+  const didAutoSelectTab = useRef(false);
 
   // Fetch result data
   const {
@@ -114,6 +117,21 @@ const ResultGuardian: React.FC = () => {
   const allRecords: AcademicRecord[] = student?.academicRecords ?? [];
   const termSummaries: TermSummary[] = termData?.data?.termSummaries ?? [];
   const { testMax, examMax } = getScoreBands(student?.class ?? "");
+
+  // Default the open tab to the current active term (e.g. Third Term,
+  // 2025/2026) rather than whichever record happens to be first in the array.
+  useEffect(() => {
+    if (didAutoSelectTab.current) return;
+    if (!activeSession || allRecords.length === 0) return;
+
+    const idx = allRecords.findIndex(
+      (r) =>
+        r.term === activeSession.term &&
+        activeSession.academicYear.split("/").some((y) => parseInt(y) === r.year)
+    );
+    setActiveTab(idx >= 0 ? idx : allRecords.length - 1);
+    didAutoSelectTab.current = true;
+  }, [activeSession, allRecords]);
 
   // ── Loading / error states ──────────────────────────────────────────────────
   if (isResultLoading || isTermLoading) return <Loader />;

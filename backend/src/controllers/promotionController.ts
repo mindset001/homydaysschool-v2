@@ -165,9 +165,22 @@ export const promoteStudents = async (req: AuthRequest, res: Response): Promise<
       }
     }
 
-    // Record 'repeated' for students explicitly held back this run
+    // Record 'repeated' for students explicitly held back this run.
+    // Only touch students whose *current* class actually had at least one
+    // promotion in this same batch — that's the signal the admin was
+    // deliberately working through that class. Without this check, every
+    // unchecked student across the whole school (including students in
+    // unrelated classes who were already promoted in an earlier run) would
+    // be wrongly tagged 'repeated' just for not being selected this time.
+    const processedClasses = new Set(
+      Array.from(buckets.keys()).map((key) => key.split('__')[0])
+    );
+
     if (term && year && Array.isArray(retainedIds) && retainedIds.length > 0) {
-      const retained = await Student.find({ _id: { $in: retainedIds } }, '_id class');
+      const retained = await Student.find(
+        { _id: { $in: retainedIds }, class: { $in: Array.from(processedClasses) } },
+        '_id class'
+      );
       await Promise.all(
         retained.map((s) => setPromotionStatus(s._id, term, year, 'repeated', s.class))
       );
