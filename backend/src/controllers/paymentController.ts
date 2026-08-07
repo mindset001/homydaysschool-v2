@@ -155,59 +155,70 @@ export const getStudentTermSummary = async (req: AuthRequest, res: Response): Pr
     // Only sessions that started on or after student admission
     const applicable = applicableSessionsForStudent(allSessions, student);
 
-    // All payments for this student, mapped by "year__term" key
+    // All payments for this student, mapped by "year__term" key, tracking
+    // the School Fee portion separately from everything else
     const payments = await Payment.find({ studentId })
       .populate('receivedBy', 'firstName lastName')
       .lean();
 
-    const paymentsByKey = new Map<string, { paid: number; payments: any[] }>();
+    const paymentsByKey = new Map<string, { paid: number; schoolFeePaid: number; payments: any[] }>();
     payments.forEach((p) => {
       const key = `${p.academicYear}__${p.term}`;
       if (!paymentsByKey.has(key)) {
-        paymentsByKey.set(key, { paid: 0, payments: [] });
+        paymentsByKey.set(key, { paid: 0, schoolFeePaid: 0, payments: [] });
       }
       const entry = paymentsByKey.get(key)!;
       entry.paid += p.amount;
+      if (p.paymentType === 'School Fee') entry.schoolFeePaid += p.amount;
       entry.payments.push(p);
     });
 
-    // Each applicable session is billed independently — no carry-over
+    // Each applicable session is billed independently — no carry-over.
+    // The outstanding balance only reflects the School Fee line item — any
+    // other fee (Uniform, Bus, custom names, ...) is informational only.
     const termSummaries = await Promise.all(
       applicable.map(async (session) => {
         const key = `${session.academicYear}__${session.term}`;
-        const { paid = 0, payments: termPayments = [] } = paymentsByKey.get(key) ?? {};
+        const { paid = 0, schoolFeePaid = 0, payments: termPayments = [] } = paymentsByKey.get(key) ?? {};
         const feeBreakdown = student.class
           ? await getTermFeeBreakdown(student.class, session.academicYear, session.term)
           : [];
         const termFee = feeBreakdown.reduce((sum, f) => sum + f.amount, 0);
+        const schoolFee = feeBreakdown
+          .filter((f) => f.feeType === 'School Fee')
+          .reduce((sum, f) => sum + f.amount, 0);
 
         const totalDue = termFee;
-        const rawBalance = totalDue - paid;
+        const rawBalance = schoolFee - schoolFeePaid;
 
         return {
           term: session.term,
           academicYear: session.academicYear,
           label: `${session.term} — ${session.academicYear}`,
           termFee,
+          schoolFee,
+          schoolFeePaid,
           feeBreakdown,
           totalDue,
           totalPaid: paid,
           balance: Math.max(0, rawBalance),
           overpaid: Math.max(0, -rawBalance),
-          status: (rawBalance <= 0 ? 'Paid' : paid > 0 ? 'Partial' : 'Unpaid') as 'Paid' | 'Partial' | 'Unpaid',
+          status: (rawBalance <= 0 ? 'Paid' : schoolFeePaid > 0 ? 'Partial' : 'Unpaid') as 'Paid' | 'Partial' | 'Unpaid',
           payments: termPayments,
         };
       })
     );
 
-    const overallPaid = termSummaries.reduce((s, t) => s + t.totalPaid, 0);
-    const overallDue = termSummaries.reduce((s, t) => s + t.termFee, 0);
+    // Overall figures are School-Fee-only — other fee types never factor
+    // into the outstanding balance or payment status.
+    const overallPaid = termSummaries.reduce((s, t) => s + t.schoolFeePaid, 0);
+    const overallDue = termSummaries.reduce((s, t) => s + t.schoolFee, 0);
     const overallBalance = termSummaries.reduce((s, t) => s + t.balance, 0);
 
     // "Current" term fee — used by older callers as a single headline figure
     const activeSession = allSessions.find((s: any) => s.isActive);
     const currentTermFee = activeSession
-      ? termSummaries.find((t) => t.term === activeSession.term && t.academicYear === activeSession.academicYear)?.termFee ?? 0
+      ? termSummaries.find((t) => t.term === activeSession.term && t.academicYear === activeSession.academicYear)?.schoolFee ?? 0
       : 0;
 
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
