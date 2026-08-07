@@ -96,7 +96,11 @@ const ClassFeesPage: React.FC = () => {
   const termsForYear = sessions.filter((s) => s.academicYear === academicYear).map((s) => s.term);
 
   const handleAddFee = (className: string) => {
-    const feeType = draftType[className] || FEE_TYPES[0];
+    const feeType = (draftType[className] || "").trim();
+    if (!feeType) {
+      showErrorToast("Enter a name for this fee");
+      return;
+    }
     const amount = Number(draftAmount[className]);
     if (!amount || amount <= 0) {
       showErrorToast("Enter an amount greater than 0");
@@ -107,11 +111,16 @@ const ClassFeesPage: React.FC = () => {
 
   return (
     <div className="p-3 sm:p-6 font-Poppins">
+      <datalist id="fee-type-options">
+        {FEE_TYPES.map((t) => <option key={t} value={t} />)}
+      </datalist>
+
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-[#F97316]">Class Fees</h1>
         <p className="text-sm text-gray-500 mt-1">
-          Add one or more fee items per class for a specific term — School Fee, Uniform, Bus,
-          etc. A term with nothing added is free to view; nothing carries over from other terms.
+          Add one or more fee items per class for a specific term — pick a common one or type
+          your own name (e.g. "Excursion Fee"). A term with nothing added is free to view;
+          nothing carries over from other terms.
         </p>
       </div>
 
@@ -180,13 +189,14 @@ const ClassFeesPage: React.FC = () => {
                 )}
 
                 <div className="flex flex-wrap gap-2 items-center">
-                  <select
-                    value={draftType[c.name] ?? FEE_TYPES[0]}
+                  <input
+                    type="text"
+                    list="fee-type-options"
+                    placeholder="Fee name (e.g. School Fee, Excursion…)"
+                    value={draftType[c.name] ?? ""}
                     onChange={(e) => setDraftType((d) => ({ ...d, [c.name]: e.target.value }))}
-                    className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]"
-                  >
-                    {FEE_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
-                  </select>
+                    className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm w-56 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
+                  />
                   <input
                     type="number"
                     min={0}

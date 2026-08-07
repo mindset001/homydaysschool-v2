@@ -26,10 +26,10 @@ export const getClassFees = async (req: AuthRequest, res: Response): Promise<voi
 export const setClassFee = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { className, academicYear, term, amount } = req.body;
-    const feeType = req.body.feeType || 'School Fee';
+    const feeType = (req.body.feeType || 'School Fee').trim();
 
-    if (!className || !academicYear || !term || amount === undefined) {
-      res.status(400).json({ message: 'className, academicYear, term and amount are required' });
+    if (!className || !academicYear || !term || !feeType || amount === undefined) {
+      res.status(400).json({ message: 'className, academicYear, term, feeType and amount are required' });
       return;
     }
 
