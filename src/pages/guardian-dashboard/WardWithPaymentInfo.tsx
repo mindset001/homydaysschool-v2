@@ -34,11 +34,17 @@ interface Ward {
   };
 }
 
+interface FeeLine {
+  feeType: string;
+  amount: number;
+}
+
 interface TermSummary {
   term: string;
   academicYear: string;
   label: string;
   termFee: number;
+  feeBreakdown?: FeeLine[];
   totalDue: number;
   totalPaid: number;
   balance: number;
@@ -358,6 +364,20 @@ export function WardWithPaymentInfo({ ward }: { ward: Ward }) {
                     </span>
                   </div>
                 </div>
+
+                {ts.feeBreakdown && ts.feeBreakdown.length > 0 && (
+                  <div className="mt-3 pt-3 border-t border-gray-100">
+                    <p className="text-[11px] font-semibold text-gray-500 mb-1.5">Fee Breakdown</p>
+                    <div className="space-y-1">
+                      {ts.feeBreakdown.map((f, i) => (
+                        <div key={i} className="flex justify-between text-gray-600">
+                          <span>{f.feeType}</span>
+                          <span className="font-medium">₦{f.amount.toLocaleString()}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
