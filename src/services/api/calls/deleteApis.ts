@@ -30,3 +30,8 @@ export const deleteEnrollmentApplication = async (id: string) => {
   const response = await apiClient.delete(`enrollment/${id}`);
   return response.data;
 };
+
+export const deleteClassFee = async (id: string) => {
+  const response = await apiClient.delete(`class-fees/${id}`);
+  return response.data;
+};

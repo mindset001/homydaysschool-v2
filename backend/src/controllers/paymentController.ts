@@ -17,17 +17,27 @@ const TERM_ORDER: Record<string, number> = {
 };
 
 /**
- * A class's fee for one specific term/session. A term with no fee record
- * set (via the Tuition page) is simply $0 due for that term — it never
- * inherits or creates debt tied to any other term.
+ * A class's fee line items (School Fee, Uniform, Bus, ...) for one specific
+ * term/session. A term with no fee records set (via the Class Fees page) is
+ * simply $0 due for that term — it never inherits or creates debt tied to
+ * any other term.
  */
-async function getTermFee(className: string, academicYear: string, term: string): Promise<number> {
-  const fee = await ClassFee.findOne({
+async function getTermFeeBreakdown(
+  className: string,
+  academicYear: string,
+  term: string
+): Promise<{ feeType: string; amount: number }[]> {
+  const fees = await ClassFee.find({
     className: new RegExp(`^${className}$`, 'i'),
     academicYear,
     term,
   }).lean();
-  return fee?.amount ?? 0;
+  return fees.map((f) => ({ feeType: f.feeType, amount: f.amount }));
+}
+
+async function getTermFee(className: string, academicYear: string, term: string): Promise<number> {
+  const breakdown = await getTermFeeBreakdown(className, academicYear, term);
+  return breakdown.reduce((sum, f) => sum + f.amount, 0);
 }
 
 /**
@@ -166,7 +176,10 @@ export const getStudentTermSummary = async (req: AuthRequest, res: Response): Pr
       applicable.map(async (session) => {
         const key = `${session.academicYear}__${session.term}`;
         const { paid = 0, payments: termPayments = [] } = paymentsByKey.get(key) ?? {};
-        const termFee = student.class ? await getTermFee(student.class, session.academicYear, session.term) : 0;
+        const feeBreakdown = student.class
+          ? await getTermFeeBreakdown(student.class, session.academicYear, session.term)
+          : [];
+        const termFee = feeBreakdown.reduce((sum, f) => sum + f.amount, 0);
 
         const totalDue = termFee;
         const rawBalance = totalDue - paid;
@@ -176,6 +189,7 @@ export const getStudentTermSummary = async (req: AuthRequest, res: Response): Pr
           academicYear: session.academicYear,
           label: `${session.term} — ${session.academicYear}`,
           termFee,
+          feeBreakdown,
           totalDue,
           totalPaid: paid,
           balance: Math.max(0, rawBalance),

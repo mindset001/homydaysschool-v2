@@ -19,11 +19,14 @@ export const getClassFees = async (req: AuthRequest, res: Response): Promise<voi
 };
 
 // PUT /api/class-fees
-// Body: { className, academicYear, term, amount } — upserts the fee for
-// that exact (class, session) combination. Does not touch any other term.
+// Body: { className, academicYear, term, feeType, amount } — upserts one fee
+// line item for that exact (class, session, feeType) combination. A class
+// can have several line items per term (School Fee, Uniform, Bus, ...);
+// this never touches any other term or fee type.
 export const setClassFee = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { className, academicYear, term, amount } = req.body;
+    const feeType = req.body.feeType || 'School Fee';
 
     if (!className || !academicYear || !term || amount === undefined) {
       res.status(400).json({ message: 'className, academicYear, term and amount are required' });
@@ -31,7 +34,7 @@ export const setClassFee = async (req: AuthRequest, res: Response): Promise<void
     }
 
     const fee = await ClassFee.findOneAndUpdate(
-      { className, academicYear, term },
+      { className, academicYear, term, feeType },
       { $set: { amount: Number(amount) } },
       { new: true, upsert: true }
     );
