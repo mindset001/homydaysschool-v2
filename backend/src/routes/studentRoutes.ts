@@ -27,8 +27,8 @@ router.patch('/:id/carried-balance', authorize('admin'), updateCarriedBalance);
 router.get('/', authorize('admin', 'staff'), getAllStudents);
 router.get('/:id', authorize('admin', 'staff', 'student', 'guardian'), getStudentById);
 router.post('/', authorize('admin'), upload.single('image'), createStudent);
-router.put('/:id', authorize('admin', 'staff'), upload.single('image'), updateStudent);
-router.patch('/:id', authorize('admin', 'staff'), upload.single('image'), updateStudent);
+router.put('/:id', authorize('admin', 'staff', 'guardian'), upload.single('image'), updateStudent);
+router.patch('/:id', authorize('admin', 'staff', 'guardian'), upload.single('image'), updateStudent);
 router.delete('/:id', authorize('admin'), deleteStudent);
 router.post('/:id/documents', authorize('admin', 'staff'), upload.single('document'), uploadStudentDocument);
 

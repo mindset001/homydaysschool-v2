@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getStudentTermSummary, getAssignmentsByClass, getQuizzesByClass } from "../../services/api/calls/getApis";
 import { submitAssignment } from "../../services/api/calls/submissionsApis";
+import { updateStudent } from "../../services/api/calls/updateApis";
+import { showSuccessToast, showErrorToast } from "../../shared/ToastNotification";
 import { profileImage } from "../../assets/images/users";
 import { DetailRow } from "./ProfileGuardian";
 
@@ -62,7 +64,60 @@ const statusColor = (status: string) => {
   return 'text-red-700 bg-red-50 border-red-200';
 };
 
+interface EditableFields {
+  gender: string;
+  date_of_birth: string;
+  religion: string;
+  home_address: string;
+  home_town: string;
+  state_of_origin: string;
+  country: string;
+  fathers_name: string;
+  fathers_occupation: string;
+  fathers_contact: string;
+  mothers_name: string;
+  mothers_occupation: string;
+  mothers_contact: string;
+}
+
+const toFormFields = (ward: Ward): EditableFields => ({
+  gender: ward.gender || "",
+  date_of_birth: ward.dateOfBirth ? ward.dateOfBirth.slice(0, 10) : "",
+  religion: ward.religion || "",
+  home_address: ward.address || "",
+  home_town: ward.homeTown || "",
+  state_of_origin: ward.stateOfOrigin || "",
+  country: ward.country || "",
+  fathers_name: ward.fathersName || "",
+  fathers_occupation: ward.fathersOccupation || "",
+  fathers_contact: ward.fathersContact || "",
+  mothers_name: ward.mothersName || "",
+  mothers_occupation: ward.mothersOccupation || "",
+  mothers_contact: ward.mothersContact || "",
+});
+
+const EditField = ({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+}) => (
+  <div className="flex flex-col gap-1 py-2">
+    <label className="text-[12px] font-Poppins font-semibold text-gray-600">{label}</label>
+    <input
+      type="text"
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      className="border border-gray-200 rounded-lg px-3 py-1.5 text-[13px] font-Poppins focus:outline-none focus:ring-2 focus:ring-clr1"
+    />
+  </div>
+);
+
 export function WardWithPaymentInfo({ ward }: { ward: Ward }) {
+  const queryClient = useQueryClient();
   const { data, isLoading, isError } = useQuery({
     queryKey: ["guardian-ward-term-summary", ward._id],
     queryFn: () => getStudentTermSummary(ward._id),
@@ -73,6 +128,28 @@ export function WardWithPaymentInfo({ ward }: { ward: Ward }) {
   const termSummaries: TermSummary[] = data?.data?.termSummaries ?? [];
   const overall = data?.data?.overall;
   const termFee: number = data?.data?.termFee ?? 0;
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState<EditableFields>(() => toFormFields(ward));
+
+  const startEditing = () => {
+    setFormData(toFormFields(ward));
+    setIsEditing(true);
+  };
+
+  const updateMutation = useMutation({
+    mutationFn: () => {
+      const data = new FormData();
+      Object.entries(formData).forEach(([key, value]) => data.append(key, value));
+      return updateStudent({ id: ward._id, updateData: data });
+    },
+    onSuccess: () => {
+      showSuccessToast("Ward details updated");
+      queryClient.invalidateQueries({ queryKey: ["guardianWards"] });
+      setIsEditing(false);
+    },
+    onError: () => showErrorToast("Failed to update ward details"),
+  });
 
   return (
     <div className="flex flex-col md:flex-row gap-8">
@@ -137,31 +214,105 @@ export function WardWithPaymentInfo({ ward }: { ward: Ward }) {
 
       {/* Right column — details + term breakdown */}
       <div className="flex-1 min-w-0">
-        <h2 className="text-[16px] font-Lora font-bold text-gray-800 mb-4 pb-2 border-b border-clr1">
-          Student Details
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8">
-          <DetailRow label="Class" value={ward.class} />
-          <DetailRow label="Gender" value={ward.gender} />
-          <DetailRow label="Date of Birth" value={formatDate(ward.dateOfBirth || "")} />
-          <DetailRow label="Religion" value={ward.religion} />
-          <DetailRow label="Home Address" value={ward.address} />
-          <DetailRow label="Home Town" value={ward.homeTown} />
-          <DetailRow label="State of Origin" value={ward.stateOfOrigin} />
-          <DetailRow label="Country" value={ward.country} />
+        <div className="flex items-center justify-between mb-4 pb-2 border-b border-clr1">
+          <h2 className="text-[16px] font-Lora font-bold text-gray-800">Student Details</h2>
+          {!isEditing && (
+            <button
+              onClick={startEditing}
+              className="text-[12px] font-Poppins font-semibold text-clr1 hover:underline"
+            >
+              Edit Details
+            </button>
+          )}
         </div>
 
-        <h2 className="text-[16px] font-Lora font-bold text-gray-800 mt-6 mb-4 pb-2 border-b border-clr1">
-          Parent / Guardian Details
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8">
-          <DetailRow label="Father's Name" value={ward.fathersName} />
-          <DetailRow label="Father's Occupation" value={ward.fathersOccupation} />
-          <DetailRow label="Father's Contact" value={ward.fathersContact} />
-          <DetailRow label="Mother's Name" value={ward.mothersName} />
-          <DetailRow label="Mother's Occupation" value={ward.mothersOccupation} />
-          <DetailRow label="Mother's Contact" value={ward.mothersContact} />
-        </div>
+        {isEditing ? (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8">
+              <div className="flex flex-col gap-1 py-2">
+                <label className="text-[12px] font-Poppins font-semibold text-gray-600">Gender</label>
+                <select
+                  value={formData.gender}
+                  onChange={(e) => setFormData((f) => ({ ...f, gender: e.target.value }))}
+                  className="border border-gray-200 rounded-lg px-3 py-1.5 text-[13px] font-Poppins focus:outline-none focus:ring-2 focus:ring-clr1"
+                >
+                  <option value="">Select</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div className="flex flex-col gap-1 py-2">
+                <label className="text-[12px] font-Poppins font-semibold text-gray-600">Date of Birth</label>
+                <input
+                  type="date"
+                  value={formData.date_of_birth}
+                  onChange={(e) => setFormData((f) => ({ ...f, date_of_birth: e.target.value }))}
+                  className="border border-gray-200 rounded-lg px-3 py-1.5 text-[13px] font-Poppins focus:outline-none focus:ring-2 focus:ring-clr1"
+                />
+              </div>
+              <EditField label="Religion" value={formData.religion} onChange={(v) => setFormData((f) => ({ ...f, religion: v }))} />
+              <EditField label="Home Address" value={formData.home_address} onChange={(v) => setFormData((f) => ({ ...f, home_address: v }))} />
+              <EditField label="Home Town" value={formData.home_town} onChange={(v) => setFormData((f) => ({ ...f, home_town: v }))} />
+              <EditField label="State of Origin" value={formData.state_of_origin} onChange={(v) => setFormData((f) => ({ ...f, state_of_origin: v }))} />
+              <EditField label="Country" value={formData.country} onChange={(v) => setFormData((f) => ({ ...f, country: v }))} />
+            </div>
+
+            <h2 className="text-[16px] font-Lora font-bold text-gray-800 mt-6 mb-4 pb-2 border-b border-clr1">
+              Parent / Guardian Details
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8">
+              <EditField label="Father's Name" value={formData.fathers_name} onChange={(v) => setFormData((f) => ({ ...f, fathers_name: v }))} />
+              <EditField label="Father's Occupation" value={formData.fathers_occupation} onChange={(v) => setFormData((f) => ({ ...f, fathers_occupation: v }))} />
+              <EditField label="Father's Contact" value={formData.fathers_contact} onChange={(v) => setFormData((f) => ({ ...f, fathers_contact: v }))} />
+              <EditField label="Mother's Name" value={formData.mothers_name} onChange={(v) => setFormData((f) => ({ ...f, mothers_name: v }))} />
+              <EditField label="Mother's Occupation" value={formData.mothers_occupation} onChange={(v) => setFormData((f) => ({ ...f, mothers_occupation: v }))} />
+              <EditField label="Mother's Contact" value={formData.mothers_contact} onChange={(v) => setFormData((f) => ({ ...f, mothers_contact: v }))} />
+            </div>
+
+            <div className="flex gap-3 mt-5">
+              <button
+                onClick={() => setIsEditing(false)}
+                disabled={updateMutation.isPending}
+                className="flex-1 py-2 rounded-[8px] border border-gray-200 text-gray-700 text-sm font-semibold hover:bg-gray-50 transition-colors disabled:opacity-60"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => updateMutation.mutate()}
+                disabled={updateMutation.isPending}
+                className="flex-1 py-2 rounded-[8px] bg-clr1 text-white text-sm font-semibold hover:bg-[#046a71] transition-colors disabled:opacity-60"
+              >
+                {updateMutation.isPending ? "Saving…" : "Save Changes"}
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8">
+              <DetailRow label="Class" value={ward.class} />
+              <DetailRow label="Gender" value={ward.gender} />
+              <DetailRow label="Date of Birth" value={formatDate(ward.dateOfBirth || "")} />
+              <DetailRow label="Religion" value={ward.religion} />
+              <DetailRow label="Home Address" value={ward.address} />
+              <DetailRow label="Home Town" value={ward.homeTown} />
+              <DetailRow label="State of Origin" value={ward.stateOfOrigin} />
+              <DetailRow label="Country" value={ward.country} />
+            </div>
+
+            <h2 className="text-[16px] font-Lora font-bold text-gray-800 mt-6 mb-4 pb-2 border-b border-clr1">
+              Parent / Guardian Details
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8">
+              <DetailRow label="Father's Name" value={ward.fathersName} />
+              <DetailRow label="Father's Occupation" value={ward.fathersOccupation} />
+              <DetailRow label="Father's Contact" value={ward.fathersContact} />
+              <DetailRow label="Mother's Name" value={ward.mothersName} />
+              <DetailRow label="Mother's Occupation" value={ward.mothersOccupation} />
+              <DetailRow label="Mother's Contact" value={ward.mothersContact} />
+            </div>
+          </>
+        )}
 
         {/* Per-Term Breakdown */}
         <h2 className="text-[16px] font-Lora font-bold text-gray-800 mt-6 mb-3 pb-2 border-b border-clr1">

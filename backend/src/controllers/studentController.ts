@@ -309,10 +309,18 @@ export const createStudent = async (req: AuthRequest, res: Response): Promise<vo
 export const updateStudent = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
+    const requesterRole = req.user?.role;
+
+    // Guardians may only edit their own scoped ward
+    if (requesterRole === 'guardian' && req.user?.scopedStudentId !== id) {
+      res.status(403).json({ message: 'You can only edit your own ward' });
+      return;
+    }
+
     console.log('Updating student with ID:', id);
     console.log('Update data:', req.body);
     console.log('File uploaded:', req.file);
-    
+
     const {
       first_name,
       last_name,
@@ -360,8 +368,9 @@ export const updateStudent = async (req: AuthRequest, res: Response): Promise<vo
     await User.findByIdAndUpdate(student.userId, userUpdates);
 
     // Update Student record
+    // Guardians can edit their ward's details but never reassign the class
     const studentUpdates: any = {};
-    if (studentClass) studentUpdates.class = studentClass;
+    if (studentClass && requesterRole !== 'guardian') studentUpdates.class = studentClass;
     if (date_of_birth) studentUpdates.dateOfBirth = new Date(date_of_birth);
     if (gender) studentUpdates.gender = gender.toLowerCase();
     if (home_address || home_town || state_of_origin || country) {
@@ -379,8 +388,9 @@ export const updateStudent = async (req: AuthRequest, res: Response): Promise<vo
     if (country !== undefined) studentUpdates.country = country;
     if (religion !== undefined) studentUpdates.religion = religion;
 
-    // Find guardian if guardian_email is provided
-    if (guardian_email) {
+    // Find guardian if guardian_email is provided (admin/staff only — a
+    // guardian cannot reassign which guardian account their ward is linked to)
+    if (guardian_email && requesterRole !== 'guardian') {
       const guardianUser = await User.findOne({ email: guardian_email.toLowerCase(), role: 'guardian' });
       if (guardianUser) {
         const guardian = await Student.findOne({ userId: guardianUser._id });
