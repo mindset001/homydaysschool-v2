@@ -44,6 +44,8 @@ interface TermSummary {
   academicYear: string;
   label: string;
   termFee: number;
+  schoolFee: number;
+  schoolFeePaid: number;
   feeBreakdown?: FeeLine[];
   totalDue: number;
   totalPaid: number;
@@ -131,8 +133,6 @@ export function WardWithPaymentInfo({ ward }: { ward: Ward }) {
   });
 
   const termSummaries: TermSummary[] = data?.data?.termSummaries ?? [];
-  const overall = data?.data?.overall;
-  const termFee: number = data?.data?.termFee ?? 0;
 
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState<EditableFields>(() => toFormFields(ward));
@@ -183,38 +183,6 @@ export function WardWithPaymentInfo({ ward }: { ward: Ward }) {
         >
           View Result
         </Link>
-
-        {/* Overall fee summary */}
-        <div className="w-full mt-2">
-          <h3 className="text-[13px] font-bold text-gray-700 mb-2">Overall Fee Summary</h3>
-          {isLoading ? (
-            <div className="space-y-2">
-              {[1, 2, 3].map((i) => <div key={i} className="h-4 bg-gray-100 rounded animate-pulse" />)}
-            </div>
-          ) : isError ? (
-            <p className="text-red-400 text-xs">Could not load payment info</p>
-          ) : overall ? (
-            <div className="text-[12px] text-gray-700 space-y-1">
-              <div className="flex justify-between">
-                <span className="text-gray-500">Term Fee</span>
-                <span className="font-semibold">₦{termFee.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-500">Total Paid</span>
-                <span className="font-semibold text-green-700">₦{overall.totalPaid.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-500">Balance</span>
-                <span className="font-semibold text-red-600">₦{overall.balance.toLocaleString()}</span>
-              </div>
-              <div className={`mt-2 text-center text-[11px] font-bold px-2 py-1 rounded-full border ${statusColor(overall.status)}`}>
-                {overall.status}
-              </div>
-            </div>
-          ) : (
-            <p className="text-gray-400 text-xs">No payment records found</p>
-          )}
-        </div>
       </div>
 
       {/* Right column — details + term breakdown */}
@@ -347,15 +315,11 @@ export function WardWithPaymentInfo({ ward }: { ward: Ward }) {
                 <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-gray-700">
                   <div className="flex justify-between">
                     <span>Term Fee</span>
-                    <span className="font-semibold">₦{ts.termFee.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Total Due</span>
-                    <span className="font-semibold">₦{ts.totalDue.toLocaleString()}</span>
+                    <span className="font-semibold">₦{ts.schoolFee.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Paid</span>
-                    <span className="font-semibold text-green-700">₦{ts.totalPaid.toLocaleString()}</span>
+                    <span className="font-semibold text-green-700">₦{ts.schoolFeePaid.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between col-span-2">
                     <span>{ts.balance > 0 ? 'Outstanding Balance' : 'Fully Settled'}</span>
