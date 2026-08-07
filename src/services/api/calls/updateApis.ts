@@ -10,6 +10,11 @@ export const updateEnrollmentApplicationStatus = async (id: string, status: stri
   return response.data;
 };
 
+export const setClassFee = async (data: { className: string; academicYear: string; term: string; amount: number }) => {
+  const response = await apiClient.put(`class-fees`, data);
+  return response.data;
+};
+
 export const updateStudent = async ({
   id,
   updateData,

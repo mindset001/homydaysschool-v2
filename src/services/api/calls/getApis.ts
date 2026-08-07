@@ -19,6 +19,14 @@ export const getContactMessages = () => {
   return apiClient.get(`contact`);
 };
 
+export const getAllAcademicSessions = () => {
+  return apiClient.get(`academic-sessions`);
+};
+
+export const getClassFees = (academicYear?: string, term?: string) => {
+  return apiClient.get(`class-fees`, { params: { academicYear, term } });
+};
+
 export const getEnrollmentApplications = () => {
   return apiClient.get(`enrollment`);
 };

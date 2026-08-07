@@ -34,6 +34,7 @@ import submissionRoutes from './routes/submissionRoutes.js';
 import weeklyReviewRoutes from './routes/weeklyReviewRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
 import enrollmentRoutes from './routes/enrollmentRoutes.js';
+import classFeeRoutes from './routes/classFeeRoutes.js';
 
 const app: Application = express();
 
@@ -115,6 +116,7 @@ app.use('/api/classes', classRoutes);
 app.use('/api/class_stat', classStatsRoutes);
 app.use('/api/calender', eventRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/api/class-fees', classFeeRoutes);
 app.use('/api/subjects', subjectRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/contact', contactRoutes);

@@ -212,6 +212,12 @@ const SideNav: React.FC<SideNavProps> = ({ mobileToggle, setMobileToggle }) => {
       roles: ["admin"],
     },
     {
+      item: <TuitionSVG />,
+      to: "class-fees",
+      text: "Class Fees",
+      roles: ["admin"],
+    },
+    {
       item: <PromotionSVG />,
       to: "student-promotion",
       text: "Promote",

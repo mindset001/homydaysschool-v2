@@ -559,7 +559,9 @@ const Tuition: React.FC = () => {
                       )}
                     </div>
                     <div className="fees-entries mb-[20px] font-Poppins text-[15px] font-medium xl:font-normal leading-[22.5px] md:leading-[16.5px]">
-                      <div>Term Fee:</div>
+                      <div title="No longer used to bill students — set per-term fees on the Class Fees page instead.">
+                        Term Fee (legacy, unused):
+                      </div>
                       {isEditMode ? (
                         <input
                           type="number"

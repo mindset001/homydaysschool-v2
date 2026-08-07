@@ -39,7 +39,6 @@ interface TermSummary {
   academicYear: string;
   label: string;
   termFee: number;
-  carryOver: number;
   totalDue: number;
   totalPaid: number;
   balance: number;
@@ -344,12 +343,6 @@ export function WardWithPaymentInfo({ ward }: { ward: Ward }) {
                     <span>Term Fee</span>
                     <span className="font-semibold">₦{ts.termFee.toLocaleString()}</span>
                   </div>
-                  {ts.carryOver > 0 && (
-                    <div className="flex justify-between col-span-2 text-red-600">
-                      <span>Carry-over from prev. term</span>
-                      <span className="font-semibold">+ ₦{ts.carryOver.toLocaleString()}</span>
-                    </div>
-                  )}
                   <div className="flex justify-between">
                     <span>Total Due</span>
                     <span className="font-semibold">₦{ts.totalDue.toLocaleString()}</span>

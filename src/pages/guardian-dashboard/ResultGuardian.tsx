@@ -39,7 +39,6 @@ interface TermSummary {
   academicYear: string;
   label: string;
   termFee: number;
-  carryOver: number;
   totalDue: number;
   totalPaid: number;
   balance: number;

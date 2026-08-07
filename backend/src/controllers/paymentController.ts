@@ -2,6 +2,7 @@ import { Response } from 'express';
 import { Payment } from '../models/Payment.js';
 import { Student } from '../models/Student.js';
 import { Class } from '../models/Class.js';
+import { ClassFee } from '../models/ClassFee.js';
 import { AcademicSession } from '../models/AcademicSession.js';
 import { AuthRequest } from '../middleware/auth.js';
 
@@ -15,8 +16,18 @@ const TERM_ORDER: Record<string, number> = {
   'Third Term': 3,
 };
 
-function computeTermFee(classDoc: any): number {
-  return classDoc.termFee || 0;
+/**
+ * A class's fee for one specific term/session. A term with no fee record
+ * set (via the Tuition page) is simply $0 due for that term — it never
+ * inherits or creates debt tied to any other term.
+ */
+async function getTermFee(className: string, academicYear: string, term: string): Promise<number> {
+  const fee = await ClassFee.findOne({
+    className: new RegExp(`^${className}$`, 'i'),
+    academicYear,
+    term,
+  }).lean();
+  return fee?.amount ?? 0;
 }
 
 /**
@@ -114,7 +125,9 @@ export const getAllPayments = async (req: AuthRequest, res: Response): Promise<v
  * - Every applicable session appears in termSummaries, even with zero payments
  *   (these show up as "Unpaid" automatically when a new term is created).
  * - Sessions whose reference date is BEFORE the student's admission date are skipped.
- * - Unpaid balance from one term is carried forward to the next.
+ * - Each term is billed and settled independently — a term with no fee set
+ *   (via the Tuition page) is $0 due, and an unpaid term never carries debt
+ *   into any other term.
  */
 export const getStudentTermSummary = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
@@ -124,15 +137,6 @@ export const getStudentTermSummary = async (req: AuthRequest, res: Response): Pr
     if (!student) {
       res.status(404).json({ message: 'Student not found' });
       return;
-    }
-
-    // Resolve term fee from student's class
-    let termFee = 0;
-    if (student.class) {
-      const classDoc = await Class.findOne({ name: new RegExp(`^${student.class}$`, 'i') });
-      if (classDoc) {
-        termFee = computeTermFee(classDoc);
-      }
     }
 
     // All academic sessions, sorted chronologically
@@ -157,49 +161,53 @@ export const getStudentTermSummary = async (req: AuthRequest, res: Response): Pr
       entry.payments.push(p);
     });
 
-    // Walk through applicable sessions computing carry-over
-    let carryOver = 0;
-    const termSummaries = applicable.map((session) => {
-      const key = `${session.academicYear}__${session.term}`;
-      const { paid = 0, payments: termPayments = [] } = paymentsByKey.get(key) ?? {};
+    // Each applicable session is billed independently — no carry-over
+    const termSummaries = await Promise.all(
+      applicable.map(async (session) => {
+        const key = `${session.academicYear}__${session.term}`;
+        const { paid = 0, payments: termPayments = [] } = paymentsByKey.get(key) ?? {};
+        const termFee = student.class ? await getTermFee(student.class, session.academicYear, session.term) : 0;
 
-      const totalDue = termFee + carryOver;
-      const rawBalance = totalDue - paid;
+        const totalDue = termFee;
+        const rawBalance = totalDue - paid;
 
-      const summary = {
-        term: session.term,
-        academicYear: session.academicYear,
-        label: `${session.term} — ${session.academicYear}`,
-        termFee,
-        carryOver,
-        totalDue,
-        totalPaid: paid,
-        balance: Math.max(0, rawBalance),
-        overpaid: Math.max(0, -rawBalance),
-        status: (rawBalance <= 0 ? 'Paid' : paid > 0 ? 'Partial' : 'Unpaid') as 'Paid' | 'Partial' | 'Unpaid',
-        payments: termPayments,
-      };
-
-      carryOver = Math.max(0, rawBalance);
-      return summary;
-    });
+        return {
+          term: session.term,
+          academicYear: session.academicYear,
+          label: `${session.term} — ${session.academicYear}`,
+          termFee,
+          totalDue,
+          totalPaid: paid,
+          balance: Math.max(0, rawBalance),
+          overpaid: Math.max(0, -rawBalance),
+          status: (rawBalance <= 0 ? 'Paid' : paid > 0 ? 'Partial' : 'Unpaid') as 'Paid' | 'Partial' | 'Unpaid',
+          payments: termPayments,
+        };
+      })
+    );
 
     const overallPaid = termSummaries.reduce((s, t) => s + t.totalPaid, 0);
-    // totalDue is the sum of per-term fees (without double-counting carry-over)
     const overallDue = termSummaries.reduce((s, t) => s + t.termFee, 0);
+    const overallBalance = termSummaries.reduce((s, t) => s + t.balance, 0);
+
+    // "Current" term fee — used by older callers as a single headline figure
+    const activeSession = allSessions.find((s: any) => s.isActive);
+    const currentTermFee = activeSession
+      ? termSummaries.find((t) => t.term === activeSession.term && t.academicYear === activeSession.academicYear)?.termFee ?? 0
+      : 0;
 
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     res.setHeader('Pragma', 'no-cache');
     res.setHeader('Expires', '0');
 
     res.json({
-      termFee,
+      termFee: currentTermFee,
       termSummaries,
       overall: {
         totalPaid: overallPaid,
         totalDue: overallDue,
-        balance: carryOver, // final outstanding carry-over
-        status: (carryOver <= 0 && overallPaid > 0 ? 'Paid' : overallPaid > 0 ? 'Partial' : 'Unpaid') as string,
+        balance: overallBalance,
+        status: (overallBalance <= 0 && overallPaid > 0 ? 'Paid' : overallPaid > 0 ? 'Partial' : 'Unpaid') as string,
       },
     });
   } catch (error: any) {
@@ -232,16 +240,13 @@ export const getPaymentsByStudent = async (req: AuthRequest, res: Response): Pro
 
     const totalPaid = payments.reduce((sum, p) => sum + p.amount, 0);
 
-    // Compute cumulative totalDue from applicable sessions
-    let termFee = 0;
-    if (student.class) {
-      const classDoc = await Class.findOne({ name: new RegExp(`^${student.class}$`, 'i') });
-      if (classDoc) termFee = computeTermFee(classDoc);
-    }
-
+    // Compute cumulative totalDue as the sum of each applicable term's own fee
     const allSessions = sortSessions(await AcademicSession.find().lean());
     const applicable = applicableSessionsForStudent(allSessions, student);
-    const totalDue = termFee * applicable.length;
+    const termFees = student.class
+      ? await Promise.all(applicable.map((s: any) => getTermFee(student.class, s.academicYear, s.term)))
+      : [];
+    const totalDue = termFees.reduce((sum, fee) => sum + fee, 0);
 
     const balance = Math.max(0, totalDue - totalPaid);
 
@@ -296,12 +301,14 @@ export const getPaymentsByClass = async (req: AuthRequest, res: Response): Promi
       return;
     }
 
-    const termFee = computeTermFee(classDoc);
-
     // Use the active session to scope payments to the current term only
     const activeSession = await AcademicSession.findOne({ isActive: true }).lean() as any;
     const activeTerm = activeSession?.term;
     const activeYear = activeSession?.academicYear;
+
+    const termFee = activeTerm && activeYear
+      ? await getTermFee(classDoc.name, activeYear, activeTerm)
+      : 0;
 
     // All students in this class
     const students = await Student.find({ class: classDoc.name }).lean();

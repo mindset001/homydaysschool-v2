@@ -103,6 +103,9 @@ const TimetablesStaff = lazy(
 const AcademicSessionPage = lazy(
   () => import("./pages/dashboard/AcademicSession")
 );
+const ClassFeesPage = lazy(
+  () => import("./pages/dashboard/ClassFees")
+);
 const StudentPromotionPage = lazy(
   () => import("./pages/dashboard/StudentPromotion")
 );
@@ -166,6 +169,7 @@ const router = createBrowserRouter(
           <Route path="tuition" element={<TuitionLayout />} />
           <Route path="timetable" element={<TimetablePage />} />
           <Route path="academic-session" element={<AcademicSessionPage />} />
+          <Route path="class-fees" element={<ClassFeesPage />} />
           <Route path="student-promotion" element={<StudentPromotionPage />} />
           <Route path="change-password" element={<ChangePasswordPage />} />
           <Route path="guardian-result/:id" element={<ResultGuardian />} />
