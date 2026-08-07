@@ -22,6 +22,22 @@ const FEE_TYPES = [
   "Other",
 ];
 
+// Groups classes by level so a fee can be applied to all of them at once
+// (e.g. every Primary class usually shares the same School Fee).
+const CLASS_GROUPS = ["Creche", "Kindergarten", "Nursery", "Primary", "Junior Secondary", "Senior Secondary"] as const;
+type ClassGroup = typeof CLASS_GROUPS[number];
+
+const groupOf = (className: string): ClassGroup | "Other" => {
+  const n = className.toLowerCase();
+  if (n === "creche") return "Creche";
+  if (n.startsWith("kg")) return "Kindergarten";
+  if (n.startsWith("nur")) return "Nursery";
+  if (n.startsWith("pry")) return "Primary";
+  if (n.startsWith("jss")) return "Junior Secondary";
+  if (n.startsWith("sss") || n.startsWith("ss")) return "Senior Secondary";
+  return "Other";
+};
+
 interface FeeLine {
   _id: string;
   className: string;
@@ -40,6 +56,15 @@ const ClassFeesPage: React.FC = () => {
   // New-fee mini-form state, keyed by className
   const [draftType, setDraftType] = useState<Record<string, string>>({});
   const [draftAmount, setDraftAmount] = useState<Record<string, string>>({});
+
+  // Bulk "apply to a class group" form state
+  const [bulkGroup, setBulkGroup] = useState<ClassGroup>("Primary");
+  const [bulkType, setBulkType] = useState("School Fee");
+  const [bulkAmount, setBulkAmount] = useState("");
+
+  // "Copy from another term" form state
+  const [copyFromYear, setCopyFromYear] = useState("");
+  const [copyFromTerm, setCopyFromTerm] = useState("");
 
   const { data: sessionsData } = useQuery({
     queryKey: ["classFeesSessionList"],
@@ -92,8 +117,23 @@ const ClassFeesPage: React.FC = () => {
     onError: () => showErrorToast("Failed to remove fee"),
   });
 
+  // Shared bulk-write mutation — used by both "apply to group" and "copy from term"
+  const bulkMutation = useMutation({
+    mutationFn: (items: { className: string; feeType: string; amount: number }[]) =>
+      Promise.all(items.map((item) => setClassFee({ ...item, academicYear, term }))),
+    onSuccess: (_res, items) => {
+      showSuccessToast(`${items.length} fee${items.length !== 1 ? "s" : ""} saved`);
+      queryClient.invalidateQueries({ queryKey: ["classFees", academicYear, term] });
+    },
+    onError: () => showErrorToast("Failed to save fees"),
+  });
+
   const uniqueYears = Array.from(new Set(sessions.map((s) => s.academicYear))).sort();
   const termsForYear = sessions.filter((s) => s.academicYear === academicYear).map((s) => s.term);
+  const copyFromTermsForYear = sessions.filter((s) => s.academicYear === copyFromYear).map((s) => s.term);
+
+  // Every other session, for the "copy from" picker
+  const otherSessions = sessions.filter((s) => !(s.academicYear === academicYear && s.term === term));
 
   const handleAddFee = (className: string) => {
     const feeType = (draftType[className] || "").trim();
@@ -107,6 +147,45 @@ const ClassFeesPage: React.FC = () => {
       return;
     }
     saveMutation.mutate({ className, feeType, amount });
+  };
+
+  const handleBulkApply = () => {
+    const feeType = bulkType.trim();
+    const amount = Number(bulkAmount);
+    if (!feeType) {
+      showErrorToast("Enter a name for this fee");
+      return;
+    }
+    if (!amount || amount <= 0) {
+      showErrorToast("Enter an amount greater than 0");
+      return;
+    }
+    const targetClasses = classes.filter((c) => groupOf(c.name) === bulkGroup);
+    if (targetClasses.length === 0) {
+      showErrorToast(`No classes found in "${bulkGroup}"`);
+      return;
+    }
+    if (!window.confirm(`Set ${feeType} = ₦${amount.toLocaleString()} for all ${targetClasses.length} ${bulkGroup} classes (${targetClasses.map((c) => c.name).join(", ")})?`)) {
+      return;
+    }
+    bulkMutation.mutate(targetClasses.map((c) => ({ className: c.name, feeType, amount })));
+  };
+
+  const handleCopyFromTerm = async () => {
+    if (!copyFromYear || !copyFromTerm) {
+      showErrorToast("Choose a term to copy from");
+      return;
+    }
+    if (!window.confirm(`Copy every fee from ${copyFromTerm} — ${copyFromYear} into ${term} — ${academicYear}? Matching fee names will be overwritten.`)) {
+      return;
+    }
+    const res = await getClassFees(copyFromYear, copyFromTerm);
+    const sourceFees: FeeLine[] = res?.data?.fees ?? [];
+    if (sourceFees.length === 0) {
+      showErrorToast("That term has no fees set to copy");
+      return;
+    }
+    bulkMutation.mutate(sourceFees.map((f) => ({ className: f.className, feeType: f.feeType, amount: f.amount })));
   };
 
   return (
@@ -149,6 +228,82 @@ const ClassFeesPage: React.FC = () => {
           </select>
         </div>
       </div>
+
+      {academicYear && term && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          {/* Bulk apply to a class group */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+            <h3 className="text-sm font-semibold text-gray-800 mb-1">Apply to a Class Group</h3>
+            <p className="text-xs text-gray-400 mb-3">Set one fee for every class in a level at once, e.g. all Primary classes.</p>
+            <div className="flex flex-wrap gap-2">
+              <select
+                value={bulkGroup}
+                onChange={(e) => setBulkGroup(e.target.value as ClassGroup)}
+                className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]"
+              >
+                {CLASS_GROUPS.map((g) => <option key={g} value={g}>{g}</option>)}
+              </select>
+              <input
+                type="text"
+                list="fee-type-options"
+                placeholder="Fee name"
+                value={bulkType}
+                onChange={(e) => setBulkType(e.target.value)}
+                className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm w-40 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
+              />
+              <input
+                type="number"
+                min={0}
+                placeholder="Amount (₦)"
+                value={bulkAmount}
+                onChange={(e) => setBulkAmount(e.target.value)}
+                className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm w-32 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
+              />
+              <button
+                onClick={handleBulkApply}
+                disabled={bulkMutation.isPending}
+                className="text-xs font-semibold text-white bg-[#F97316] hover:bg-[#046a71] rounded-lg px-3 py-1.5 transition-colors disabled:opacity-50"
+              >
+                Apply to Group
+              </button>
+            </div>
+          </div>
+
+          {/* Copy fees from another term */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+            <h3 className="text-sm font-semibold text-gray-800 mb-1">Copy Fees From Another Term</h3>
+            <p className="text-xs text-gray-400 mb-3">Bring every class's fees over from a previous session instead of re-typing them.</p>
+            <div className="flex flex-wrap gap-2">
+              <select
+                value={copyFromYear}
+                onChange={(e) => { setCopyFromYear(e.target.value); setCopyFromTerm(""); }}
+                className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316]"
+              >
+                <option value="">Year…</option>
+                {Array.from(new Set(otherSessions.map((s) => s.academicYear))).sort().map((y) => (
+                  <option key={y} value={y}>{y}</option>
+                ))}
+              </select>
+              <select
+                value={copyFromTerm}
+                onChange={(e) => setCopyFromTerm(e.target.value)}
+                disabled={!copyFromYear}
+                className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#F97316] disabled:opacity-50"
+              >
+                <option value="">Term…</option>
+                {copyFromTermsForYear.map((t) => <option key={t} value={t}>{t}</option>)}
+              </select>
+              <button
+                onClick={handleCopyFromTerm}
+                disabled={bulkMutation.isPending}
+                className="text-xs font-semibold text-white bg-[#F97316] hover:bg-[#046a71] rounded-lg px-3 py-1.5 transition-colors disabled:opacity-50"
+              >
+                Copy All Fees Here
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {!academicYear || !term ? (
         <div className="bg-white rounded-2xl border border-gray-100 p-8 text-center text-sm text-gray-400">
