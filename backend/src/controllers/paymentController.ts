@@ -41,6 +41,16 @@ async function getTermFee(className: string, academicYear: string, term: string)
 }
 
 /**
+ * Just the compulsory School Fee line item — the only fee type that ever
+ * counts toward an outstanding balance. Other fee types (Uniform, Bus,
+ * custom names, ...) are informational only everywhere balances are shown.
+ */
+async function getSchoolFee(className: string, academicYear: string, term: string): Promise<number> {
+  const breakdown = await getTermFeeBreakdown(className, academicYear, term);
+  return breakdown.filter((f) => f.feeType === 'School Fee').reduce((sum, f) => sum + f.amount, 0);
+}
+
+/**
  * Sort AcademicSession documents chronologically:
  * academic year ascending, then term order ascending.
  */
@@ -263,17 +273,21 @@ export const getPaymentsByStudent = async (req: AuthRequest, res: Response): Pro
       .populate('receivedBy', 'firstName lastName email')
       .sort({ paymentDate: -1 });
 
+    // Balance is School Fee only — other fee types (Uniform, Bus, ...) never
+    // count toward it, matching the guardian-facing term summary.
+    const schoolFeePaid = payments
+      .filter((p) => p.paymentType === 'School Fee')
+      .reduce((sum, p) => sum + p.amount, 0);
     const totalPaid = payments.reduce((sum, p) => sum + p.amount, 0);
 
-    // Compute cumulative totalDue as the sum of each applicable term's own fee
     const allSessions = sortSessions(await AcademicSession.find().lean());
     const applicable = applicableSessionsForStudent(allSessions, student);
-    const termFees = student.class
-      ? await Promise.all(applicable.map((s: any) => getTermFee(student.class, s.academicYear, s.term)))
+    const schoolFees = student.class
+      ? await Promise.all(applicable.map((s: any) => getSchoolFee(student.class, s.academicYear, s.term)))
       : [];
-    const totalDue = termFees.reduce((sum, fee) => sum + fee, 0);
+    const totalDue = schoolFees.reduce((sum, fee) => sum + fee, 0);
 
-    const balance = Math.max(0, totalDue - totalPaid);
+    const balance = Math.max(0, totalDue - schoolFeePaid);
 
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     res.setHeader('Pragma', 'no-cache');
@@ -331,8 +345,10 @@ export const getPaymentsByClass = async (req: AuthRequest, res: Response): Promi
     const activeTerm = activeSession?.term;
     const activeYear = activeSession?.academicYear;
 
-    const termFee = activeTerm && activeYear
-      ? await getTermFee(classDoc.name, activeYear, activeTerm)
+    // "Tuition Paid" / "Balance" here are School Fee only — Uniform, Bus and
+    // other extras never factor in, matching the guardian-facing summary.
+    const schoolFee = activeTerm && activeYear
+      ? await getSchoolFee(classDoc.name, activeYear, activeTerm)
       : 0;
 
     // All students in this class
@@ -352,14 +368,14 @@ export const getPaymentsByClass = async (req: AuthRequest, res: Response): Promi
 
     console.log('Found payments:', payments.length);
 
-    // Sum payments per student for the ACTIVE term only
+    // Sum School Fee payments per student for the ACTIVE term only
     const paidByStudent = new Map<string, number>();
     payments.forEach((payment: any) => {
       const sid = payment.studentId?._id?.toString() ?? payment.studentId?.toString();
       const isActiveTerm = activeTerm && activeYear
         ? payment.term === activeTerm && payment.academicYear === activeYear
         : true;
-      if (isActiveTerm) {
+      if (isActiveTerm && payment.paymentType === 'School Fee') {
         paidByStudent.set(sid, (paidByStudent.get(sid) ?? 0) + (payment.amount || 0));
       }
     });
@@ -376,7 +392,7 @@ export const getPaymentsByClass = async (req: AuthRequest, res: Response): Promi
 
     for (const student of students) {
       const sid = (student._id as any).toString();
-      const totalDue = termFee;
+      const totalDue = schoolFee;
       const totalPaid = paidByStudent.get(sid) ?? 0;
       const balance = Math.max(0, totalDue - totalPaid);
       const carriedBalance = (student as any).carriedBalance ?? 0;
